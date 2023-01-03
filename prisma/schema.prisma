@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Condition {
+  MINT
+  GOOD
+  POOR
+  BROKEN
+}
+
+enum Power {
+  GAS
+  DIESEL
+  ELECTRIC
+  HYBRID
+}
+
+model Tag {
+  name      String      @id
+  Equipment Equipment[]
+  Implement Implement[]
+  Tool      Tool[]
+  Vehicle   Vehicle[]
+}
+
+model Equipment {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  condition Condition @default(MINT)
+
+  tagName      String?
+  tag          Tag?      @relation(fields: [tagName], references: [name])
+  locationName String?   @default("Unknown")
+  location     Location? @relation(fields: [locationName], references: [name])
+}
+
+model Implement {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  condition Condition @default(MINT)
+
+  tagName      String?
+  tag          Tag?      @relation(fields: [tagName], references: [name])
+  locationName String?   @default("Unknown")
+  location     Location? @relation(fields: [locationName], references: [name])
+}
+
+model Location {
+  name      String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  implements Implement[]
+  equipment  Equipment[]
+  tools      Tool[]
+  vehicles   Vehicle[]
+}
+
+model Tool {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  condition Condition @default(MINT)
+
+  tagName      String?
+  tag          Tag?      @relation(fields: [tagName], references: [name])
+  locationName String?   @default("Unknown")
+  location     Location? @relation(fields: [locationName], references: [name])
+}
+
+model Vehicle {
+  id        String   @id @default(cuid())
+  name      String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  make      String
+  model     String
+  hours     Int?
+  year      Int?
+  active    Boolean  @default(true)
+  power     Power    @default(GAS)
+
+  tagName      String?
+  tag          Tag?      @relation(fields: [tagName], references: [name])
+  locationName String?   @default("Unknown")
+  location     Location? @relation(fields: [locationName], references: [name])
+}
