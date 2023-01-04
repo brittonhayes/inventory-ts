@@ -7,7 +7,7 @@
       </Row>
     </Head>
     <Body>
-      {#each items as item (item.id)}
+      {#each items as item}
         <Row>
           <Cell numeric>{item.id}</Cell>
           <Cell>{item.name}</Cell>
@@ -29,21 +29,25 @@
   </div>
   
   <script lang="ts">
+    import { LocationsApi, type LocationResponse } from '$lib/api';
     import DataTable, { Body, Cell, Head, Row } from '@smui/data-table';
     import IconButton from '@smui/icon-button';
     import LinearProgress from '@smui/linear-progress';
-    import { LocationsApi as Client} from '$lib/api';
-	  import type { LocationResponse } from 'src/api';
     
+      let client = new LocationsApi();
       let items: LocationResponse[] = [];
       let loaded = false;
     
       requestData();
     
       async function requestData() {
-        const client = new Client(); 
-        client.locationsControllerList({}).then((response) => {
-          items = response.data
+        client.locationsControllerList().then((response) => {
+          items = response.data.length > 0 ? response.data : [{
+            id: '1',
+            name: 'No locations found',
+            createdAt: new Date().toDateString(),
+            updatedAt: new Date().toDateString(),
+          }];
           loaded = true;
         });
       }

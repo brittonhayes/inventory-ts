@@ -15,12 +15,46 @@
 
 import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+// URLSearchParams not necessarily used
+// @ts-ignore
+import { URL, URLSearchParams } from 'url';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
+/**
+ * 
+ * @export
+ * @interface CreateImplementDto
+ */
+export interface CreateImplementDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateImplementDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof CreateImplementDto
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateImplementDto
+     */
+    'locationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateImplementDto
+     */
+    'tagName'?: string;
+}
 /**
  * 
  * @export
@@ -34,19 +68,308 @@ export interface CreateLocationDto {
      */
     'name': string;
 }
+/**
+ * 
+ * @export
+ * @interface CreateTagDto
+ */
+export interface CreateTagDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTagDto
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateToolDto
+ */
+export interface CreateToolDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateToolDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof CreateToolDto
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateToolDto
+     */
+    'locationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateToolDto
+     */
+    'tagName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ImplementResponse
+ */
+export interface ImplementResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof ImplementResponse
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'locationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'tagName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImplementResponse
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface LocationResponse
+ */
+export interface LocationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationResponse
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LocationResponse
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface TagResponse
+ */
+export interface TagResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface ToolResponse
+ */
+export interface ToolResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof ToolResponse
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'locationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'tagName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ToolResponse
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateImplementDto
+ */
+export interface UpdateImplementDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateImplementDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof UpdateImplementDto
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateImplementDto
+     */
+    'locationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateImplementDto
+     */
+    'tagName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateLocationDto
+ */
+export interface UpdateLocationDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateLocationDto
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateTagDto
+ */
+export interface UpdateTagDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateTagDto
+     */
+    'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateToolDto
+ */
+export interface UpdateToolDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateToolDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof UpdateToolDto
+     */
+    'condition'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateToolDto
+     */
+    'tagName'?: string;
+}
 
 /**
- * DefaultApi - axios parameter creator
+ * ImplementsApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ImplementsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {CreateImplementDto} createImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerCreate: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        implementsControllerCreate: async (createImplementDto: CreateImplementDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createImplementDto' is not null or undefined
+            assertParamExists('implementsControllerCreate', 'createImplementDto', createImplementDto)
             const localVarPath = `/api/implements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -61,9 +384,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createImplementDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -138,13 +464,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerList: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('implementsControllerList', 'name', name)
+        implementsControllerList: async (name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/implements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -161,6 +487,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['name'] = name;
             }
 
+            if (orderBy !== undefined) {
+                localVarQueryParameter['orderBy'] = orderBy;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -175,12 +509,15 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @param {string} id 
+         * @param {UpdateImplementDto} updateImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerUpdate: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        implementsControllerUpdate: async (id: string, updateImplementDto: UpdateImplementDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('implementsControllerUpdate', 'id', id)
+            // verify required parameter 'updateImplementDto' is not null or undefined
+            assertParamExists('implementsControllerUpdate', 'updateImplementDto', updateImplementDto)
             const localVarPath = `/api/implements/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -196,9 +533,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateImplementDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -209,19 +549,20 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * DefaultApi - functional programming interface
+ * ImplementsApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+export const ImplementsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ImplementsApiAxiosParamCreator(configuration)
     return {
         /**
          * 
+         * @param {CreateImplementDto} createImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async implementsControllerCreate(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerCreate(options);
+        async implementsControllerCreate(createImplementDto: CreateImplementDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImplementResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerCreate(createImplementDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -230,7 +571,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async implementsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async implementsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImplementResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerDelete(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -240,47 +581,51 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async implementsControllerFindById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async implementsControllerFindById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImplementResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerFindById(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async implementsControllerList(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerList(name, options);
+        async implementsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImplementResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerList(name, orderBy, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateImplementDto} updateImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async implementsControllerUpdate(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerUpdate(id, options);
+        async implementsControllerUpdate(id: string, updateImplementDto: UpdateImplementDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImplementResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.implementsControllerUpdate(id, updateImplementDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * DefaultApi - factory interface
+ * ImplementsApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
+export const ImplementsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ImplementsApiFp(configuration)
     return {
         /**
          * 
+         * @param {CreateImplementDto} createImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerCreate(options?: any): AxiosPromise<void> {
-            return localVarFp.implementsControllerCreate(options).then((request) => request(axios, basePath));
+        implementsControllerCreate(createImplementDto: CreateImplementDto, options?: any): AxiosPromise<ImplementResponse> {
+            return localVarFp.implementsControllerCreate(createImplementDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -288,7 +633,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerDelete(id: string, options?: any): AxiosPromise<void> {
+        implementsControllerDelete(id: string, options?: any): AxiosPromise<ImplementResponse> {
             return localVarFp.implementsControllerDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -297,197 +642,184 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerFindById(id: string, options?: any): AxiosPromise<void> {
+        implementsControllerFindById(id: string, options?: any): AxiosPromise<ImplementResponse> {
             return localVarFp.implementsControllerFindById(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerList(name: string, options?: any): AxiosPromise<void> {
-            return localVarFp.implementsControllerList(name, options).then((request) => request(axios, basePath));
+        implementsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options?: any): AxiosPromise<Array<ImplementResponse>> {
+            return localVarFp.implementsControllerList(name, orderBy, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateImplementDto} updateImplementDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        implementsControllerUpdate(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.implementsControllerUpdate(id, options).then((request) => request(axios, basePath));
+        implementsControllerUpdate(id: string, updateImplementDto: UpdateImplementDto, options?: any): AxiosPromise<ImplementResponse> {
+            return localVarFp.implementsControllerUpdate(id, updateImplementDto, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DefaultApi - interface
+ * Request parameters for implementsControllerCreate operation in ImplementsApi.
  * @export
- * @interface DefaultApi
+ * @interface ImplementsApiImplementsControllerCreateRequest
  */
-export interface DefaultApiInterface {
+export interface ImplementsApiImplementsControllerCreateRequest {
     /**
      * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
+     * @type {CreateImplementDto}
+     * @memberof ImplementsApiImplementsControllerCreate
      */
-    implementsControllerCreate(options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    implementsControllerDelete(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    implementsControllerFindById(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    implementsControllerList(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    implementsControllerUpdate(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
+    readonly createImplementDto: CreateImplementDto
 }
 
 /**
- * Request parameters for implementsControllerDelete operation in DefaultApi.
+ * Request parameters for implementsControllerDelete operation in ImplementsApi.
  * @export
- * @interface DefaultApiImplementsControllerDeleteRequest
+ * @interface ImplementsApiImplementsControllerDeleteRequest
  */
-export interface DefaultApiImplementsControllerDeleteRequest {
+export interface ImplementsApiImplementsControllerDeleteRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiImplementsControllerDelete
+     * @memberof ImplementsApiImplementsControllerDelete
      */
     readonly id: string
 }
 
 /**
- * Request parameters for implementsControllerFindById operation in DefaultApi.
+ * Request parameters for implementsControllerFindById operation in ImplementsApi.
  * @export
- * @interface DefaultApiImplementsControllerFindByIdRequest
+ * @interface ImplementsApiImplementsControllerFindByIdRequest
  */
-export interface DefaultApiImplementsControllerFindByIdRequest {
+export interface ImplementsApiImplementsControllerFindByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiImplementsControllerFindById
+     * @memberof ImplementsApiImplementsControllerFindById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for implementsControllerList operation in DefaultApi.
+ * Request parameters for implementsControllerList operation in ImplementsApi.
  * @export
- * @interface DefaultApiImplementsControllerListRequest
+ * @interface ImplementsApiImplementsControllerListRequest
  */
-export interface DefaultApiImplementsControllerListRequest {
+export interface ImplementsApiImplementsControllerListRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiImplementsControllerList
+     * @memberof ImplementsApiImplementsControllerList
      */
-    readonly name: string
+    readonly name?: string
+
+    /**
+     * 
+     * @type {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'}
+     * @memberof ImplementsApiImplementsControllerList
+     */
+    readonly orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'
+
+    /**
+     * 
+     * @type {'asc' | 'desc'}
+     * @memberof ImplementsApiImplementsControllerList
+     */
+    readonly sort?: 'asc' | 'desc'
 }
 
 /**
- * Request parameters for implementsControllerUpdate operation in DefaultApi.
+ * Request parameters for implementsControllerUpdate operation in ImplementsApi.
  * @export
- * @interface DefaultApiImplementsControllerUpdateRequest
+ * @interface ImplementsApiImplementsControllerUpdateRequest
  */
-export interface DefaultApiImplementsControllerUpdateRequest {
+export interface ImplementsApiImplementsControllerUpdateRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiImplementsControllerUpdate
+     * @memberof ImplementsApiImplementsControllerUpdate
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {UpdateImplementDto}
+     * @memberof ImplementsApiImplementsControllerUpdate
+     */
+    readonly updateImplementDto: UpdateImplementDto
 }
 
 /**
- * DefaultApi - object-oriented interface
+ * ImplementsApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class ImplementsApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI implements DefaultApiInterface {
+export class ImplementsApi extends BaseAPI {
     /**
      * 
+     * @param {ImplementsApiImplementsControllerCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ImplementsApi
      */
-    public implementsControllerCreate(options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).implementsControllerCreate(options).then((request) => request(this.axios, this.basePath));
+    public implementsControllerCreate(requestParameters: ImplementsApiImplementsControllerCreateRequest, options?: AxiosRequestConfig) {
+        return ImplementsApiFp(this.configuration).implementsControllerCreate(requestParameters.createImplementDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {DefaultApiImplementsControllerDeleteRequest} requestParameters Request parameters.
+     * @param {ImplementsApiImplementsControllerDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ImplementsApi
      */
-    public implementsControllerDelete(requestParameters: DefaultApiImplementsControllerDeleteRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).implementsControllerDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public implementsControllerDelete(requestParameters: ImplementsApiImplementsControllerDeleteRequest, options?: AxiosRequestConfig) {
+        return ImplementsApiFp(this.configuration).implementsControllerDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {DefaultApiImplementsControllerFindByIdRequest} requestParameters Request parameters.
+     * @param {ImplementsApiImplementsControllerFindByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ImplementsApi
      */
-    public implementsControllerFindById(requestParameters: DefaultApiImplementsControllerFindByIdRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).implementsControllerFindById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public implementsControllerFindById(requestParameters: ImplementsApiImplementsControllerFindByIdRequest, options?: AxiosRequestConfig) {
+        return ImplementsApiFp(this.configuration).implementsControllerFindById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {DefaultApiImplementsControllerListRequest} requestParameters Request parameters.
+     * @param {ImplementsApiImplementsControllerListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ImplementsApi
      */
-    public implementsControllerList(requestParameters: DefaultApiImplementsControllerListRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).implementsControllerList(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public implementsControllerList(requestParameters: ImplementsApiImplementsControllerListRequest = {}, options?: AxiosRequestConfig) {
+        return ImplementsApiFp(this.configuration).implementsControllerList(requestParameters.name, requestParameters.orderBy, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {DefaultApiImplementsControllerUpdateRequest} requestParameters Request parameters.
+     * @param {ImplementsApiImplementsControllerUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
+     * @memberof ImplementsApi
      */
-    public implementsControllerUpdate(requestParameters: DefaultApiImplementsControllerUpdateRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).implementsControllerUpdate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public implementsControllerUpdate(requestParameters: ImplementsApiImplementsControllerUpdateRequest, options?: AxiosRequestConfig) {
+        return ImplementsApiFp(this.configuration).implementsControllerUpdate(requestParameters.id, requestParameters.updateImplementDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -646,12 +978,15 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @param {string} id 
+         * @param {UpdateLocationDto} updateLocationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerUpdate: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        locationsControllerUpdate: async (id: string, updateLocationDto: UpdateLocationDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('locationsControllerUpdate', 'id', id)
+            // verify required parameter 'updateLocationDto' is not null or undefined
+            assertParamExists('locationsControllerUpdate', 'updateLocationDto', updateLocationDto)
             const localVarPath = `/api/locations/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -667,9 +1002,12 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateLocationDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -692,7 +1030,7 @@ export const LocationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async locationsControllerCreate(createLocationDto: CreateLocationDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async locationsControllerCreate(createLocationDto: CreateLocationDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LocationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerCreate(createLocationDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -702,7 +1040,7 @@ export const LocationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async locationsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async locationsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LocationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerDelete(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -712,7 +1050,7 @@ export const LocationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async locationsControllerFindByName(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async locationsControllerFindByName(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LocationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerFindByName(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -724,18 +1062,19 @@ export const LocationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async locationsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt', sort?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async locationsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt', sort?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LocationResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerList(name, orderBy, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateLocationDto} updateLocationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async locationsControllerUpdate(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerUpdate(id, options);
+        async locationsControllerUpdate(id: string, updateLocationDto: UpdateLocationDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LocationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerUpdate(id, updateLocationDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -754,7 +1093,7 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerCreate(createLocationDto: CreateLocationDto, options?: any): AxiosPromise<void> {
+        locationsControllerCreate(createLocationDto: CreateLocationDto, options?: any): AxiosPromise<LocationResponse> {
             return localVarFp.locationsControllerCreate(createLocationDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -763,7 +1102,7 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerDelete(id: string, options?: any): AxiosPromise<void> {
+        locationsControllerDelete(id: string, options?: any): AxiosPromise<LocationResponse> {
             return localVarFp.locationsControllerDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -772,7 +1111,7 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerFindByName(id: string, options?: any): AxiosPromise<void> {
+        locationsControllerFindByName(id: string, options?: any): AxiosPromise<LocationResponse> {
             return localVarFp.locationsControllerFindByName(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -783,75 +1122,21 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt', sort?: 'asc' | 'desc', options?: any): AxiosPromise<void> {
+        locationsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt', sort?: 'asc' | 'desc', options?: any): AxiosPromise<Array<LocationResponse>> {
             return localVarFp.locationsControllerList(name, orderBy, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateLocationDto} updateLocationDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        locationsControllerUpdate(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.locationsControllerUpdate(id, options).then((request) => request(axios, basePath));
+        locationsControllerUpdate(id: string, updateLocationDto: UpdateLocationDto, options?: any): AxiosPromise<LocationResponse> {
+            return localVarFp.locationsControllerUpdate(id, updateLocationDto, options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * LocationsApi - interface
- * @export
- * @interface LocationsApi
- */
-export interface LocationsApiInterface {
-    /**
-     * 
-     * @param {CreateLocationDto} createLocationDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LocationsApiInterface
-     */
-    locationsControllerCreate(createLocationDto: CreateLocationDto, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LocationsApiInterface
-     */
-    locationsControllerDelete(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LocationsApiInterface
-     */
-    locationsControllerFindByName(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} [name] 
-     * @param {'id' | 'name' | 'createdAt' | 'updatedAt'} [orderBy] 
-     * @param {'asc' | 'desc'} [sort] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LocationsApiInterface
-     */
-    locationsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt', sort?: 'asc' | 'desc', options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LocationsApiInterface
-     */
-    locationsControllerUpdate(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-}
 
 /**
  * Request parameters for locationsControllerCreate operation in LocationsApi.
@@ -935,6 +1220,13 @@ export interface LocationsApiLocationsControllerUpdateRequest {
      * @memberof LocationsApiLocationsControllerUpdate
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {UpdateLocationDto}
+     * @memberof LocationsApiLocationsControllerUpdate
+     */
+    readonly updateLocationDto: UpdateLocationDto
 }
 
 /**
@@ -943,7 +1235,7 @@ export interface LocationsApiLocationsControllerUpdateRequest {
  * @class LocationsApi
  * @extends {BaseAPI}
  */
-export class LocationsApi extends BaseAPI implements LocationsApiInterface {
+export class LocationsApi extends BaseAPI {
     /**
      * 
      * @param {LocationsApiLocationsControllerCreateRequest} requestParameters Request parameters.
@@ -996,7 +1288,7 @@ export class LocationsApi extends BaseAPI implements LocationsApiInterface {
      * @memberof LocationsApi
      */
     public locationsControllerUpdate(requestParameters: LocationsApiLocationsControllerUpdateRequest, options?: AxiosRequestConfig) {
-        return LocationsApiFp(this.configuration).locationsControllerUpdate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return LocationsApiFp(this.configuration).locationsControllerUpdate(requestParameters.id, requestParameters.updateLocationDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1009,10 +1301,13 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
+         * @param {CreateTagDto} createTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerCreate: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsControllerCreate: async (createTagDto: CreateTagDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createTagDto' is not null or undefined
+            assertParamExists('tagsControllerCreate', 'createTagDto', createTagDto)
             const localVarPath = `/api/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1027,9 +1322,12 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createTagDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1104,13 +1402,12 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerList: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('tagsControllerList', 'name', name)
+        tagsControllerList: async (name?: string, sort?: 'asc' | 'desc', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1127,6 +1424,10 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['name'] = name;
             }
 
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1141,12 +1442,15 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} name 
+         * @param {UpdateTagDto} updateTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerUpdate: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tagsControllerUpdate: async (name: string, updateTagDto: UpdateTagDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('tagsControllerUpdate', 'name', name)
+            // verify required parameter 'updateTagDto' is not null or undefined
+            assertParamExists('tagsControllerUpdate', 'updateTagDto', updateTagDto)
             const localVarPath = `/api/tags/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1162,9 +1466,12 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateTagDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1183,11 +1490,12 @@ export const TagsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {CreateTagDto} createTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsControllerCreate(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerCreate(options);
+        async tagsControllerCreate(createTagDto: CreateTagDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerCreate(createTagDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1196,7 +1504,7 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsControllerDelete(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async tagsControllerDelete(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerDelete(name, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1206,28 +1514,30 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsControllerFindById(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async tagsControllerFindById(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerFindById(name, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsControllerList(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerList(name, options);
+        async tagsControllerList(name?: string, sort?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TagResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerList(name, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} name 
+         * @param {UpdateTagDto} updateTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tagsControllerUpdate(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerUpdate(name, options);
+        async tagsControllerUpdate(name: string, updateTagDto: UpdateTagDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tagsControllerUpdate(name, updateTagDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1242,11 +1552,12 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @param {CreateTagDto} createTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerCreate(options?: any): AxiosPromise<void> {
-            return localVarFp.tagsControllerCreate(options).then((request) => request(axios, basePath));
+        tagsControllerCreate(createTagDto: CreateTagDto, options?: any): AxiosPromise<TagResponse> {
+            return localVarFp.tagsControllerCreate(createTagDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1254,7 +1565,7 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerDelete(name: string, options?: any): AxiosPromise<void> {
+        tagsControllerDelete(name: string, options?: any): AxiosPromise<TagResponse> {
             return localVarFp.tagsControllerDelete(name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1263,80 +1574,44 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerFindById(name: string, options?: any): AxiosPromise<void> {
+        tagsControllerFindById(name: string, options?: any): AxiosPromise<TagResponse> {
             return localVarFp.tagsControllerFindById(name, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerList(name: string, options?: any): AxiosPromise<void> {
-            return localVarFp.tagsControllerList(name, options).then((request) => request(axios, basePath));
+        tagsControllerList(name?: string, sort?: 'asc' | 'desc', options?: any): AxiosPromise<Array<TagResponse>> {
+            return localVarFp.tagsControllerList(name, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} name 
+         * @param {UpdateTagDto} updateTagDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tagsControllerUpdate(name: string, options?: any): AxiosPromise<void> {
-            return localVarFp.tagsControllerUpdate(name, options).then((request) => request(axios, basePath));
+        tagsControllerUpdate(name: string, updateTagDto: UpdateTagDto, options?: any): AxiosPromise<TagResponse> {
+            return localVarFp.tagsControllerUpdate(name, updateTagDto, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * TagsApi - interface
+ * Request parameters for tagsControllerCreate operation in TagsApi.
  * @export
- * @interface TagsApi
+ * @interface TagsApiTagsControllerCreateRequest
  */
-export interface TagsApiInterface {
+export interface TagsApiTagsControllerCreateRequest {
     /**
      * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagsApiInterface
+     * @type {CreateTagDto}
+     * @memberof TagsApiTagsControllerCreate
      */
-    tagsControllerCreate(options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagsApiInterface
-     */
-    tagsControllerDelete(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagsApiInterface
-     */
-    tagsControllerFindById(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagsApiInterface
-     */
-    tagsControllerList(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagsApiInterface
-     */
-    tagsControllerUpdate(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
+    readonly createTagDto: CreateTagDto
 }
 
 /**
@@ -1378,7 +1653,14 @@ export interface TagsApiTagsControllerListRequest {
      * @type {string}
      * @memberof TagsApiTagsControllerList
      */
-    readonly name: string
+    readonly name?: string
+
+    /**
+     * 
+     * @type {'asc' | 'desc'}
+     * @memberof TagsApiTagsControllerList
+     */
+    readonly sort?: 'asc' | 'desc'
 }
 
 /**
@@ -1393,6 +1675,13 @@ export interface TagsApiTagsControllerUpdateRequest {
      * @memberof TagsApiTagsControllerUpdate
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {UpdateTagDto}
+     * @memberof TagsApiTagsControllerUpdate
+     */
+    readonly updateTagDto: UpdateTagDto
 }
 
 /**
@@ -1401,15 +1690,16 @@ export interface TagsApiTagsControllerUpdateRequest {
  * @class TagsApi
  * @extends {BaseAPI}
  */
-export class TagsApi extends BaseAPI implements TagsApiInterface {
+export class TagsApi extends BaseAPI {
     /**
      * 
+     * @param {TagsApiTagsControllerCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TagsApi
      */
-    public tagsControllerCreate(options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsControllerCreate(options).then((request) => request(this.axios, this.basePath));
+    public tagsControllerCreate(requestParameters: TagsApiTagsControllerCreateRequest, options?: AxiosRequestConfig) {
+        return TagsApiFp(this.configuration).tagsControllerCreate(requestParameters.createTagDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1441,8 +1731,8 @@ export class TagsApi extends BaseAPI implements TagsApiInterface {
      * @throws {RequiredError}
      * @memberof TagsApi
      */
-    public tagsControllerList(requestParameters: TagsApiTagsControllerListRequest, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsControllerList(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public tagsControllerList(requestParameters: TagsApiTagsControllerListRequest = {}, options?: AxiosRequestConfig) {
+        return TagsApiFp(this.configuration).tagsControllerList(requestParameters.name, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1453,7 +1743,7 @@ export class TagsApi extends BaseAPI implements TagsApiInterface {
      * @memberof TagsApi
      */
     public tagsControllerUpdate(requestParameters: TagsApiTagsControllerUpdateRequest, options?: AxiosRequestConfig) {
-        return TagsApiFp(this.configuration).tagsControllerUpdate(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return TagsApiFp(this.configuration).tagsControllerUpdate(requestParameters.name, requestParameters.updateTagDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1466,10 +1756,13 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @param {CreateToolDto} createToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerCreate: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        toolsControllerCreate: async (createToolDto: CreateToolDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createToolDto' is not null or undefined
+            assertParamExists('toolsControllerCreate', 'createToolDto', createToolDto)
             const localVarPath = `/api/tools`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1484,9 +1777,12 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createToolDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1561,13 +1857,13 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerList: async (name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('toolsControllerList', 'name', name)
+        toolsControllerList: async (name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/tools`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1584,6 +1880,14 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['name'] = name;
             }
 
+            if (orderBy !== undefined) {
+                localVarQueryParameter['orderBy'] = orderBy;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1598,12 +1902,15 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {string} id 
+         * @param {UpdateToolDto} updateToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerUpdate: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        toolsControllerUpdate: async (id: string, updateToolDto: UpdateToolDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('toolsControllerUpdate', 'id', id)
+            // verify required parameter 'updateToolDto' is not null or undefined
+            assertParamExists('toolsControllerUpdate', 'updateToolDto', updateToolDto)
             const localVarPath = `/api/tools/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1619,9 +1926,12 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateToolDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1640,11 +1950,12 @@ export const ToolsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {CreateToolDto} createToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toolsControllerCreate(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerCreate(options);
+        async toolsControllerCreate(createToolDto: CreateToolDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerCreate(createToolDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1653,7 +1964,7 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toolsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async toolsControllerDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerDelete(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1663,28 +1974,31 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toolsControllerFindById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async toolsControllerFindById(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerFindById(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toolsControllerList(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerList(name, options);
+        async toolsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerList(name, orderBy, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateToolDto} updateToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async toolsControllerUpdate(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerUpdate(id, options);
+        async toolsControllerUpdate(id: string, updateToolDto: UpdateToolDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.toolsControllerUpdate(id, updateToolDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1699,11 +2013,12 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @param {CreateToolDto} createToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerCreate(options?: any): AxiosPromise<void> {
-            return localVarFp.toolsControllerCreate(options).then((request) => request(axios, basePath));
+        toolsControllerCreate(createToolDto: CreateToolDto, options?: any): AxiosPromise<ToolResponse> {
+            return localVarFp.toolsControllerCreate(createToolDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1711,7 +2026,7 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerDelete(id: string, options?: any): AxiosPromise<void> {
+        toolsControllerDelete(id: string, options?: any): AxiosPromise<ToolResponse> {
             return localVarFp.toolsControllerDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1720,80 +2035,45 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerFindById(id: string, options?: any): AxiosPromise<void> {
+        toolsControllerFindById(id: string, options?: any): AxiosPromise<ToolResponse> {
             return localVarFp.toolsControllerFindById(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} name 
+         * @param {string} [name] 
+         * @param {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'} [orderBy] 
+         * @param {'asc' | 'desc'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerList(name: string, options?: any): AxiosPromise<void> {
-            return localVarFp.toolsControllerList(name, options).then((request) => request(axios, basePath));
+        toolsControllerList(name?: string, orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId', sort?: 'asc' | 'desc', options?: any): AxiosPromise<void> {
+            return localVarFp.toolsControllerList(name, orderBy, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} id 
+         * @param {UpdateToolDto} updateToolDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        toolsControllerUpdate(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.toolsControllerUpdate(id, options).then((request) => request(axios, basePath));
+        toolsControllerUpdate(id: string, updateToolDto: UpdateToolDto, options?: any): AxiosPromise<ToolResponse> {
+            return localVarFp.toolsControllerUpdate(id, updateToolDto, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ToolsApi - interface
+ * Request parameters for toolsControllerCreate operation in ToolsApi.
  * @export
- * @interface ToolsApi
+ * @interface ToolsApiToolsControllerCreateRequest
  */
-export interface ToolsApiInterface {
+export interface ToolsApiToolsControllerCreateRequest {
     /**
      * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolsApiInterface
+     * @type {CreateToolDto}
+     * @memberof ToolsApiToolsControllerCreate
      */
-    toolsControllerCreate(options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolsApiInterface
-     */
-    toolsControllerDelete(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolsApiInterface
-     */
-    toolsControllerFindById(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolsApiInterface
-     */
-    toolsControllerList(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ToolsApiInterface
-     */
-    toolsControllerUpdate(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
+    readonly createToolDto: CreateToolDto
 }
 
 /**
@@ -1835,7 +2115,21 @@ export interface ToolsApiToolsControllerListRequest {
      * @type {string}
      * @memberof ToolsApiToolsControllerList
      */
-    readonly name: string
+    readonly name?: string
+
+    /**
+     * 
+     * @type {'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'}
+     * @memberof ToolsApiToolsControllerList
+     */
+    readonly orderBy?: 'id' | 'name' | 'createdAt' | 'updatedAt' | 'condition' | 'tagName' | 'locationId'
+
+    /**
+     * 
+     * @type {'asc' | 'desc'}
+     * @memberof ToolsApiToolsControllerList
+     */
+    readonly sort?: 'asc' | 'desc'
 }
 
 /**
@@ -1850,6 +2144,13 @@ export interface ToolsApiToolsControllerUpdateRequest {
      * @memberof ToolsApiToolsControllerUpdate
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {UpdateToolDto}
+     * @memberof ToolsApiToolsControllerUpdate
+     */
+    readonly updateToolDto: UpdateToolDto
 }
 
 /**
@@ -1858,15 +2159,16 @@ export interface ToolsApiToolsControllerUpdateRequest {
  * @class ToolsApi
  * @extends {BaseAPI}
  */
-export class ToolsApi extends BaseAPI implements ToolsApiInterface {
+export class ToolsApi extends BaseAPI {
     /**
      * 
+     * @param {ToolsApiToolsControllerCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public toolsControllerCreate(options?: AxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).toolsControllerCreate(options).then((request) => request(this.axios, this.basePath));
+    public toolsControllerCreate(requestParameters: ToolsApiToolsControllerCreateRequest, options?: AxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).toolsControllerCreate(requestParameters.createToolDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1898,8 +2200,8 @@ export class ToolsApi extends BaseAPI implements ToolsApiInterface {
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public toolsControllerList(requestParameters: ToolsApiToolsControllerListRequest, options?: AxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).toolsControllerList(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public toolsControllerList(requestParameters: ToolsApiToolsControllerListRequest = {}, options?: AxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).toolsControllerList(requestParameters.name, requestParameters.orderBy, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1910,7 +2212,7 @@ export class ToolsApi extends BaseAPI implements ToolsApiInterface {
      * @memberof ToolsApi
      */
     public toolsControllerUpdate(requestParameters: ToolsApiToolsControllerUpdateRequest, options?: AxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).toolsControllerUpdate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return ToolsApiFp(this.configuration).toolsControllerUpdate(requestParameters.id, requestParameters.updateToolDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2202,58 +2504,6 @@ export const VehiclesApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * VehiclesApi - interface
- * @export
- * @interface VehiclesApi
- */
-export interface VehiclesApiInterface {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VehiclesApiInterface
-     */
-    vehiclesControllerCreate(options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VehiclesApiInterface
-     */
-    vehiclesControllerDelete(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VehiclesApiInterface
-     */
-    vehiclesControllerFindById(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VehiclesApiInterface
-     */
-    vehiclesControllerList(name: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VehiclesApiInterface
-     */
-    vehiclesControllerUpdate(id: string, options?: AxiosRequestConfig): AxiosPromise<void>;
-
-}
-
-/**
  * Request parameters for vehiclesControllerDelete operation in VehiclesApi.
  * @export
  * @interface VehiclesApiVehiclesControllerDeleteRequest
@@ -2315,7 +2565,7 @@ export interface VehiclesApiVehiclesControllerUpdateRequest {
  * @class VehiclesApi
  * @extends {BaseAPI}
  */
-export class VehiclesApi extends BaseAPI implements VehiclesApiInterface {
+export class VehiclesApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.

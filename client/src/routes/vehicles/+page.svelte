@@ -49,13 +49,28 @@
     import LinearProgress from '@smui/linear-progress';
     import { VehiclesApi } from '$lib/api';
     
-      let items: [] = [];
+      let items: any[] = [
+        {
+          id: 1,
+          name: 'Vehicle 1',
+          make: 'Make 1',
+          model: 'Model 1',
+          year: 2021
+        },
+        {
+          id: 2,
+          name: 'Vehicle 2',
+          make: 'Make 2',
+          model: 'Model 2',
+          year: 2021
+        }
+      ];
       let loaded = false;
     
       requestData();
     
       async function requestData() {
-        // const client = new VehiclesApi(); 
+        const client = new VehiclesApi(); 
         // await client.vehiclesControllerList({}).then((response: Vehicle) => {
         //   items = response.data
         //   loaded = true;
