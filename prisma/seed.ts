@@ -27,7 +27,7 @@ async function main() {
   });
 
   await prisma.vehicle.create({
-    data: { name: 'Big Red', make: 'John Deere', model: 'Tractor', year: 2010 },
+    data: { name: 'Big Green', make: 'John Deere', model: 'Tractor', year: 2010 },
   });
 }
 

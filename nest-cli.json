@@ -1,5 +1,19 @@
 {
-    "$schema": "https://json.schemastore.org/nest-cli",
-    "collection": "@nestjs/schematics",
-    "sourceRoot": "src"
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "projects": {
+    "inventory-sdk": {
+      "type": "library",
+      "root": "libs/inventory-sdk",
+      "entryFile": "index",
+      "sourceRoot": "libs/inventory-sdk/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/inventory-sdk/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
 }

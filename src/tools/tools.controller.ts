@@ -10,34 +10,44 @@ import {
   DefaultValuePipe,
   ParseEnumPipe,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma, Tool } from '@prisma/client';
+import { CreateToolDto, ToolResponse, UpdateToolDto } from './tools.dto';
 import { ToolsService } from './tools.service';
 
+@ApiTags('tools')
 @Controller('tools')
 export class ToolsController {
   constructor(private readonly toolsService: ToolsService) {}
 
   @Post()
-  async create(@Body() data: Prisma.ToolCreateInput): Promise<Tool> {
-    return this.toolsService.createTool(data);
+  @ApiOkResponse({ description: 'Returns the created tool', type: ToolResponse })
+  async create(@Body() createToolDto: CreateToolDto): Promise<Tool> {
+    return this.toolsService.createTool(createToolDto);
   }
 
   @Get(':id')
+  @ApiOkResponse({ description: 'Returns the tool', type: ToolResponse })
   async findById(@Param('id') id: string): Promise<Tool | null> {
     return this.toolsService.tool({ id });
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() tool: Prisma.ToolCreateInput): Promise<Tool> {
-    return this.toolsService.updateTool({ where: { id }, data: tool });
+  @ApiOkResponse({ description: 'Returns the updated tool', type: ToolResponse })
+  async update(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto): Promise<Tool> {
+    return this.toolsService.updateTool({ where: { id }, data: updateToolDto });
   }
 
   @Delete(':id')
+  @ApiOkResponse({ description: 'Returns the deleted tool', type: ToolResponse })
   async delete(@Param('id') id: string): Promise<Tool> {
     return this.toolsService.deleteTool({ id });
   }
 
   @Get()
+  @ApiQuery({ name: 'name', required: false })
+  @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
+  @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.ToolScalarFieldEnum })
   async list(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,

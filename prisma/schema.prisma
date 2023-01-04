@@ -42,7 +42,7 @@ model Equipment {
   tagName      String?
   tag          Tag?      @relation(fields: [tagName], references: [name])
   locationName String?   @default("Unknown")
-  location     Location? @relation(fields: [locationName], references: [name])
+  location     Location? @relation(fields: [locationName], references: [id])
 }
 
 model Implement {
@@ -52,14 +52,15 @@ model Implement {
   updatedAt DateTime  @updatedAt
   condition Condition @default(MINT)
 
-  tagName      String?
-  tag          Tag?      @relation(fields: [tagName], references: [name])
-  locationName String?   @default("Unknown")
-  location     Location? @relation(fields: [locationName], references: [name])
+  tagName    String?
+  tag        Tag?      @relation(fields: [tagName], references: [name])
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id])
 }
 
 model Location {
-  name      String   @id
+  id        String   @id @default(cuid())
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -76,10 +77,10 @@ model Tool {
   updatedAt DateTime  @updatedAt
   condition Condition @default(MINT)
 
-  tagName      String?
-  tag          Tag?      @relation(fields: [tagName], references: [name])
-  locationName String?   @default("Unknown")
-  location     Location? @relation(fields: [locationName], references: [name])
+  tagName    String?
+  tag        Tag?      @relation(fields: [tagName], references: [name])
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id])
 }
 
 model Vehicle {
@@ -94,8 +95,8 @@ model Vehicle {
   active    Boolean  @default(true)
   power     Power    @default(GAS)
 
-  tagName      String?
-  tag          Tag?      @relation(fields: [tagName], references: [name])
-  locationName String?   @default("Unknown")
-  location     Location? @relation(fields: [locationName], references: [name])
+  tagName    String?
+  tag        Tag?      @relation(fields: [tagName], references: [name])
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id])
 }

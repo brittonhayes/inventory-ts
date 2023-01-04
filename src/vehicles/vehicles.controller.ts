@@ -10,9 +10,11 @@ import {
   ParseEnumPipe,
   DefaultValuePipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Prisma, Vehicle } from '@prisma/client';
 import { VehiclesService } from './vehicles.service';
 
+@ApiTags('vehicles')
 @Controller('vehicles')
 export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}

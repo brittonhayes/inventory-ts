@@ -9,17 +9,23 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidUnknownValues: false,
+    }),
+  );
 
   // API Prefix
   app.setGlobalPrefix('api');
 
   // Security
   app.use(helmet());
+  app.enableCors();
 
   // Documentation
   const config = new DocumentBuilder()
     .setTitle('Open Farms Inventory Service')
+    .addServer('http://localhost:5000', 'development')
     .setDescription('Agriculture inventory management service.')
     .setVersion('1.0')
     .build();
