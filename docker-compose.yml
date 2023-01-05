@@ -1,19 +1,40 @@
 version: '3.8'
 services:
-  postgres:
+  inventory-ui:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3000:80
+    
+
+  inventory-db:
     image: postgres:13
     restart: unless-stopped
     ports:
       - 5432:5432
-    env_file:
-      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-prisma}
+      POSTGRES_DB: ${POSTGRES_DB:-inventory}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-topsecret}
+    volumes:
+      - postgres:/var/lib/postgresql/data
 
-  api:
+  inventory-api:
     build: .
     restart: unless-stopped
     ports:
       - 5000:5000
-    env_file:
-      - .env
+    environment:
+      PORT: ${PORT:-5000}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_HOST: ${DB_HOST:-inventory-db}
+      DB_SCHEMA: ${DB_SCHEMA:-inventory}
+      DATABASE_URL: postgres://${POSTGRES_USER:-prisma}:${POSTGRES_PASSWORD:-topsecret}@inventory-db:5432/${POSTGRES_DB:-inventory}?schema=${DB_SCHEMA:-inventory}&sslmode=prefer
     depends_on:
-      - postgres
+      - inventory-db
+
+volumes:
+  postgres:
+    name: inventory-db

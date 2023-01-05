@@ -7,7 +7,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"isolatedModules": false,
-		"importsNotUsedAsValues": "remove",
+		"importsNotUsedAsValues": "preserve",
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true

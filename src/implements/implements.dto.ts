@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Condition, Implement, Prisma } from '@prisma/client';
-import { IsDateString, IsUUID } from 'class-validator';
+import { IsDateString } from 'class-validator';
 
 export class ImplementResponse implements Implement {
   @ApiProperty({ example: 'clch9rxw90000p718qrofjcqd' })
@@ -15,7 +15,7 @@ export class ImplementResponse implements Implement {
   @ApiPropertyOptional()
   locationId: string;
 
-  @ApiPropertyOptional({ example: 'mower' })
+  @ApiPropertyOptional({ example: 'Harvesting' })
   tagName: string;
 
   @ApiProperty({ example: '2021-05-01T00:00:00.000Z' })

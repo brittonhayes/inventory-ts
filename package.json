@@ -25,7 +25,7 @@
     "prisma:generate:watch": "npx prisma generate --watch",
     "seed": "prisma db seed",
     "postinstall": "npm run prisma:generate",
-    "generate-api-client": "npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/docs-json --generator-name typescript-axios -o client/src/lib/api/ --additional-properties=useSingleRequestParameter=true,disallowAdditionalPropertiesIfNotPresent=false,supportsES6=true,withNodeImports=true,typescriptThreePlus=true",
+    "generate-api-client": "npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/docs-json --generator-name typescript-fetch -o client/src/lib/api/ --additional-properties=useSingleRequestParameter=true,supportsES6=true",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

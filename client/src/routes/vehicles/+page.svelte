@@ -44,10 +44,10 @@
   
   
   <script lang="ts">
+    import { VehiclesApi } from '$lib/api';
     import DataTable, { Body, Cell, Head, Row } from '@smui/data-table';
     import IconButton from '@smui/icon-button';
     import LinearProgress from '@smui/linear-progress';
-    import { VehiclesApi } from '$lib/api';
     
       let items: any[] = [
         {
@@ -71,10 +71,10 @@
     
       async function requestData() {
         const client = new VehiclesApi(); 
-        // await client.vehiclesControllerList({}).then((response: Vehicle) => {
-        //   items = response.data
-        //   loaded = true;
-        // });
+        await client.vehiclesControllerList({}).then((response) => {
+          items = response;
+          loaded = true;
+        });
       }
   </script>
   

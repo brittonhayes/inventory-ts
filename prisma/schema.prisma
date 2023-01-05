@@ -39,10 +39,10 @@ model Equipment {
   updatedAt DateTime  @updatedAt
   condition Condition @default(MINT)
 
-  tagName      String?
-  tag          Tag?      @relation(fields: [tagName], references: [name])
-  locationName String?   @default("Unknown")
-  location     Location? @relation(fields: [locationName], references: [id])
+  tagName    String?
+  tag        Tag?      @relation(fields: [tagName], references: [name])
+  locationId String?   @default("Unknown")
+  location   Location? @relation(fields: [locationId], references: [id])
 }
 
 model Implement {

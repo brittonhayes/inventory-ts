@@ -42,12 +42,7 @@
     
       async function requestData() {
         client.locationsControllerList().then((response) => {
-          items = response.data.length > 0 ? response.data : [{
-            id: '1',
-            name: 'No locations found',
-            createdAt: new Date().toDateString(),
-            updatedAt: new Date().toDateString(),
-          }];
+          items = response;
           loaded = true;
         });
       }

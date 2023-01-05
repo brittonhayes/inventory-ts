@@ -6,7 +6,7 @@ import { PrismaService } from 'nestjs-prisma';
 export class EquipmentService {
   constructor(private prisma: PrismaService) {}
 
-  async equipments(params: {
+  async listEquipment(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.EquipmentWhereUniqueInput;
