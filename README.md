@@ -1,6 +1,6 @@
 # Inventory 📦
 
-> An inventory service for managing farming vehicles, equipment, and resources.
+> An inventory service for managing farming vehicles, equipment, and resources. Built in Typescript with [NestJS](https://nestjs.com/), [Prisma](https://www.prisma.io/), and [Sveltekit](https://kit.svelte.dev/)
 
 ![logo](./logo.png)
 
@@ -19,10 +19,13 @@ You can either build the project from source, or deploy it via docker.
 
 ```shell
 # Start the database and API via docker-compose
-docker-compose up
+docker-compose up -d
 
-# List the vehicles
-http :3000/api/vehicles
+# View the UI
+http://localhost:3000
+
+# View the API docs
+http://localhost:5000/api/docs
 ```
 
 ## Run the app locally
