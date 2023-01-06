@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Vehicle, Prisma, Condition, Power } from '@prisma/client';
+import { Power, Prisma, Vehicle } from '@prisma/client';
 import { IsDateString } from 'class-validator';
 
 export class VehicleResponse implements Vehicle {

@@ -18,6 +18,9 @@ export class EquipmentResponse implements Equipment {
   @ApiPropertyOptional({ example: 'Harvesting' })
   tagName: string;
 
+  @ApiPropertyOptional({ example: 'Barn' })
+  locationName: string;
+
   @ApiProperty({ example: '2021-05-01T00:00:00.000Z' })
   @IsDateString()
   createdAt: Date;

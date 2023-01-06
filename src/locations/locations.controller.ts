@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOkResponse, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Location, Prisma } from '@prisma/client';
 import { CreateLocationDto, LocationResponse, UpdateLocationDto } from './locations.dto';
 import { LocationsService } from './locations.service';
