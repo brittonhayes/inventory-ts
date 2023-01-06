@@ -11,10 +11,9 @@
 <Sidebar>
 	<Scrim fixed="{false}" />
 	<LayoutGrid>
-		<Cell span="{1}" />
-		<Cell span="{10}">
+		<!-- <Cell span="{1}" /> -->
+		<Cell span="{12}">
 			<slot />
 		</Cell>
-		<Cell span="{1}" />
 	</LayoutGrid>
 </Sidebar>

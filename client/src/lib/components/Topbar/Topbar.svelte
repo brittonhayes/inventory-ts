@@ -5,7 +5,7 @@
 </script>
 
 <div class="top-app-bar-container">
-	<TopAppBar variant="standard" color="primary">
+	<TopAppBar variant="static" color="primary">
 		<Row>
 			<Section class="">
 				<IconButton class="material-icons" href="/">spa</IconButton>
