@@ -1,8 +1,8 @@
 @use '@material/theme' as theme with (
 	$primary: #006c46,
 	$on-primary: #ffffff,
-	$secondary: #4e6356,
-	$on-secondary: #ffffff,
+	$secondary: #f0f0f0,
+	$on-secondary: #252525,
 	$error: #ba1a1a,
 	$on-error: #ffffff,
 	$surface: #fbfdf8,
@@ -16,4 +16,10 @@ body {
 	background-color: theme.$background;
 	font-family: 'Roboto', sans-serif !important;
 	color: theme.accessible-ink-color(theme.$surface);
+}
+
+h1 {
+	.success {
+		color: theme.$primary;
+	}
 }

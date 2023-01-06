@@ -7,6 +7,17 @@ import { ToolsModule } from './tools/tools.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
-  imports: [LocationsModule, ImplementsModule, VehiclesModule, EquipmentModule, ToolsModule, TagsModule],
+  imports: [
+    // CacheModule.register({
+    //   ttl: 5, // seconds
+    //   max: 100, // maximum number of items in cache
+    // }),
+    LocationsModule,
+    ImplementsModule,
+    VehiclesModule,
+    EquipmentModule,
+    ToolsModule,
+    TagsModule,
+  ],
 })
 export class AppModule {}

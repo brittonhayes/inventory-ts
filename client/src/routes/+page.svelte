@@ -1,11 +1,14 @@
 <script lang="ts">
-  import Paper, { Title, Content, Subtitle } from '@smui/paper';
+	import Paper, { Content } from '@smui/paper';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+	let elevation = 0;
 </script>
- 
-<main>
-  <Paper variant="raised">
-    <Title>Inventory</Title>
-    <Subtitle>This is a sheet of paper.</Subtitle>
-    <Content>Paper is used to build an elevated surface.</Content>
-  </Paper>
-</main>
+
+<Paper elevation="{elevation}">
+	<h1 class="success">{data.pageTitle}</h1>
+	<Content>
+		<p>{data.pageSubtitle}</p>
+	</Content>
+</Paper>
