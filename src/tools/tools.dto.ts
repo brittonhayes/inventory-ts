@@ -18,6 +18,9 @@ export class ToolResponse implements Tool {
   @ApiPropertyOptional({ example: 'mower' })
   tagName: string;
 
+  @ApiProperty()
+  maintenanceTaskId: string;
+
   @ApiProperty({ example: '2021-05-01T00:00:00.000Z' })
   @IsDateString()
   createdAt: Date;

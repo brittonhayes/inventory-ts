@@ -51,11 +51,7 @@ export class ToolsController {
   async list(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
-    @Query(
-      'orderBy',
-      new DefaultValuePipe(Prisma.ToolScalarFieldEnum.updatedAt),
-      new ParseEnumPipe(Prisma.ToolScalarFieldEnum),
-    )
+    @Query('orderBy', new DefaultValuePipe(Prisma.ToolScalarFieldEnum), new ParseEnumPipe(Prisma.ToolScalarFieldEnum))
     orderBy?: Prisma.ToolScalarFieldEnum,
   ): Promise<Tool[]> {
     return this.toolsService.tools({

@@ -1,54 +1,64 @@
-import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('Resetting...');
+  await prisma.vehicle.deleteMany();
+  await prisma.maintenanceGuide.deleteMany();
+  await prisma.maintenanceTask.deleteMany();
+  await prisma.employee.deleteMany();
+
   console.log('Seeding...');
-
-  await prisma.tag.createMany({
-    data: [
-      { name: 'Seeding' },
-      { name: 'Plowing' },
-      { name: 'Harvesting' },
-      { name: 'Fertilizing' },
-      { name: 'Planting' },
-      { name: 'Irrigation' },
-      { name: 'Weeding' },
-      { name: 'Pesticides' },
-      { name: 'Tilling' },
-      { name: 'Mulching' },
-      { name: 'Composting' },
-      { name: 'Watering' },
-    ],
-  });
-
-  await prisma.location.createMany({
-    data: [
-      { name: 'Unknown' },
-      { name: 'Field 1' },
-      { name: 'Field 2' },
-      { name: 'Workshop' },
-      { name: 'Garage' },
-      { name: 'Barn' },
-      { name: 'Greenhouse' },
-      { name: 'Toolshed' },
-    ],
-  });
-
   await prisma.vehicle.createMany({
-    data: [
-      { name: 'Big Green', make: 'John Deere', model: 'Tractor', year: 2010 },
-      { name: 'Little Red', make: 'John Deere', model: 'Tractor', year: 2012 },
-      { name: 'Big Red', make: 'John Deere', model: 'Tractor', year: 2014 },
-      { name: 'Big Blue', make: 'John Deere', model: 'Tractor', year: 2016 },
-      { name: 'Little Blue', make: 'John Deere', model: 'Tractor', year: 2018 },
-      { name: 'Big Yellow', make: 'John Deere', model: 'Tractor', year: 2020 },
-      { name: 'Little Yellow', make: 'John Deere', model: 'Tractor', year: 2022 },
-      { name: 'Big White', make: 'John Deere', model: 'Tractor', year: 2024 },
-      { name: 'Little White', make: 'John Deere', model: 'Tractor', year: 2026 },
-      { name: 'Big Black', make: 'John Deere', model: 'Tractor', year: 2028 },
-      { name: 'Little Black', make: 'John Deere', model: 'Tractor', year: 2030 },
-    ],
+    data: Array.from({ length: 15 }).map(() => {
+      return {
+        name: faker.random.words(2),
+        make: faker.vehicle.manufacturer(),
+        model: faker.vehicle.model(),
+        machineHours: faker.datatype.number({ min: 0, max: 1000 }),
+        link: faker.internet.url(),
+        vin: faker.vehicle.vin(),
+      } satisfies Prisma.VehicleCreateInput;
+    }),
+  });
+
+  await prisma.maintenanceGuide.createMany({
+    data: Array.from({ length: 10 }).map(() => {
+      return {
+        name: faker.random.words(2),
+        content: faker.lorem.paragraphs(3),
+      } satisfies Prisma.MaintenanceGuideCreateInput;
+    }),
+  });
+
+  await prisma.maintenanceTask.create({
+    data: {
+      name: faker.random.words(2),
+      dueDate: faker.date.future(),
+      assignee: {
+        create: {
+          name: faker.name.fullName(),
+        },
+      },
+      guide: {
+        create: {
+          name: faker.random.words(2),
+          content: faker.lorem.paragraphs(3),
+        },
+      },
+      vehicle: {
+        create: {
+          name: faker.random.words(2),
+          make: faker.vehicle.manufacturer(),
+          model: faker.vehicle.model(),
+          machineHours: faker.datatype.number({ min: 0, max: 1000 }),
+          link: faker.internet.url(),
+          vin: faker.vehicle.vin(),
+        },
+      },
+    },
   });
 }
 

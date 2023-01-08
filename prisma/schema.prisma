@@ -10,11 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TaskStatus {
+  PENDING
+  COMPLETE
+  CANCELLED
+}
+
 enum Condition {
   MINT
   GOOD
   POOR
-  BROKEN
+  NEEDS_REPLACEMENT
 }
 
 enum Power {
@@ -24,79 +30,82 @@ enum Power {
   HYBRID
 }
 
-model Tag {
-  name      String      @id
-  Equipment Equipment[]
-  Implement Implement[]
-  Tool      Tool[]
-  Vehicle   Vehicle[]
+enum VehicleType {
+  VEHICLE
+  IMPLEMENT
 }
 
-model Equipment {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  condition Condition @default(MINT)
-
-  tagName    String?
-  tag        Tag?      @relation(fields: [tagName], references: [name])
-  locationId String?   @default("Unknown")
-  location   Location? @relation(fields: [locationId], references: [id])
-}
-
-model Implement {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  condition Condition @default(MINT)
-
-  tagName    String?
-  tag        Tag?      @relation(fields: [tagName], references: [name])
-  locationId String?
-  location   Location? @relation(fields: [locationId], references: [id])
-}
-
-model Location {
-  id        String   @id @default(cuid())
+model Employee {
+  id        String            @id @default(cuid())
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tasks     MaintenanceTask[]
+}
 
-  implements Implement[]
-  equipment  Equipment[]
-  tools      Tool[]
-  vehicles   Vehicle[]
+model VehiclePart {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  name      String
+  condition Condition?
+  hours     Int?
+  notes     String?
+  vehicle   Vehicle?   @relation(fields: [vehicleId], references: [id])
+  vehicleId String
 }
 
 model Tool {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  condition Condition @default(MINT)
+  id                String           @id @default(cuid())
+  name              String?          @unique
+  MaintenanceTask   MaintenanceTask? @relation(fields: [maintenanceTaskId], references: [id])
+  maintenanceTaskId String?
+}
 
-  tagName    String?
-  tag        Tag?      @relation(fields: [tagName], references: [name])
-  locationId String?
-  location   Location? @relation(fields: [locationId], references: [id])
+model MaintenanceGuide {
+  id        String            @id @default(cuid())
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  name      String
+  content   String
+  tasks     MaintenanceTask[]
+  vehicle   Vehicle?          @relation(fields: [vehicleId], references: [id])
+  vehicleId String?
+}
+
+model MaintenanceTask {
+  id           String            @id @default(cuid())
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  status       TaskStatus        @default(PENDING)
+  dueDate      DateTime
+  startedAt    DateTime?
+  completedAt  DateTime?
+  name         String
+  machineHours Int?
+  notes        String?
+  tools        Tool[]
+  assigneeId   String?
+  assignee     Employee?         @relation(fields: [assigneeId], references: [id])
+  vehicle      Vehicle?          @relation(fields: [vehicleId], references: [id])
+  vehicleId    String?
+  guide        MaintenanceGuide? @relation(fields: [guideId], references: [id])
+  guideId      String?
 }
 
 model Vehicle {
-  id        String   @id @default(cuid())
-  name      String?  @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  make      String
-  model     String
-  hours     Int?
-  year      Int?
-  active    Boolean  @default(true)
-  power     Power    @default(GAS)
-
-  tagName    String?
-  tag        Tag?      @relation(fields: [tagName], references: [name])
-  locationId String?
-  location   Location? @relation(fields: [locationId], references: [id])
+  id           String             @id @default(cuid())
+  name         String?            @unique
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  vin          String?            @unique
+  vehicleType  VehicleType        @default(VEHICLE)
+  make         String
+  model        String
+  machineHours Int?
+  link         String?
+  power        Power              @default(GAS)
+  tasks        MaintenanceTask[]
+  guides       MaintenanceGuide[]
+  parts        VehiclePart[]
 }
