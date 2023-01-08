@@ -1,10 +1,19 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Power, Prisma, Vehicle } from '@prisma/client';
-import { IsDateString } from 'class-validator';
+import { Power, Prisma, Vehicle, VehicleType } from '@prisma/client';
+import { IsDateString, IsUrl } from 'class-validator';
 
 export class VehicleResponse implements Vehicle {
   @ApiProperty({ example: 'clch9rxw90000p718qrofjcqd' })
   id: string;
+
+  @ApiProperty()
+  vin: string;
+
+  @ApiProperty()
+  vehicleType: VehicleType;
+
+  @IsUrl()
+  link: string;
 
   @ApiProperty({ example: 'Big Green' })
   name: string;
@@ -19,7 +28,7 @@ export class VehicleResponse implements Vehicle {
   year: number;
 
   @ApiProperty({ example: 500 })
-  hours: number;
+  machineHours: number;
 
   @ApiPropertyOptional({ example: true })
   active: boolean;

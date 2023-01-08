@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Prisma, Tag } from '@prisma/client';
+import { Prisma, Employee } from '@prisma/client';
 import { IsDateString } from 'class-validator';
 
-export class TagResponse implements Tag {
+export class EmployeeResponse implements Employee {
   @ApiProperty({ example: 'clch9rxw90000p718qrofjcqd' })
   id: string;
 
@@ -18,25 +18,25 @@ export class TagResponse implements Tag {
   updatedAt: Date;
 }
 
-export class ListTagsDto implements Pick<Prisma.TagFindManyArgs, 'skip' | 'where' | 'orderBy'> {
+export class ListEmployeesDto implements Pick<Prisma.EmployeeFindManyArgs, 'skip' | 'where' | 'orderBy'> {
   @ApiPropertyOptional()
   skip?: number;
 
   @ApiPropertyOptional()
-  where?: Prisma.TagWhereInput;
+  where?: Prisma.EmployeeWhereInput;
 
   @ApiPropertyOptional()
-  orderBy?: Prisma.TagOrderByWithRelationInput;
+  orderBy?: Prisma.EmployeeOrderByWithRelationInput;
 }
 
-export class FindTagDto implements Pick<Prisma.TagWhereUniqueInput, 'name'> {
+export class FindEmployeeDto {
   @ApiProperty({ required: true })
   name: string;
 }
 
-export class CreateTagDto implements Pick<Prisma.TagCreateInput, 'name'> {
+export class CreateEmployeeDto implements Pick<Prisma.EmployeeCreateInput, 'name'> {
   @ApiProperty()
   name: string;
 }
 
-export class UpdateTagDto extends CreateTagDto {}
+export class UpdateEmployeeDto extends CreateEmployeeDto {}
