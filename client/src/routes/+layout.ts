@@ -4,11 +4,6 @@ import type { Application } from '$lib/types';
 
 export const ssr = false;
 
-let app: Application = {} as Application;
-application.subscribe((value) => {
-	app = value;
-});
-
 let navigation = [
 	{
 		label: 'Home',
@@ -30,8 +25,8 @@ let navigation = [
 export const load = async () => {
 	return {
 		application: {
-			title: app.title,
-			subtitle: app.subtitle
+			title: "Farmer's Hand",
+			subtitle: "Manage your farm's vehicles from anywhere."
 		},
 		navigation: navigation,
 	};

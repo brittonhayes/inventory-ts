@@ -1,37 +1,25 @@
 <script lang="ts">
-	import { AppBar, AppRail, AppRailTile, AppShell, LightSwitch } from '@skeletonlabs/skeleton';
-	import '@skeletonlabs/skeleton/styles/all.css';
-	import '@skeletonlabs/skeleton/themes/theme-seasonal.css';
-	import { writable, type Writable } from 'svelte/store';
+	import Navigation from '$lib/components/Navigation.svelte';
+	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import '../app.postcss';
-	import type { LayoutData } from './$types';
-	export let data: LayoutData;
-
-	let selectedNavigation: Writable<number> = writable(1);
 </script>
 
-<AppShell>
-	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<strong class="text-xl">Inventory</strong>
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<LightSwitch />
-			</svelte:fragment>
-		</AppBar>
+<Navigation titleText="Inventory" titleURL="/" />
+<AppDrawer>
+	<svelte:fragment slot="sidebar">
+		<li><a class="btn btn-square btn-primary text-white mb-2" href="/" >
+			<i class="material-icons">home</i>
+		</a></li>
+		<li><a class="btn btn-square btn-ghost mb-2" href="/vehicles">
+			<i class="material-icons">agriculture</i>
+		</a></li>
+		<li><a class="btn btn-square btn-ghost mb-2" href="/maintenance">
+			<i class="material-icons">home_repair_service</i>
+		</a></li>
 	</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
-		<AppRail>
-			{#each data.navigation as link}
-				<AppRailTile bind:selected={selectedNavigation} value={data.navigation.indexOf(link) + 1} label="{link.label}" href="{link.href}">
-					<span class="material-icons">{link.icon}</span>
-				</AppRailTile>
-			{/each}
-			
-		</AppRail>
-	</svelte:fragment>
-	<slot />
-</AppShell>
 
+	<section class="overflow-auto">
+		<slot></slot>
+	</section>
+	
+</AppDrawer>
