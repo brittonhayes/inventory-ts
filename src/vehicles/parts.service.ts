@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { VehiclePart, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
+import { CreateVehiclePartDto, UpdateVehiclePartDto } from './dto/parts.dto';
 
 @Injectable()
 export class VehiclePartsService {
   constructor(private prisma: PrismaService) {}
 
-  async listVehiclePart(params: {
+  async listVehicleParts(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.VehiclePartWhereUniqueInput;
     where?: Prisma.VehiclePartWhereInput;
     orderBy?: Prisma.VehiclePartOrderByWithRelationInput;
-  }): Promise<VehiclePart[]> {
+  }) {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.vehiclePart.findMany({
       skip,
@@ -23,20 +24,26 @@ export class VehiclePartsService {
     });
   }
 
-  async vehiclePart(where: Prisma.VehiclePartWhereUniqueInput): Promise<VehiclePart | null> {
-    return this.prisma.vehiclePart.findUnique({ where });
+  async findVehiclePart(id: string) {
+    return this.prisma.vehiclePart.findUnique({ where: { id } });
   }
 
-  async createVehiclePart(data: Prisma.VehiclePartCreateInput) {
-    return this.prisma.vehiclePart.create({ data });
+  async createVehiclePart(createVehiclePartDto: CreateVehiclePartDto) {
+    return this.prisma.vehiclePart.create({
+      data: createVehiclePartDto,
+    });
   }
 
-  async updateVehiclePart(params: { where: Prisma.VehiclePartWhereUniqueInput; data: Prisma.VehiclePartUpdateInput }) {
-    const { where, data } = params;
-    return this.prisma.vehiclePart.update({ data, where });
+  async updateVehiclePart(id: string, updateVehiclePartDto: UpdateVehiclePartDto) {
+    return this.prisma.vehiclePart.update({
+      where: { id },
+      data: updateVehiclePartDto,
+    });
   }
 
-  async deleteVehiclePart(where: Prisma.VehiclePartWhereUniqueInput): Promise<VehiclePart> {
-    return this.prisma.vehiclePart.delete({ where });
+  async deleteVehiclePart(id: string) {
+    return this.prisma.vehiclePart.delete({
+      where: { id },
+    });
   }
 }

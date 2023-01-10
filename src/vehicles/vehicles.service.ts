@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Vehicle } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
+import { CreateVehicleDto, UpdateVehicleDto } from './dto/vehicles.dto';
 
 @Injectable()
 export class VehiclesService {
@@ -12,7 +13,7 @@ export class VehiclesService {
     cursor?: Prisma.VehicleWhereUniqueInput;
     where?: Prisma.VehicleWhereInput;
     orderBy?: Prisma.VehicleOrderByWithRelationInput;
-  }): Promise<Vehicle[]> {
+  }) {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.vehicle.findMany({
       skip,
@@ -23,20 +24,28 @@ export class VehiclesService {
     });
   }
 
-  async vehicle(where: Prisma.VehicleWhereUniqueInput): Promise<Vehicle | null> {
-    return this.prisma.vehicle.findUnique({ where });
+  async vehicle(id: string) {
+    return this.prisma.vehicle.findUnique({ where: { id } });
   }
 
-  async createVehicle(data: Prisma.VehicleCreateInput) {
-    return this.prisma.vehicle.create({ data });
+  async createVehicle(createVehicleDto: CreateVehicleDto) {
+    return this.prisma.vehicle.create({
+      data: createVehicleDto,
+    });
   }
 
-  async updateVehicle(params: { where: Prisma.VehicleWhereUniqueInput; data: Prisma.VehicleUpdateInput }) {
-    const { where, data } = params;
-    return this.prisma.vehicle.update({ data, where });
+  async updateVehicle(id: string, updateVehicleDto: UpdateVehicleDto) {
+    return this.prisma.vehicle.update({
+      where: {
+        id,
+      },
+      data: updateVehicleDto,
+    });
   }
 
-  async deleteVehicle(where: Prisma.VehicleWhereUniqueInput): Promise<Vehicle> {
-    return this.prisma.vehicle.delete({ where });
+  async deleteVehicle(id: string) {
+    return this.prisma.vehicle.delete({
+      where: { id },
+    });
   }
 }

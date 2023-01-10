@@ -1,20 +1,20 @@
 import {
   Body,
   Controller,
-  Post,
+  DefaultValuePipe,
+  Delete,
   Get,
   Param,
-  Patch,
-  Delete,
-  Query,
-  DefaultValuePipe,
   ParseEnumPipe,
+  Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Prisma, MaintenanceTask, MaintenanceGuide } from '@prisma/client';
-import { CreateMaintenanceGuideDto, MaintenanceGuideResponse, UpdateMaintenanceGuideDto } from './guides.dto';
+import { Prisma } from '@prisma/client';
+import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from 'src/maintenance/dto/tasks.dto';
+import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';
 import { MaintenanceGuidesService } from './guides.service';
-import { CreateMaintenanceTaskDto, MaintenanceTaskResponse, UpdateMaintenanceTaskDto } from './tasks.dto';
 import { MaintenanceTasksService } from './tasks.service';
 
 @ApiTags('maintenance')
@@ -26,47 +26,44 @@ export class MaintenanceController {
   ) {}
 
   @Post('/guides')
-  @ApiOkResponse({ description: 'Returns the created maintenance guide', type: MaintenanceGuideResponse })
-  async createGuide(@Body() createMaintenanceGuideDto: CreateMaintenanceGuideDto): Promise<MaintenanceGuide> {
+  @ApiOkResponse({ description: 'Returns the created maintenance guide', type: MaintenanceGuide })
+  async createGuide(@Body() createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
     return this.maintenanceGuidesService.createMaintenanceGuide(createMaintenanceGuideDto);
   }
 
   @Get('/guides/:id')
-  @ApiOkResponse({ description: 'Returns the maintenance guide', type: MaintenanceGuideResponse })
-  async findGuideById(@Param('id') id: string): Promise<MaintenanceGuide | null> {
-    return this.maintenanceGuidesService.maintenanceGuide({ id });
+  @ApiOkResponse({ description: 'Returns the maintenance guide', type: MaintenanceGuide })
+  async findGuideById(@Param('id') id: string) {
+    return this.maintenanceGuidesService.findMaintenanceGuide(id);
   }
 
   @Patch('/guides/:id')
-  @ApiOkResponse({ description: 'Returns the updated maintenance guide', type: MaintenanceGuideResponse })
-  async updateGuide(
-    @Param('id') id: string,
-    @Body() updateMaintenanceGuideDto: UpdateMaintenanceGuideDto,
-  ): Promise<MaintenanceGuide> {
-    return this.maintenanceGuidesService.updateMaintenanceGuide({ where: { id }, data: updateMaintenanceGuideDto });
+  @ApiOkResponse({ description: 'Returns the updated maintenance guide', type: MaintenanceGuide })
+  async updateGuide(@Param('id') id: string, @Body() updateMaintenanceGuideDto: UpdateMaintenanceGuideDto) {
+    return this.maintenanceGuidesService.updateMaintenanceGuide(id, updateMaintenanceGuideDto);
   }
 
   @Delete('/guides/:id')
-  @ApiOkResponse({ description: 'Returns the deleted maintenance guide', type: MaintenanceGuideResponse })
-  async deleteGuide(@Param('id') id: string): Promise<MaintenanceGuide> {
-    return this.maintenanceGuidesService.deleteMaintenanceGuide({ id });
+  @ApiOkResponse({ description: 'Returns the deleted maintenance guide', type: MaintenanceGuide })
+  async deleteGuide(@Param('id') id: string) {
+    return this.maintenanceGuidesService.deleteMaintenanceGuide(id);
   }
 
   @Get('/guides')
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.MaintenanceGuideScalarFieldEnum })
-  async list(
+  async listGuides(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
     @Query(
       'orderBy',
-      new DefaultValuePipe(Prisma.MaintenanceGuideScalarFieldEnum),
+      new DefaultValuePipe(Prisma.MaintenanceGuideScalarFieldEnum.updatedAt),
       new ParseEnumPipe(Prisma.MaintenanceGuideScalarFieldEnum),
     )
     orderBy?: Prisma.MaintenanceGuideScalarFieldEnum,
-  ): Promise<MaintenanceGuide[]> {
-    return this.maintenanceGuidesService.maintenanceGuides({
+  ) {
+    return this.maintenanceGuidesService.listMaintenanceGuides({
       orderBy: { [orderBy]: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
@@ -75,30 +72,27 @@ export class MaintenanceController {
   }
 
   @Post('/tasks')
-  @ApiOkResponse({ description: 'Returns the created maintenance task', type: MaintenanceTaskResponse })
-  async createTask(@Body() createMaintenanceTaskDto: CreateMaintenanceTaskDto): Promise<MaintenanceTask> {
+  @ApiOkResponse({ description: 'Returns the created maintenance task', type: MaintenanceTask })
+  async createTask(@Body() createMaintenanceTaskDto: CreateMaintenanceTaskDto) {
     return this.maintenanceTasksService.createMaintenanceTask(createMaintenanceTaskDto);
   }
 
   @Get('/tasks/:id')
-  @ApiOkResponse({ description: 'Returns the maintenance', type: MaintenanceTaskResponse })
-  async findByTaskId(@Param('id') id: string): Promise<MaintenanceTask | null> {
-    return this.maintenanceTasksService.maintenanceTask({ id });
+  @ApiOkResponse({ description: 'Returns the maintenance', type: MaintenanceTask })
+  async findByTaskId(@Param('id') id: string) {
+    return this.maintenanceTasksService.findMaintenanceTask({ id });
   }
 
   @Patch('/tasks/:id')
-  @ApiOkResponse({ description: 'Returns the updated maintenance', type: MaintenanceTaskResponse })
-  async updateTask(
-    @Param('id') id: string,
-    @Body() updateMaintenanceTaskDto: UpdateMaintenanceTaskDto,
-  ): Promise<MaintenanceTask> {
-    return this.maintenanceTasksService.updateMaintenanceTask({ where: { id }, data: updateMaintenanceTaskDto });
+  @ApiOkResponse({ description: 'Returns the updated maintenance', type: MaintenanceTask })
+  async updateTask(@Param('id') id: string, @Body() updateMaintenanceTaskDto: UpdateMaintenanceTaskDto) {
+    return this.maintenanceTasksService.updateMaintenanceTask(id, updateMaintenanceTaskDto);
   }
 
   @Delete('/tasks/:id')
-  @ApiOkResponse({ description: 'Returns the deleted maintenance', type: MaintenanceTaskResponse })
-  async deleteTask(@Param('id') id: string): Promise<MaintenanceTask> {
-    return this.maintenanceTasksService.deleteMaintenanceTask({ id });
+  @ApiOkResponse({ description: 'Returns the deleted maintenance', type: MaintenanceTask })
+  async deleteTask(@Param('id') id: string) {
+    return this.maintenanceTasksService.deleteMaintenanceTask(id);
   }
 
   @Get('/tasks')
@@ -110,12 +104,12 @@ export class MaintenanceController {
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
     @Query(
       'orderBy',
-      new DefaultValuePipe(Prisma.MaintenanceTaskScalarFieldEnum),
+      new DefaultValuePipe(Prisma.MaintenanceTaskScalarFieldEnum.updatedAt),
       new ParseEnumPipe(Prisma.MaintenanceTaskScalarFieldEnum),
     )
     orderBy?: Prisma.MaintenanceTaskScalarFieldEnum,
-  ): Promise<MaintenanceTask[]> {
-    return this.maintenanceTasksService.maintenanceTasks({
+  ) {
+    return this.maintenanceTasksService.listMaintenanceTasks({
       orderBy: { [orderBy]: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],

@@ -1,18 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { VehiclePartService } from './parts.service';
+import { PrismaService } from 'nestjs-prisma';
+import { VehiclePartsService } from './parts.service';
 
 describe('VehiclePartService', () => {
-  let service: VehiclePartService;
+  let service: VehiclePartsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [VehiclePartService],
+      providers: [VehiclePartsService, PrismaService],
     }).compile();
 
-    service = module.get<VehiclePartService>(VehiclePartService);
+    service = module.get<VehiclePartsService>(VehiclePartsService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return a vehicle parts list', async () => {
+    expect(service.listVehicleParts({})).resolves.toBeDefined();
   });
 });

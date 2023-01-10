@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Tool } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
+import { CreateToolDto, UpdateToolDto } from './dto/tools.dto';
 
 @Injectable()
 export class ToolsService {
   constructor(private prisma: PrismaService) {}
 
-  async tools(params: {
+  async listTools(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.ToolWhereUniqueInput;
     where?: Prisma.ToolWhereInput;
     orderBy?: Prisma.ToolOrderByWithRelationInput;
-  }): Promise<Tool[]> {
+  }) {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.tool.findMany({
       skip,
@@ -23,20 +24,24 @@ export class ToolsService {
     });
   }
 
-  async tool(where: Prisma.ToolWhereUniqueInput): Promise<Tool | null> {
-    return this.prisma.tool.findUnique({ where });
+  async findTool(id: string) {
+    return this.prisma.tool.findUnique({ where: { id } });
   }
 
-  async createTool(data: Prisma.ToolCreateInput): Promise<Tool> {
-    return this.prisma.tool.create({ data });
+  async createTool(createToolDto: CreateToolDto) {
+    return this.prisma.tool.create({ data: createToolDto });
   }
 
-  async updateTool(params: { where: Prisma.ToolWhereUniqueInput; data: Prisma.ToolUpdateInput }): Promise<Tool> {
-    const { where, data } = params;
-    return this.prisma.tool.update({ data, where });
+  async updateTool(id: string, updateToolDto: UpdateToolDto) {
+    return this.prisma.tool.update({
+      data: updateToolDto,
+      where: {
+        id,
+      },
+    });
   }
 
-  async deleteTool(where: Prisma.ToolWhereUniqueInput): Promise<Tool> {
-    return this.prisma.tool.delete({ where });
+  async deleteTool(id: string) {
+    return this.prisma.tool.delete({ where: { id } });
   }
 }

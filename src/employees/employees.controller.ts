@@ -1,7 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Prisma, Employee } from '@prisma/client';
-import { CreateEmployeeDto, EmployeeResponse, UpdateEmployeeDto } from './employees.dto';
+import { Prisma } from '@prisma/client';
+import { CreateEmployeeDto, Employee, UpdateEmployeeDto } from 'src/employees/dto/employees.dto';
 import { EmployeesService } from './employees.service';
 
 @ApiTags('employees')
@@ -10,38 +10,38 @@ export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Post()
-  @ApiOkResponse({ description: 'Returns the created employee', type: EmployeeResponse })
-  async create(@Body() createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
+  @ApiOkResponse({ description: 'Returns the created employee', type: Employee })
+  async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.createEmployee(createEmployeeDto);
   }
 
   @Get(':id')
-  @ApiOkResponse({ description: 'Returns the employee', type: EmployeeResponse })
-  async findById(@Param('id') id: string): Promise<Employee | null> {
-    return this.employeesService.employee({ id });
+  @ApiOkResponse({ description: 'Returns the employee', type: Employee })
+  async findEmployeeById(@Param('id') id: string) {
+    return this.employeesService.findEmployee(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ description: 'Returns the updated employee', type: EmployeeResponse })
-  async update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto): Promise<Employee> {
-    return this.employeesService.updateEmployee({ where: { id }, data: updateEmployeeDto });
+  @ApiOkResponse({ description: 'Returns the updated employee', type: Employee })
+  async updateEmployee(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+    return this.employeesService.updateEmployee(id, updateEmployeeDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ description: 'Returns the deleted employee', type: EmployeeResponse })
-  async delete(@Param('id') id: string): Promise<Employee> {
-    return this.employeesService.deleteEmployee({ id });
+  @ApiOkResponse({ description: 'Returns the deleted employee', type: Employee })
+  async deleteEmployee(@Param('id') id: string) {
+    return this.employeesService.deleteEmployee(id);
   }
 
   @Get()
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
-  @ApiOkResponse({ description: 'Returns the employees', type: [EmployeeResponse] })
-  async list(
+  @ApiOkResponse({ description: 'Returns the employees', type: [Employee] })
+  async listEmployees(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
-  ): Promise<Employee[]> {
-    return this.employeesService.employees({
+  ) {
+    return this.employeesService.listEmployees({
       orderBy: { name: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],

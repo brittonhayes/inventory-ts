@@ -11,8 +11,8 @@ import {
   ParseEnumPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Prisma, Tool } from '@prisma/client';
-import { CreateToolDto, ToolResponse, UpdateToolDto } from './tools.dto';
+import { Prisma } from '@prisma/client';
+import { CreateToolDto, Tool, UpdateToolDto } from './dto/tools.dto';
 import { ToolsService } from './tools.service';
 
 @ApiTags('tools')
@@ -21,40 +21,44 @@ export class ToolsController {
   constructor(private readonly toolsService: ToolsService) {}
 
   @Post()
-  @ApiOkResponse({ description: 'Returns the created tool', type: ToolResponse })
-  async create(@Body() createToolDto: CreateToolDto): Promise<Tool> {
+  @ApiOkResponse({ description: 'Returns the created tool', type: Tool })
+  async createTool(@Body() createToolDto: CreateToolDto) {
     return this.toolsService.createTool(createToolDto);
   }
 
   @Get(':id')
-  @ApiOkResponse({ description: 'Returns the tool', type: ToolResponse })
-  async findById(@Param('id') id: string): Promise<Tool | null> {
-    return this.toolsService.tool({ id });
+  @ApiOkResponse({ description: 'Returns the tool', type: Tool })
+  async findToolById(@Param('id') id: string) {
+    return this.toolsService.findTool(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ description: 'Returns the updated tool', type: ToolResponse })
-  async update(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto): Promise<Tool> {
-    return this.toolsService.updateTool({ where: { id }, data: updateToolDto });
+  @ApiOkResponse({ description: 'Returns the updated tool', type: Tool })
+  async updateTool(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto) {
+    return this.toolsService.updateTool(id, updateToolDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ description: 'Returns the deleted tool', type: ToolResponse })
-  async delete(@Param('id') id: string): Promise<Tool> {
-    return this.toolsService.deleteTool({ id });
+  @ApiOkResponse({ description: 'Returns the deleted tool', type: Tool })
+  async deleteTool(@Param('id') id: string) {
+    return this.toolsService.deleteTool(id);
   }
 
   @Get()
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.ToolScalarFieldEnum })
-  async list(
+  async listTools(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
-    @Query('orderBy', new DefaultValuePipe(Prisma.ToolScalarFieldEnum), new ParseEnumPipe(Prisma.ToolScalarFieldEnum))
+    @Query(
+      'orderBy',
+      new DefaultValuePipe(Prisma.ToolScalarFieldEnum.name),
+      new ParseEnumPipe(Prisma.ToolScalarFieldEnum),
+    )
     orderBy?: Prisma.ToolScalarFieldEnum,
   ): Promise<Tool[]> {
-    return this.toolsService.tools({
+    return this.toolsService.listTools({
       orderBy: { [orderBy]: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
