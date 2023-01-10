@@ -21,6 +21,9 @@ export class EmployeesService {
       cursor,
       where,
       orderBy,
+      include: {
+        tasks: true,
+      },
     });
   }
 

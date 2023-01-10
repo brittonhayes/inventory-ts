@@ -11,16 +11,18 @@ export class VehiclesService {
     skip?: number;
     take?: number;
     cursor?: Prisma.VehicleWhereUniqueInput;
-    where?: Prisma.VehicleWhereInput;
     orderBy?: Prisma.VehicleOrderByWithRelationInput;
+    where?: Prisma.VehicleWhereInput;
+    include?: Prisma.VehicleInclude;
   }) {
-    const { skip, take, cursor, where, orderBy } = params;
+    const { skip, take, cursor, where, orderBy, include } = params;
     return this.prisma.vehicle.findMany({
       skip,
       take,
       cursor,
       where,
       orderBy,
+      include,
     });
   }
 

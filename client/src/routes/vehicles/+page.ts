@@ -11,7 +11,7 @@ export const load = (async ({ fetch }) => {
     try {
         vehicles = await client.vehiclesControllerListVehicles();
     } catch (error) {
-        console.log(error);
+        console.warn(error);
     }
     
     return {

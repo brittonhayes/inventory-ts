@@ -23,6 +23,5 @@ export * from './UpdateVehicleDto';
 export * from './UpdateVehiclePartDto';
 export * from './Vehicle';
 export * from './VehiclePart';
-export * from './VehiclePartResponse';
 export * from './VehicleResponse';
 export * from './VehicleType';

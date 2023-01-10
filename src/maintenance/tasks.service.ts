@@ -13,8 +13,9 @@ export class MaintenanceTasksService {
     cursor?: Prisma.MaintenanceTaskWhereUniqueInput;
     where?: Prisma.MaintenanceTaskWhereInput;
     orderBy?: Prisma.MaintenanceTaskOrderByWithRelationInput;
+    include?: Prisma.MaintenanceTaskInclude;
   }) {
-    const { skip, take, cursor, where, orderBy } = params;
+    const { skip, take, cursor, where, orderBy, include } = params;
 
     return this.prisma.maintenanceTask.findMany({
       skip,
@@ -22,6 +23,7 @@ export class MaintenanceTasksService {
       cursor,
       where,
       orderBy,
+      include,
     });
   }
 

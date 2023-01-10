@@ -25,7 +25,7 @@
     "prisma:generate:watch": "npx prisma generate --watch",
     "seed": "prisma db seed",
     "postinstall": "npm run prisma:generate",
-    "generate-api-client": "rimraf client/src/lib/api/ && npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/docs-json --generator-name typescript-fetch -o client/src/lib/api/ --additional-properties=useSingleRequestParameter=true,supportsES6=true",
+    "generate-api-client": "rimraf client/src/lib/api/ && npx @openapitools/openapi-generator-cli generate -i http://localhost:5000/docs-json --generator-name typescript-fetch -o client/src/lib/api/ --additional-properties=useSingleRequestParameter=true,typescriptThreePlus=true,supportsES6=true",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

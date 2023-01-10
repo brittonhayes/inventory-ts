@@ -28,7 +28,6 @@ models/UpdateVehicleDto.ts
 models/UpdateVehiclePartDto.ts
 models/Vehicle.ts
 models/VehiclePart.ts
-models/VehiclePartResponse.ts
 models/VehicleResponse.ts
 models/VehicleType.ts
 models/index.ts

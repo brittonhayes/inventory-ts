@@ -113,6 +113,10 @@ export class MaintenanceController {
   ) {
     return this.maintenanceTasksService.listMaintenanceTasks({
       orderBy: { [orderBy]: sort },
+      include: {
+        tools: true,
+        assignee: true,
+      },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
       },

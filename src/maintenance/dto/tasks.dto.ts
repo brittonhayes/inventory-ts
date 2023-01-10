@@ -36,8 +36,8 @@ export class MaintenanceTask {
   @ApiPropertyOptional({ type: String })
   notes?: string;
 
-  @ApiProperty({ isArray: true, type: () => Tool })
-  tools: Tool[];
+  @ApiPropertyOptional({ isArray: true, type: () => Tool })
+  tools?: Tool[];
 
   @ApiPropertyOptional({ type: String })
   assigneeId?: string;

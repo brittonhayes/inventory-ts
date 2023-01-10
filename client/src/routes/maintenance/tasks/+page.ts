@@ -1,13 +1,14 @@
-import { Configuration,  EmployeesApi, MaintenanceApi } from '$lib/api';
+import type { MaintenanceTask } from '$lib/api';
+import { Configuration, MaintenanceApi } from '$lib/api';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
-    const config = new Configuration({
-        fetchApi: fetch,
-    });
-    const maintenanceClient = new MaintenanceApi(config);
-    let tasks = await maintenanceClient.maintenanceControllerListTasks();
+    // const config = new Configuration({
+    //     fetchApi: fetch,
+    // });
+    // const client = new MaintenanceApi(config);
+    const tasks = await fetch('http://localhost:5000/api/maintenance/tasks')
     return {
-      tasks: tasks,
+      tasks: tasks.json() as Promise<MaintenanceTask[]>,
     };
   }) satisfies PageLoad;

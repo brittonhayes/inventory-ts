@@ -115,7 +115,7 @@ export interface MaintenanceTask {
      * @type {Array<Tool>}
      * @memberof MaintenanceTask
      */
-    tools: Array<Tool>;
+    tools?: Array<Tool>;
     /**
      * 
      * @type {string}
@@ -165,7 +165,6 @@ export function instanceOfMaintenanceTask(value: object): boolean {
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "dueDate" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "tools" in value;
 
     return isInstance;
 }
@@ -190,7 +189,7 @@ export function MaintenanceTaskFromJSONTyped(json: any, ignoreDiscriminator: boo
         'name': json['name'],
         'machineHours': !exists(json, 'machineHours') ? undefined : json['machineHours'],
         'notes': !exists(json, 'notes') ? undefined : json['notes'],
-        'tools': ((json['tools'] as Array<any>).map(ToolFromJSON)),
+        'tools': !exists(json, 'tools') ? undefined : ((json['tools'] as Array<any>).map(ToolFromJSON)),
         'assigneeId': !exists(json, 'assigneeId') ? undefined : json['assigneeId'],
         'assignee': !exists(json, 'assignee') ? undefined : EmployeeFromJSON(json['assignee']),
         'vehicle': !exists(json, 'vehicle') ? undefined : VehicleFromJSON(json['vehicle']),
@@ -219,7 +218,7 @@ export function MaintenanceTaskToJSON(value?: MaintenanceTask | null): any {
         'name': value.name,
         'machineHours': value.machineHours,
         'notes': value.notes,
-        'tools': ((value.tools as Array<any>).map(ToolToJSON)),
+        'tools': value.tools === undefined ? undefined : ((value.tools as Array<any>).map(ToolToJSON)),
         'assigneeId': value.assigneeId,
         'assignee': EmployeeToJSON(value.assignee),
         'vehicle': VehicleToJSON(value.vehicle),

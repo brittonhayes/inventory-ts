@@ -1,4 +1,6 @@
 <script lang="ts">
+	  import { MaintenanceApi } from '$lib/api';
+    import type { MaintenanceTask } from '$lib/api';
     import type { PageData } from './$types';
     export let data:PageData; 
   </script>
@@ -32,8 +34,8 @@
               {#each data.tasks as task}
                 <tr>
                   <td>{task.name}</td>
-                  <td>{task.assignee?.name}</td>
-                  <td>{task.dueDate.toDateString()}</td> 
+                  <td>{task.assignee ? task.assignee.name : 'Nobody'}</td>
+                  <td>{task.dueDate}</td> 
                 </tr>
               {/each}
             </tbody>  

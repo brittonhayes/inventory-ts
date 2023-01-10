@@ -10,15 +10,10 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags, OmitType, PartialType } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import {
-  CreateVehiclePartDto,
-  UpdateVehiclePartDto,
-  VehiclePart,
-  VehiclePartResponse,
-} from 'src/vehicles/dto/parts.dto';
-import { Vehicle, CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from 'src/vehicles/dto/vehicles.dto';
+import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart } from 'src/vehicles/dto/parts.dto';
+import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from 'src/vehicles/dto/vehicles.dto';
 import { VehiclePartsService } from './parts.service';
 import { VehiclesService } from './vehicles.service';
 
@@ -82,25 +77,25 @@ export class VehiclesController {
   }
 
   @Post('parts')
-  @ApiOkResponse({ description: 'Returns the created part', type: VehiclePartResponse })
+  @ApiOkResponse({ description: 'Returns the created part', type: VehiclePart })
   async createPart(@Body() createVehiclePartDto: CreateVehiclePartDto) {
     return this.vehiclePartsService.createVehiclePart(createVehiclePartDto);
   }
 
   @Get('parts/:id')
-  @ApiOkResponse({ description: 'Returns the part', type: VehiclePartResponse })
+  @ApiOkResponse({ description: 'Returns the part', type: VehiclePart })
   async findPartById(@Param('id') id: string) {
     return this.vehiclePartsService.findVehiclePart(id);
   }
 
   @Patch('parts/:id')
-  @ApiOkResponse({ description: 'Returns the updated part', type: VehiclePartResponse })
+  @ApiOkResponse({ description: 'Returns the updated part', type: VehiclePart })
   async updatePart(@Param('id') id: string, @Body() updatePartDto: UpdateVehiclePartDto) {
     return this.vehiclePartsService.updateVehiclePart(id, updatePartDto);
   }
 
   @Delete('parts/:id')
-  @ApiOkResponse({ description: 'Returns the deleted part', type: VehiclePartResponse })
+  @ApiOkResponse({ description: 'Returns the deleted part', type: VehiclePart })
   async deletePart(@Param('id') id: string) {
     return this.vehiclePartsService.deleteVehiclePart(id);
   }
@@ -109,7 +104,7 @@ export class VehiclesController {
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.VehiclePartScalarFieldEnum })
-  @ApiOkResponse({ type: VehiclePartResponse, isArray: true, description: 'Returns the parts' })
+  @ApiOkResponse({ type: VehiclePart, isArray: true, description: 'Returns the parts' })
   async listParts(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
