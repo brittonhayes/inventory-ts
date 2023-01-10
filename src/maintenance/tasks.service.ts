@@ -15,6 +15,7 @@ export class MaintenanceTasksService {
     orderBy?: Prisma.MaintenanceTaskOrderByWithRelationInput;
   }) {
     const { skip, take, cursor, where, orderBy } = params;
+
     return this.prisma.maintenanceTask.findMany({
       skip,
       take,

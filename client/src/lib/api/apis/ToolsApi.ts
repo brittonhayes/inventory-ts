@@ -16,14 +16,14 @@
 import * as runtime from '../runtime';
 import type {
   CreateToolDto,
-  Tool,
+  ToolResponse,
   UpdateToolDto,
 } from '../models';
 import {
     CreateToolDtoFromJSON,
     CreateToolDtoToJSON,
-    ToolFromJSON,
-    ToolToJSON,
+    ToolResponseFromJSON,
+    ToolResponseToJSON,
     UpdateToolDtoFromJSON,
     UpdateToolDtoToJSON,
 } from '../models';
@@ -58,7 +58,7 @@ export class ToolsApi extends runtime.BaseAPI {
 
     /**
      */
-    async toolsControllerCreateToolRaw(requestParameters: ToolsControllerCreateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Tool>> {
+    async toolsControllerCreateToolRaw(requestParameters: ToolsControllerCreateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolResponse>> {
         if (requestParameters.createToolDto === null || requestParameters.createToolDto === undefined) {
             throw new runtime.RequiredError('createToolDto','Required parameter requestParameters.createToolDto was null or undefined when calling toolsControllerCreateTool.');
         }
@@ -77,19 +77,19 @@ export class ToolsApi extends runtime.BaseAPI {
             body: CreateToolDtoToJSON(requestParameters.createToolDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ToolFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ToolResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async toolsControllerCreateTool(requestParameters: ToolsControllerCreateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Tool> {
+    async toolsControllerCreateTool(requestParameters: ToolsControllerCreateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolResponse> {
         const response = await this.toolsControllerCreateToolRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async toolsControllerDeleteToolRaw(requestParameters: ToolsControllerDeleteToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Tool>> {
+    async toolsControllerDeleteToolRaw(requestParameters: ToolsControllerDeleteToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling toolsControllerDeleteTool.');
         }
@@ -105,19 +105,19 @@ export class ToolsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ToolFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ToolResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async toolsControllerDeleteTool(requestParameters: ToolsControllerDeleteToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Tool> {
+    async toolsControllerDeleteTool(requestParameters: ToolsControllerDeleteToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolResponse> {
         const response = await this.toolsControllerDeleteToolRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async toolsControllerFindToolByIdRaw(requestParameters: ToolsControllerFindToolByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Tool>> {
+    async toolsControllerFindToolByIdRaw(requestParameters: ToolsControllerFindToolByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling toolsControllerFindToolById.');
         }
@@ -133,19 +133,19 @@ export class ToolsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ToolFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ToolResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async toolsControllerFindToolById(requestParameters: ToolsControllerFindToolByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Tool> {
+    async toolsControllerFindToolById(requestParameters: ToolsControllerFindToolByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolResponse> {
         const response = await this.toolsControllerFindToolByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async toolsControllerListToolsRaw(requestParameters: ToolsControllerListToolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async toolsControllerListToolsRaw(requestParameters: ToolsControllerListToolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ToolResponse>>> {
         const queryParameters: any = {};
 
         if (requestParameters.name !== undefined) {
@@ -169,18 +169,19 @@ export class ToolsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ToolResponseFromJSON));
     }
 
     /**
      */
-    async toolsControllerListTools(requestParameters: ToolsControllerListToolsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.toolsControllerListToolsRaw(requestParameters, initOverrides);
+    async toolsControllerListTools(requestParameters: ToolsControllerListToolsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ToolResponse>> {
+        const response = await this.toolsControllerListToolsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
      */
-    async toolsControllerUpdateToolRaw(requestParameters: ToolsControllerUpdateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Tool>> {
+    async toolsControllerUpdateToolRaw(requestParameters: ToolsControllerUpdateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ToolResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling toolsControllerUpdateTool.');
         }
@@ -203,12 +204,12 @@ export class ToolsApi extends runtime.BaseAPI {
             body: UpdateToolDtoToJSON(requestParameters.updateToolDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ToolFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ToolResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async toolsControllerUpdateTool(requestParameters: ToolsControllerUpdateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Tool> {
+    async toolsControllerUpdateTool(requestParameters: ToolsControllerUpdateToolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ToolResponse> {
         const response = await this.toolsControllerUpdateToolRaw(requestParameters, initOverrides);
         return await response.value();
     }

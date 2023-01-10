@@ -15,6 +15,8 @@ export class Tool {
   maintenanceTaskId?: string;
 }
 
+export class ToolResponse extends Tool {}
+
 export class CreateToolDto extends OmitType(Tool, ['id', 'maintenanceTask'] as const) {}
 
 export class UpdateToolDto extends PartialType(CreateToolDto) {}

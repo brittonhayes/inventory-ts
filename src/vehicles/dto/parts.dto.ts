@@ -31,6 +31,8 @@ export class VehiclePart {
   vehicleId?: string;
 }
 
+export class VehiclePartResponse extends VehiclePart {}
+
 export class CreateVehiclePartDto extends OmitType(VehiclePart, ['id', 'createdAt', 'updatedAt', 'vehicle'] as const) {}
 
 export class UpdateVehiclePartDto extends PartialType(CreateVehiclePartDto) {}

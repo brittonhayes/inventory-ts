@@ -48,6 +48,8 @@ export class Vehicle {
   parts: VehiclePart[];
 }
 
+export class VehicleResponse extends OmitType(Vehicle, ['tasks', 'parts', 'guides'] as const) {}
+
 export class CreateVehicleDto extends OmitType(Vehicle, ['id', 'tasks', 'guides', 'parts'] as const) {}
 
 export class UpdateVehicleDto extends PartialType(CreateVehicleDto) {}

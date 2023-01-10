@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   CreateEmployeeDto,
   Employee,
+  EmployeeResponse,
   UpdateEmployeeDto,
 } from '../models';
 import {
@@ -24,6 +25,8 @@ import {
     CreateEmployeeDtoToJSON,
     EmployeeFromJSON,
     EmployeeToJSON,
+    EmployeeResponseFromJSON,
+    EmployeeResponseToJSON,
     UpdateEmployeeDtoFromJSON,
     UpdateEmployeeDtoToJSON,
 } from '../models';
@@ -57,7 +60,7 @@ export class EmployeesApi extends runtime.BaseAPI {
 
     /**
      */
-    async employeesControllerCreateEmployeeRaw(requestParameters: EmployeesControllerCreateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Employee>> {
+    async employeesControllerCreateEmployeeRaw(requestParameters: EmployeesControllerCreateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EmployeeResponse>> {
         if (requestParameters.createEmployeeDto === null || requestParameters.createEmployeeDto === undefined) {
             throw new runtime.RequiredError('createEmployeeDto','Required parameter requestParameters.createEmployeeDto was null or undefined when calling employeesControllerCreateEmployee.');
         }
@@ -76,19 +79,19 @@ export class EmployeesApi extends runtime.BaseAPI {
             body: CreateEmployeeDtoToJSON(requestParameters.createEmployeeDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async employeesControllerCreateEmployee(requestParameters: EmployeesControllerCreateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Employee> {
+    async employeesControllerCreateEmployee(requestParameters: EmployeesControllerCreateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EmployeeResponse> {
         const response = await this.employeesControllerCreateEmployeeRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async employeesControllerDeleteEmployeeRaw(requestParameters: EmployeesControllerDeleteEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Employee>> {
+    async employeesControllerDeleteEmployeeRaw(requestParameters: EmployeesControllerDeleteEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EmployeeResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employeesControllerDeleteEmployee.');
         }
@@ -104,19 +107,19 @@ export class EmployeesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async employeesControllerDeleteEmployee(requestParameters: EmployeesControllerDeleteEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Employee> {
+    async employeesControllerDeleteEmployee(requestParameters: EmployeesControllerDeleteEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EmployeeResponse> {
         const response = await this.employeesControllerDeleteEmployeeRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async employeesControllerFindEmployeeByIdRaw(requestParameters: EmployeesControllerFindEmployeeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Employee>> {
+    async employeesControllerFindEmployeeByIdRaw(requestParameters: EmployeesControllerFindEmployeeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EmployeeResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employeesControllerFindEmployeeById.');
         }
@@ -132,12 +135,12 @@ export class EmployeesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async employeesControllerFindEmployeeById(requestParameters: EmployeesControllerFindEmployeeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Employee> {
+    async employeesControllerFindEmployeeById(requestParameters: EmployeesControllerFindEmployeeByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EmployeeResponse> {
         const response = await this.employeesControllerFindEmployeeByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -176,7 +179,7 @@ export class EmployeesApi extends runtime.BaseAPI {
 
     /**
      */
-    async employeesControllerUpdateEmployeeRaw(requestParameters: EmployeesControllerUpdateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Employee>> {
+    async employeesControllerUpdateEmployeeRaw(requestParameters: EmployeesControllerUpdateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EmployeeResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employeesControllerUpdateEmployee.');
         }
@@ -199,12 +202,12 @@ export class EmployeesApi extends runtime.BaseAPI {
             body: UpdateEmployeeDtoToJSON(requestParameters.updateEmployeeDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EmployeeResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async employeesControllerUpdateEmployee(requestParameters: EmployeesControllerUpdateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Employee> {
+    async employeesControllerUpdateEmployee(requestParameters: EmployeesControllerUpdateEmployeeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EmployeeResponse> {
         const response = await this.employeesControllerUpdateEmployeeRaw(requestParameters, initOverrides);
         return await response.value();
     }

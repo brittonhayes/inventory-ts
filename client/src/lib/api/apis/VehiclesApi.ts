@@ -19,8 +19,8 @@ import type {
   CreateVehiclePartDto,
   UpdateVehicleDto,
   UpdateVehiclePartDto,
-  Vehicle,
-  VehiclePart,
+  VehiclePartResponse,
+  VehicleResponse,
 } from '../models';
 import {
     CreateVehicleDtoFromJSON,
@@ -31,10 +31,10 @@ import {
     UpdateVehicleDtoToJSON,
     UpdateVehiclePartDtoFromJSON,
     UpdateVehiclePartDtoToJSON,
-    VehicleFromJSON,
-    VehicleToJSON,
-    VehiclePartFromJSON,
-    VehiclePartToJSON,
+    VehiclePartResponseFromJSON,
+    VehiclePartResponseToJSON,
+    VehicleResponseFromJSON,
+    VehicleResponseToJSON,
 } from '../models';
 
 export interface VehiclesControllerCreatePartRequest {
@@ -90,7 +90,7 @@ export class VehiclesApi extends runtime.BaseAPI {
 
     /**
      */
-    async vehiclesControllerCreatePartRaw(requestParameters: VehiclesControllerCreatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePart>> {
+    async vehiclesControllerCreatePartRaw(requestParameters: VehiclesControllerCreatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePartResponse>> {
         if (requestParameters.createVehiclePartDto === null || requestParameters.createVehiclePartDto === undefined) {
             throw new runtime.RequiredError('createVehiclePartDto','Required parameter requestParameters.createVehiclePartDto was null or undefined when calling vehiclesControllerCreatePart.');
         }
@@ -109,19 +109,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             body: CreateVehiclePartDtoToJSON(requestParameters.createVehiclePartDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerCreatePart(requestParameters: VehiclesControllerCreatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePart> {
+    async vehiclesControllerCreatePart(requestParameters: VehiclesControllerCreatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePartResponse> {
         const response = await this.vehiclesControllerCreatePartRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerCreateVehicleRaw(requestParameters: VehiclesControllerCreateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
+    async vehiclesControllerCreateVehicleRaw(requestParameters: VehiclesControllerCreateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehicleResponse>> {
         if (requestParameters.createVehicleDto === null || requestParameters.createVehicleDto === undefined) {
             throw new runtime.RequiredError('createVehicleDto','Required parameter requestParameters.createVehicleDto was null or undefined when calling vehiclesControllerCreateVehicle.');
         }
@@ -140,19 +140,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             body: CreateVehicleDtoToJSON(requestParameters.createVehicleDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerCreateVehicle(requestParameters: VehiclesControllerCreateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Vehicle> {
+    async vehiclesControllerCreateVehicle(requestParameters: VehiclesControllerCreateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehicleResponse> {
         const response = await this.vehiclesControllerCreateVehicleRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerDeletePartRaw(requestParameters: VehiclesControllerDeletePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePart>> {
+    async vehiclesControllerDeletePartRaw(requestParameters: VehiclesControllerDeletePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePartResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerDeletePart.');
         }
@@ -168,19 +168,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerDeletePart(requestParameters: VehiclesControllerDeletePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePart> {
+    async vehiclesControllerDeletePart(requestParameters: VehiclesControllerDeletePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePartResponse> {
         const response = await this.vehiclesControllerDeletePartRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerDeleteVehicleRaw(requestParameters: VehiclesControllerDeleteVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
+    async vehiclesControllerDeleteVehicleRaw(requestParameters: VehiclesControllerDeleteVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehicleResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerDeleteVehicle.');
         }
@@ -196,19 +196,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerDeleteVehicle(requestParameters: VehiclesControllerDeleteVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Vehicle> {
+    async vehiclesControllerDeleteVehicle(requestParameters: VehiclesControllerDeleteVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehicleResponse> {
         const response = await this.vehiclesControllerDeleteVehicleRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerFindPartByIdRaw(requestParameters: VehiclesControllerFindPartByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePart>> {
+    async vehiclesControllerFindPartByIdRaw(requestParameters: VehiclesControllerFindPartByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePartResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerFindPartById.');
         }
@@ -224,19 +224,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerFindPartById(requestParameters: VehiclesControllerFindPartByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePart> {
+    async vehiclesControllerFindPartById(requestParameters: VehiclesControllerFindPartByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePartResponse> {
         const response = await this.vehiclesControllerFindPartByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerFindVehicleByIdRaw(requestParameters: VehiclesControllerFindVehicleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
+    async vehiclesControllerFindVehicleByIdRaw(requestParameters: VehiclesControllerFindVehicleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehicleResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerFindVehicleById.');
         }
@@ -252,19 +252,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerFindVehicleById(requestParameters: VehiclesControllerFindVehicleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Vehicle> {
+    async vehiclesControllerFindVehicleById(requestParameters: VehiclesControllerFindVehicleByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehicleResponse> {
         const response = await this.vehiclesControllerFindVehicleByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerListPartsRaw(requestParameters: VehiclesControllerListPartsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async vehiclesControllerListPartsRaw(requestParameters: VehiclesControllerListPartsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VehiclePartResponse>>> {
         const queryParameters: any = {};
 
         if (requestParameters.name !== undefined) {
@@ -288,18 +288,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(VehiclePartResponseFromJSON));
     }
 
     /**
      */
-    async vehiclesControllerListParts(requestParameters: VehiclesControllerListPartsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.vehiclesControllerListPartsRaw(requestParameters, initOverrides);
+    async vehiclesControllerListParts(requestParameters: VehiclesControllerListPartsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VehiclePartResponse>> {
+        const response = await this.vehiclesControllerListPartsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerListVehiclesRaw(requestParameters: VehiclesControllerListVehiclesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Vehicle>>> {
+    async vehiclesControllerListVehiclesRaw(requestParameters: VehiclesControllerListVehiclesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<VehicleResponse>>> {
         const queryParameters: any = {};
 
         if (requestParameters.name !== undefined) {
@@ -323,19 +324,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(VehicleFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(VehicleResponseFromJSON));
     }
 
     /**
      */
-    async vehiclesControllerListVehicles(requestParameters: VehiclesControllerListVehiclesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Vehicle>> {
+    async vehiclesControllerListVehicles(requestParameters: VehiclesControllerListVehiclesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<VehicleResponse>> {
         const response = await this.vehiclesControllerListVehiclesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerUpdatePartRaw(requestParameters: VehiclesControllerUpdatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePart>> {
+    async vehiclesControllerUpdatePartRaw(requestParameters: VehiclesControllerUpdatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehiclePartResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerUpdatePart.');
         }
@@ -358,19 +359,19 @@ export class VehiclesApi extends runtime.BaseAPI {
             body: UpdateVehiclePartDtoToJSON(requestParameters.updateVehiclePartDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehiclePartResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerUpdatePart(requestParameters: VehiclesControllerUpdatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePart> {
+    async vehiclesControllerUpdatePart(requestParameters: VehiclesControllerUpdatePartRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehiclePartResponse> {
         const response = await this.vehiclesControllerUpdatePartRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async vehiclesControllerUpdateVehicleRaw(requestParameters: VehiclesControllerUpdateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Vehicle>> {
+    async vehiclesControllerUpdateVehicleRaw(requestParameters: VehiclesControllerUpdateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VehicleResponse>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling vehiclesControllerUpdateVehicle.');
         }
@@ -393,12 +394,12 @@ export class VehiclesApi extends runtime.BaseAPI {
             body: UpdateVehicleDtoToJSON(requestParameters.updateVehicleDto),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VehicleResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async vehiclesControllerUpdateVehicle(requestParameters: VehiclesControllerUpdateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Vehicle> {
+    async vehiclesControllerUpdateVehicle(requestParameters: VehiclesControllerUpdateVehicleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VehicleResponse> {
         const response = await this.vehiclesControllerUpdateVehicleRaw(requestParameters, initOverrides);
         return await response.value();
     }

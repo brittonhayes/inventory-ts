@@ -1,10 +1,10 @@
 <script lang="ts">
-    export let titleText: string;
-	export let titleURL: string;
+    // export let titleText: string;
+	// export let titleURL: string;
 </script>
 
 
-<div class="navbar bg-base-100 text-base-content">
+<div class="navbar text-base-content bg-neutral">
 	<div class="navbar-start">
 	  <div class="dropdown">
 		<label for="sidebar-toggle" class="btn btn-ghost btn-circle drawer-button lg:hidden">
@@ -13,7 +13,7 @@
 	  </div>
 	</div>
 	<div class="navbar-center">
-		<a href="{titleURL}" class="btn btn-ghost text-lg ">{titleText}</a>
+		<!-- <a href="{titleURL}" class="btn btn-ghost text-lg ">{titleText}</a> -->
 	</div>
 	<div class="navbar-end">
 	  <button class="btn btn-ghost btn-circle">

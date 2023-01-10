@@ -67,10 +67,10 @@ export interface MaintenanceControllerListGuidesRequest {
     sort?: MaintenanceControllerListGuidesSortEnum;
 }
 
-export interface MaintenanceControllerListTaskRequest {
+export interface MaintenanceControllerListTasksRequest {
     name?: string;
-    orderBy?: MaintenanceControllerListTaskOrderByEnum;
-    sort?: MaintenanceControllerListTaskSortEnum;
+    orderBy?: MaintenanceControllerListTasksOrderByEnum;
+    sort?: MaintenanceControllerListTasksSortEnum;
 }
 
 export interface MaintenanceControllerUpdateGuideRequest {
@@ -264,7 +264,7 @@ export class MaintenanceApi extends runtime.BaseAPI {
 
     /**
      */
-    async maintenanceControllerListGuidesRaw(requestParameters: MaintenanceControllerListGuidesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async maintenanceControllerListGuidesRaw(requestParameters: MaintenanceControllerListGuidesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MaintenanceGuide>>> {
         const queryParameters: any = {};
 
         if (requestParameters.name !== undefined) {
@@ -288,18 +288,19 @@ export class MaintenanceApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MaintenanceGuideFromJSON));
     }
 
     /**
      */
-    async maintenanceControllerListGuides(requestParameters: MaintenanceControllerListGuidesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.maintenanceControllerListGuidesRaw(requestParameters, initOverrides);
+    async maintenanceControllerListGuides(requestParameters: MaintenanceControllerListGuidesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MaintenanceGuide>> {
+        const response = await this.maintenanceControllerListGuidesRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
      */
-    async maintenanceControllerListTaskRaw(requestParameters: MaintenanceControllerListTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async maintenanceControllerListTasksRaw(requestParameters: MaintenanceControllerListTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<MaintenanceTask>>> {
         const queryParameters: any = {};
 
         if (requestParameters.name !== undefined) {
@@ -323,13 +324,14 @@ export class MaintenanceApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MaintenanceTaskFromJSON));
     }
 
     /**
      */
-    async maintenanceControllerListTask(requestParameters: MaintenanceControllerListTaskRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.maintenanceControllerListTaskRaw(requestParameters, initOverrides);
+    async maintenanceControllerListTasks(requestParameters: MaintenanceControllerListTasksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<MaintenanceTask>> {
+        const response = await this.maintenanceControllerListTasksRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -427,7 +429,7 @@ export type MaintenanceControllerListGuidesSortEnum = typeof MaintenanceControll
 /**
  * @export
  */
-export const MaintenanceControllerListTaskOrderByEnum = {
+export const MaintenanceControllerListTasksOrderByEnum = {
     Id: 'id',
     CreatedAt: 'createdAt',
     UpdatedAt: 'updatedAt',
@@ -442,12 +444,12 @@ export const MaintenanceControllerListTaskOrderByEnum = {
     VehicleId: 'vehicleId',
     GuideId: 'guideId'
 } as const;
-export type MaintenanceControllerListTaskOrderByEnum = typeof MaintenanceControllerListTaskOrderByEnum[keyof typeof MaintenanceControllerListTaskOrderByEnum];
+export type MaintenanceControllerListTasksOrderByEnum = typeof MaintenanceControllerListTasksOrderByEnum[keyof typeof MaintenanceControllerListTasksOrderByEnum];
 /**
  * @export
  */
-export const MaintenanceControllerListTaskSortEnum = {
+export const MaintenanceControllerListTasksSortEnum = {
     Asc: 'asc',
     Desc: 'desc'
 } as const;
-export type MaintenanceControllerListTaskSortEnum = typeof MaintenanceControllerListTaskSortEnum[keyof typeof MaintenanceControllerListTaskSortEnum];
+export type MaintenanceControllerListTasksSortEnum = typeof MaintenanceControllerListTasksSortEnum[keyof typeof MaintenanceControllerListTasksSortEnum];

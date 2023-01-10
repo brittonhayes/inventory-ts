@@ -13,11 +13,13 @@ models/CreateToolDto.ts
 models/CreateVehicleDto.ts
 models/CreateVehiclePartDto.ts
 models/Employee.ts
+models/EmployeeResponse.ts
 models/MaintenanceGuide.ts
 models/MaintenanceTask.ts
 models/Power.ts
 models/TaskStatus.ts
 models/Tool.ts
+models/ToolResponse.ts
 models/UpdateEmployeeDto.ts
 models/UpdateMaintenanceGuideDto.ts
 models/UpdateMaintenanceTaskDto.ts
@@ -26,6 +28,8 @@ models/UpdateVehicleDto.ts
 models/UpdateVehiclePartDto.ts
 models/Vehicle.ts
 models/VehiclePart.ts
+models/VehiclePartResponse.ts
+models/VehicleResponse.ts
 models/VehicleType.ts
 models/index.ts
 runtime.ts

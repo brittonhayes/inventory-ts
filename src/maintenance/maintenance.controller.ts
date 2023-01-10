@@ -53,6 +53,7 @@ export class MaintenanceController {
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.MaintenanceGuideScalarFieldEnum })
+  @ApiOkResponse({ description: 'Returns the maintenance guides', type: MaintenanceGuide, isArray: true })
   async listGuides(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
@@ -99,7 +100,8 @@ export class MaintenanceController {
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.MaintenanceTaskScalarFieldEnum })
-  async listTask(
+  @ApiOkResponse({ description: 'Returns the maintenance tasks', type: MaintenanceTask, isArray: true })
+  async listTasks(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
     @Query(
