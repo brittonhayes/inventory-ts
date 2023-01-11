@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	darkMode: 'class',
+	darkMode: ["class", '[data-mode="dark"]'] ,
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	daisyui: {
+		darkTheme: "dark",
 		themes: [
 			{
-				custom: {
+				dark: {
+					...require("daisyui/src/colors/themes")["[data-theme=forest]"],
+				},
+				light: {
 					primary: '#10b981',
 					secondary: '#1FD65F',
 					accent: '#D99330',
@@ -19,6 +23,5 @@ module.exports = {
 			}
 		]
 	},
-	theme: {},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')]
 };

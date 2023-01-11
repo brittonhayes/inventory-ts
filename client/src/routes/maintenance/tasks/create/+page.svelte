@@ -29,26 +29,26 @@
 	<div class="col-span-2 rounded">
 		<form on:submit|preventDefault="{submit}">
 			<div class="mb-4">
-				<label class="block text-gray-700 text-lg mb-2" for="name"> Name </label>
+				<label class="block text-lg mb-2" for="name">Name</label>
 				<input
-					class="max-w-md w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					class="input input-bordered max-w-md w-full"
 					id="name"
 					type="text"
 					bind:value={taskName}
 				/>
 			</div>
 			<div class="mb-4">
-				<label class="block text-gray-700 text-lg mb-2" for="dueDate">Due Date</label>
+				<label class="block text-lg mb-2" for="dueDate">Due Date</label>
 				<input
-					class="max-w-md w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					class="input input-bordered max-w-md w-full"
 					id="name"
 					type="date"
 					bind:value={taskDueDate}
 				/>
 			</div>
 			<div class="mb-4">
-				<label class="block text-gray-700 text-lg mb-2" for="status">Status</label>
-				<select bind:value={taskStatus} class="select max-w-xl bg-white shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+				<label class="block text-lg mb-2" for="status">Status</label>
+				<select bind:value={taskStatus} class="select max-w-xl input-bordered border py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 					<option disabled selected>Select a status</option>
 					<option value="PENDING">Pending</option>
 					<option value="COMPLETE">Complete</option>
