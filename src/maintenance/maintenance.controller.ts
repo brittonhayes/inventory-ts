@@ -10,7 +10,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiInternalServerErrorResponse, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from 'src/maintenance/dto/tasks.dto';
 import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';

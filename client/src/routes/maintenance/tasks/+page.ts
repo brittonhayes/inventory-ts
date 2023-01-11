@@ -1,14 +1,17 @@
-import type { MaintenanceTask } from '$lib/api';
-import { Configuration, MaintenanceApi } from '$lib/api';
+import type { ListMaintenanceTasksResponse } from '$lib/types';
+import { get } from '$lib/common/fetcher';
 import type { PageLoad } from './$types';
 
-export const load = (async ({ fetch }) => {
-    // const config = new Configuration({
-    //     fetchApi: fetch,
-    // });
-    // const client = new MaintenanceApi(config);
-    const tasks = await fetch('http://localhost:5000/api/maintenance/tasks')
-    return {
-      tasks: tasks.json() as Promise<MaintenanceTask[]>,
-    };
-  }) satisfies PageLoad;
+export const load = (async () => {
+	const response = await get<ListMaintenanceTasksResponse>('/api/maintenance/tasks');
+	return {
+		title: 'Maintenance Tasks',
+		subtitle: 'List of maintenance tasks.',
+		tasks: response,
+		crumbs: [
+			{ label: 'Home', href: '/' },
+			{ label: 'Maintenance', href: '/maintenance' },
+			{ label: 'Tasks', href: '/maintenance/tasks' }
+		]
+	};
+}) satisfies PageLoad;

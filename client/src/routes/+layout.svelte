@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Navigation from '$lib/components/Navigation.svelte';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast'
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import '../app.postcss';
-
-	import { page } from '$app/stores';
 	let links = [
 		{ href: '/', label: 'home', icon: 'home' },
 		{ href: '/vehicles', label: 'vehicles', icon: 'agriculture' },
@@ -11,9 +11,11 @@
 	];
 </script>
 
-<Navigation/>
-<AppDrawer links={links}>
+<Navigation />
+<AppDrawer links="{links}">
+	<Breadcrumbs ></Breadcrumbs>
 	<section>
-		<slot></slot>
-	</section>	
+		<slot />
+	</section>
 </AppDrawer>
+<SvelteToast />

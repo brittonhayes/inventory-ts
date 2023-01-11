@@ -8,6 +8,9 @@ module.exports = {
 	settings: {
 		'svelte3/typescript': () => require('typescript')
 	},
+	rules: {
+		'@typescript-eslint/consistent-type-imports': 'warn'
+	},
 	parserOptions: {
 		sourceType: 'module',
 		ecmaVersion: 2020

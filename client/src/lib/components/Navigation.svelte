@@ -4,7 +4,7 @@
 </script>
 
 
-<div class="navbar text-base-content bg-neutral">
+<div class="navbar text-neutral-content bg-transparent">
 	<div class="navbar-start">
 	  <div class="dropdown">
 		<label for="sidebar-toggle" class="btn btn-ghost btn-circle drawer-button lg:hidden">

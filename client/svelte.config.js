@@ -19,11 +19,10 @@ const config = {
 	vitePlugin: {
 		experimental: {
 			inspector: {
-				holdMode: true,
+				holdMode: true
 			}
 		}
 	}
-
 };
 
 export default config;

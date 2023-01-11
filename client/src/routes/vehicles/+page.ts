@@ -1,20 +1,14 @@
-import { Configuration, VehiclesApi } from '$lib/api';
-import type { VehicleResponse } from '$lib/api';
+import { get } from '$lib/common/fetcher';
+import type { VehiclesResponse } from '$lib/types';
 import type { PageLoad } from './$types';
 
-export const load = (async ({ fetch }) => {
-    const config = new Configuration({
-        fetchApi: fetch,
-    });
-    const client = new VehiclesApi(config);
-    let vehicles: VehicleResponse[] = [];
-    try {
-        vehicles = await client.vehiclesControllerListVehicles();
-    } catch (error) {
-        console.warn(error);
-    }
-    
-    return {
-      vehicles: vehicles,
-    };
-  }) satisfies PageLoad;
+export const load = (async () => {
+	const vehicles = await get<VehiclesResponse>('/api/vehicles');
+	return {
+		vehicles: vehicles,
+		crumbs: [
+			{ label: 'Home', href: '/' },
+			{ label: 'Vehicles', href: '/vehicles' },
+		],
+	};
+}) satisfies PageLoad;
