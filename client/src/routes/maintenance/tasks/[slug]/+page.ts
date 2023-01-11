@@ -10,7 +10,7 @@ export const load = (async ({ params }) => {
 			{ label: 'Home', href: '/' },
 			{ label: 'Maintenance', href: '/maintenance' },
 			{ label: 'Tasks', href: '/maintenance/tasks' },
-			{ label: 'Task', href: `/maintenance/tasks/${response.name}` }
+			{ label: response.name, href: `/maintenance/tasks/${response.name}` }
 		],
 	};
 }) satisfies PageLoad;
