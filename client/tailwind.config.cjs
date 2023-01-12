@@ -10,15 +10,16 @@ module.exports = {
 					...require("daisyui/src/colors/themes")["[data-theme=forest]"],
 				},
 				light: {
+					...require("daisyui/src/colors/themes")["[data-theme=garden]"],
 					primary: '#10b981',
-					secondary: '#1FD65F',
-					accent: '#D99330',
-					neutral: '#f3f4f6',
-					'base-100': '#f5f5f4',
-					info: '#3ABFF8',
-					success: '#16a34a',
-					warning: '#FBBD23',
-					error: '#F87272'
+					// secondary: '#1FD65F',
+					// accent: '#D99330',
+					// neutral: '#f3f4f6',
+					// 'base-100': '#f5f5f4',
+					// info: '#3ABFF8',
+					// success: '#16a34a',
+					// warning: '#FBBD23',
+					// error: '#F87272'
 				}
 			}
 		]

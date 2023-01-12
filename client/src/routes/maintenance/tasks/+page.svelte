@@ -1,10 +1,8 @@
 <script lang="ts">
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<Breadcrumbs crumbs={data.crumbs}/>
 <div class="grid gap-24 grid-cols-2">
 	<div class="col-span-1">
 		<h1 class="text-3xl font-bold">{data.title}</h1>
@@ -47,7 +45,7 @@
 						{:else}
 							<td class="opacity-50">Nobody</td>
 						{/if}
-						<td>{ new Date(task.dueDate).toDateString()}</td>
+						<td>{ new Date(task.dueDate).toLocaleDateString()}</td>
 					</tr>
 				{/each}
 			</tbody>

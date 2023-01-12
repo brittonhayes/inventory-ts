@@ -6,9 +6,11 @@ import {
   Get,
   Param,
   ParseEnumPipe,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
@@ -67,9 +69,11 @@ export class VehiclesController {
       new ParseEnumPipe(Prisma.VehicleScalarFieldEnum),
     )
     orderBy?: Prisma.VehicleScalarFieldEnum,
+    @Query('limit', new ParseIntPipe(), new DefaultValuePipe(15)) limit?: number,
   ) {
     return this.vehiclesService.vehicles({
       orderBy: { [orderBy]: sort },
+      take: limit ? limit : 15,
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
       },

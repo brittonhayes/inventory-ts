@@ -7,13 +7,15 @@
 	let links = [
 		{ href: '/', label: 'home', icon: 'home' },
 		{ href: '/vehicles', label: 'vehicles', icon: 'agriculture' },
-		{ href: '/maintenance/tasks', label: 'tasks', icon: 'task' }
+		{ href: '/maintenance/tasks', label: 'tasks', icon: 'task_alt' },
+		{ href: '/employees', label: 'employees', icon: 'groups'}
+		// { href: '/maintenance', label: 'maintenance', icon: 'home_repair_service' }
 	];
 </script>
 
 <Navigation />
 <AppDrawer links="{links}">
-	<Breadcrumbs ></Breadcrumbs>
+	<Breadcrumbs />
 	<section>
 		<slot />
 	</section>

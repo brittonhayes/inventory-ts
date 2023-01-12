@@ -19,5 +19,7 @@ export type ListMaintenanceTasksResponse =	paths['/api/maintenance/tasks']['get'
 export type CreateMaintenanceTaskResponse = paths['/api/maintenance/tasks']['post']['responses']['200']['content']['application/json'];
 
 export type ListVehiclesResponse = paths['/api/vehicles']['get']['responses']['200']['content']['application/json'];
+export type FindVehicleResponse = paths['/api/vehicles/{id}']['get']['responses']['200']['content']['application/json'];
+
 export type ListEmployeesResponse = paths['/api/employees']['get']['responses']['200']['content']['application/json'];
 export type FindEmployeeResponse = paths['/api/employees/{id}']['get']['responses']['200']['content']['application/json'];
