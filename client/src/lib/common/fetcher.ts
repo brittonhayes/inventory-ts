@@ -28,12 +28,17 @@ async function http<T>(path: TypedRequestPath, config: RequestInit): Promise<T> 
 	return response.json().catch(() => ({}));
 }
 
+export class Fetcher {
+	static get = get;
+	static post = post; 
+}
+
 /**
  * @param path - the api path to hit
  * @param config - the request configuration
  * @returns the response from the api
  */
-export async function get<T>(path: TypedRequestPath, config?: RequestInit): Promise<T> {
+async function get<T>(path: TypedRequestPath, config?: RequestInit): Promise<T> {
 	// create the request
 	const init = { method: 'get', ...config };
 
@@ -47,7 +52,7 @@ export async function get<T>(path: TypedRequestPath, config?: RequestInit): Prom
  * @param config - the request configuration
  * @returns the response from the api
  */
-export async function post<T, U>(path: TypedRequestPath, body: T, config?: RequestInit): Promise<U> {
+async function post<T, U>(path: TypedRequestPath, body: T, config?: RequestInit): Promise<U> {
 	// create the request
 	const init = { method: 'post', body: JSON.stringify(body), ...config };
 

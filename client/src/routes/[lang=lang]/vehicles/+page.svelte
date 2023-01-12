@@ -1,20 +1,13 @@
 <script lang="ts">
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
-	import { breadcrumbs } from '$lib/stores/navigation';
 	export let data: PageData;
-
-	breadcrumbs.set([
-		{ href: '/', label: 'Home', icon: 'home' },
-		{ href: '/vehicles', label: 'Vehicles', icon: 'agriculture' },
-	])
 </script>
 
 <div class="grid gap-24 grid-cols-2">
 	<div class="col-span-1">
-		<h1 class="text-3xl font-bold">Vehicles</h1>
-		<p class="text-gray-500">List of vehicles</p>
+		<h1 class="text-3xl font-bold">{data.content.title}</h1>
+		<p class="text-gray-500">{data.content.subtitle}</p>
 	</div>
 	<div class="col-span-1">
 		<div class="flex justify-end">
@@ -30,21 +23,21 @@
 	<table class="custom-table">
 		<thead>
 			<tr>
-				<th class="custom-table-head">Name</th>
-				<th class="custom-table-head">Make & Model</th>
-				<th class="custom-table-head">Machine Hours</th>
-				<th class="custom-table-head">Type</th>
+				<th class="custom-table-head">{data.content.table.columns.name}</th>
+				<th class="custom-table-head">{data.content.table.columns.make}</th>
+				<th class="custom-table-head">{data.content.table.columns.hours}</th>
+				<th class="custom-table-head">{data.content.table.columns.type}</th>
 				<th class="custom-table-head"></th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each data.vehicles as vehicle}
-				<tr class="hover hover:cursor-pointer" on:click={()=> { goto(`/vehicles/${vehicle.id}`)}}>
+				<tr class="hover hover:cursor-pointer" on:click={()=> { goto(`/${data.locale}/vehicles/${vehicle.id}`)}}>
 					<td>
 						<div class="flex items-center space-x-3">
 							<div>
 								<div class="font-bold">{vehicle.name}</div>
-								<div class="text-xs opacity-30">Last updated <span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span></div>
+								<div class="text-xs opacity-30">{data.content.lastUpdated} <span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span></div>
 							</div>
 						</div>
 					</td>

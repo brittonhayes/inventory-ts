@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
 <div class="grid gap-24 grid-cols-2">
 	<div class="col-span-1">
-		<h1 class="text-3xl font-bold">{data.title}</h1>
-		<p class="text-gray-500">{data.subtitle}</p>
+		<h1 class="text-3xl font-bold">{data.content.title}</h1>
+		<p class="text-gray-500">{data.content.subtitle}</p>
 	</div>
 	<div class="col-span-1">
 		<div class="flex justify-end">
@@ -30,11 +31,14 @@
 			</thead>
 			<tbody>
 				{#each data.tasks as task}
-					<tr>
-						<td class="link no-underline hover:text-primary">
-							<a href="/maintenance/tasks/{task.id}">
-								{task.name}
-							</a>
+					<tr class="hover hover:cursor-pointer" on:click={()=>{ goto(`/${data.locale}/maintenance/tasks/${task.id}`)}}>
+						<td>
+							<div class="flex items-center space-x-3">
+								<div>
+									<div class="font-bold">{task.name}</div>
+									<div class="text-xs opacity-30">{data.content.lastUpdated} <span class="italic">{new Date(task.updatedAt).toLocaleDateString()}</span></div>
+								</div>
+							</div>
 						</td>
 						{#if task.assignee}
 							<td class="link no-underline hover:text-primary">

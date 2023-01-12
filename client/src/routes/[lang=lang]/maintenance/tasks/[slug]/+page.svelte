@@ -1,11 +1,9 @@
 <script lang="ts">
-    import type { PageData } from "./$types"
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+    import type { PageData } from "./$types";
     
     export let data: PageData = {} as PageData;
 </script>
 
-<Breadcrumbs crumbs={data.crumbs}></Breadcrumbs>
 <div class="grid gap-24 grid-cols-2">
 	<div class="col-span-2">
 		<h1 class="text-3xl font-bold">{data.task.name}</h1>

@@ -6,11 +6,11 @@
 </script>
 
 <div class="flex items-center">
-	<BackButton to="/vehicles" class="pr-10" />
+	<BackButton to="/{data.locale}/employees" class="pr-10" />
 	<div>
-		<h1 class="text-3xl font-bold">{data.vehicle.name}</h1>
+		<h1 class="text-3xl font-bold">{data.employee.name}</h1>
 		<p class="opacity-50"> 
-			<span>Last updated {new Date(data.vehicle.updatedAt).toLocaleDateString()}</span>
+			<span>{data.content.lastUpdated} {new Date(data.employee.updatedAt).toLocaleDateString()}</span>
 		</p>
 	</div>
 </div>

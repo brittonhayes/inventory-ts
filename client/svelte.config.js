@@ -3,12 +3,6 @@ import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	kit: {
-		adapter: adapterStatic({
-			fallback: '200.html'
-		})
-	},
-
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
 	preprocess: [
@@ -16,13 +10,15 @@ const config = {
 			postcss: true
 		})
 	],
-	vitePlugin: {
-		experimental: {
-			inspector: {
-				holdMode: true
-			}
+	kit: {
+		adapter: adapterStatic({
+			fallback: '200.html'
+		}),
+		alias: {
+			$components: './src/components',
+			$i18n: './src/i18n',
 		}
-	}
+	},
 };
 
 export default config;

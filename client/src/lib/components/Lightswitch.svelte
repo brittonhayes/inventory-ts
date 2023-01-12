@@ -9,8 +9,8 @@
     theme.subscribe((value)=> {
         if (browser) {
             window.localStorage.setItem('theme', value);
+            document.body.dataset.theme = value;
         }
-        document.body.dataset.theme = value;
     })
 
     const applyThemePreference = () => { 
