@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { Fetcher } from "$lib/common/fetcher";
-	import { toast } from '@zerodevx/svelte-toast'
-	import type { CreateMaintenanceTaskRequest, CreateMaintenanceTaskResponse, MaintenanceTaskStatus } from "$lib/types";
-	import type { PageData } from "./$types";
 	import TitleBar from "$lib/components/TitleBar.svelte";
+	import type { MaintenanceTaskStatus } from "$lib/types";
+	import { toast } from '@zerodevx/svelte-toast';
+	import type { PageData } from "./$types";
 
 	let taskName: string = '';
 	let taskDueDate = '';
@@ -13,11 +12,11 @@
 
 	const submit = async () => {
 		toast.push('Creating task...')
-		return await Fetcher.post<CreateMaintenanceTaskRequest, CreateMaintenanceTaskResponse>('/api/maintenance/tasks', {
-			name: taskName,
-			status: taskStatus,
-			dueDate: new Date(taskDueDate).toISOString(),
-		});
+		// return await Fetcher.post<CreateMaintenanceTaskRequest, CreateMaintenanceTaskResponse>('/api/maintenance/tasks', {
+		// 	name: taskName,
+		// 	status: taskStatus,
+		// 	dueDate: new Date(taskDueDate).toISOString(),
+		// });
 	}
 </script>
 

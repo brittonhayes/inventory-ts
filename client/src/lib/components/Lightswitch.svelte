@@ -36,6 +36,11 @@
     applyThemePreference();
 </script>
 
-<button on:click={toggleTheme} class="btn btn-sm bg-transparent btn-ghost outline-none btn-square m-2">
-    <i class="material-icons">dark_mode</i>
-</button>
+<label class={$$props.class + " swap swap-rotate btn btn-ghost opacity-50 hover:opacity-100 btn-square"}>
+    <!-- this hidden checkbox controls the state -->
+    <input type="checkbox" on:click={toggleTheme} checked={$theme === 'dark'} />
+    <!-- moon icon -->
+    <i class="swap-on material-icons">light_mode</i>
+    <!-- sun icon -->
+    <i class="swap-off material-icons">dark_mode</i>
+</label>

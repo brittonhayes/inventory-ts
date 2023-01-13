@@ -1,33 +1,28 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import TitleBar from '$lib/components/TitleBar.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<div class="grid gap-24 grid-cols-2">
-	<div class="col-span-1">
-		<h1 class="text-3xl font-bold">{data.content.title}</h1>
-		<p class="text-gray-500">{data.content.subtitle}</p>
-	</div>
-	<div class="col-span-1">
-		<div class="flex justify-end">
-			<a href="/vehicles/create" class="btn btn-primary">
-				<i class="material-icons">add</i>
-				<span>Add Vehicle</span>
-			</a>
-		</div>
-	</div>
-</div>
+<TitleBar class="mb-10" title={data.content.title} subtitle={data.content.subtitle}>
+	<svelte:fragment slot="action">
+		<a href="/{data.locale}/vehicles/create" class="btn btn-primary gap-1">
+			<i class="material-icons">add</i>
+			<span>{data.content.button.add}</span>
+		</a>
+	</svelte:fragment>
+</TitleBar>
 
-<div class="overflow-x-auto w-full mt-10">
-	<table class="custom-table">
+<div class="overflow-x-auto pb-24">
+	<table class="table table-compact xl:table-normal">
 		<thead>
 			<tr>
-				<th class="custom-table-head">{data.content.table.columns.name}</th>
-				<th class="custom-table-head">{data.content.table.columns.make}</th>
-				<th class="custom-table-head">{data.content.table.columns.hours}</th>
-				<th class="custom-table-head">{data.content.table.columns.type}</th>
-				<th class="custom-table-head"></th>
+				<th class="w-full">{data.content.table.columns.name}</th>
+				<th>{data.content.table.columns.make}</th>
+				<th>{data.content.table.columns.hours}</th>
+				<th class="w-full">{data.content.table.columns.type}</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,11 +44,11 @@
 							</div>
 						</div>
 					</td>
-					<td class="custom-table-row">{vehicle.machineHours}</td>
-					<td class="custom-table-row">
-						<span class:badge-ghost="{vehicle.vehicleType === 'VEHICLE'}" class="badge">{vehicle.vehicleType.toLowerCase()}</span>
+					<td>{vehicle.machineHours}</td>
+					<td>
+						<span class="badge">{vehicle.vehicleType.toLowerCase()}</span>
 					</td>
-					<td class="custom-table-row">
+					<td>
 						<i class="material-icons">chevron_right</i>
 					</td>
 				</tr>
@@ -63,15 +58,4 @@
 </div>
 
 <style lang="postcss">
-	
-	.custom-table {
-		@apply table w-full table-compact;
-	}
-
-
-	.custom-table-head {
-		
-	}
-	.custom-table-row {
-	}
 </style>

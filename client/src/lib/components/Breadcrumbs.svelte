@@ -3,13 +3,15 @@
     import { breadcrumbs } from "$lib/stores/navigation";
 
     let crumbs: Route[] = [];
+    export let maxItems:number = 5;
+
     breadcrumbs.subscribe((value)=>{
-        crumbs = value
+        crumbs = value.length > maxItems ? crumbs = value.slice(Math.max(value.length - maxItems, 1)) : value
     })
 </script>
 
 {#if crumbs}
-    <div class="text-sm breadcrumbs mt-0 mb-10">
+    <div class={$$props.class + " text-sm breadcrumbs"}>
         <ul>
             {#each crumbs as crumb}
                 <li>

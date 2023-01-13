@@ -12,6 +12,11 @@ export interface Application {
 }
 
 
+export type ListMaintenanceGuidesResponse = paths['/api/maintenance/guides']['get']['responses']['200']['content']['application/json'];
+export type FindMaintenanceGuideResponse = paths['/api/maintenance/guides/{id}']['get']['responses']['200']['content']['application/json'];
+export type CreateMaintenanceGuideRequest = components['schemas']['CreateMaintenanceGuideDto'];
+export type CreateMaintenanceGuideResponse = paths['/api/maintenance/guides']['post']['responses']['200']['content']['application/json'];
+
 export type MaintenanceTaskStatus = components['schemas']['CreateMaintenanceTaskDto']['status'];
 export type FindMaintenanceTaskResponse = paths['/api/maintenance/tasks/{id}']['get']['responses']['200']['content']['application/json'];
 export type CreateMaintenanceTaskRequest = components['schemas']['CreateMaintenanceTaskDto'];

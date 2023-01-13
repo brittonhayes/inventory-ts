@@ -1,21 +1,18 @@
 <script lang="ts">
-	let title = "Create a new vehicle"
-	let subtitle = "Add a new vehicle to the system"
-
+	import TitleBar from "$lib/components/TitleBar.svelte";
+	import type { PageData } from "./$types";
 	let vehicleName: string;
 
+	export let data: PageData;
 	const submit = ()=>{
 		alert('submit');
 	}
 </script>
 
 
+<TitleBar title={data.content.title} subtitle={data.content.subtitle} backButtonLink={`/${data.locale}/vehicles`} />
+
 <div class="grid gap-5 grid-cols-2">
-	<div class="col-span-2">
-		<h1 class="text-3xl font-bold">{title}</h1>
-		<p class="text-gray-500">{subtitle}</p>
-		<div class="divider m-0 p-0"></div>
-	</div>	
 	<div class="col-span-2 rounded">
 		<form on:submit|preventDefault="{submit}">
 			<div class="mb-4">

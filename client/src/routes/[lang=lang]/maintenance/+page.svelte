@@ -1,12 +1,7 @@
 <script lang="ts">
+	import TitleBar from '$lib/components/TitleBar.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<div class="grid gap-12 grid-cols-2">
-	<div class="col-span-2">
-		<h1 class="text-3xl font-bold">{data.content.title}</h1>
-		<p class="text-gray-500">{data.content.title}</p>
-		<divider class="divider"></divider>
-	</div>
-</div>
+<TitleBar title={data.content.title} subtitle={data.content.subtitle} />

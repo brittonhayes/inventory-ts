@@ -1,0 +1,26 @@
+<script lang="ts">
+	import BackButton from "./BackButton.svelte";
+
+    export let title: string;
+    export let subtitle: string;
+	export let backButtonLink: string | undefined = undefined;
+</script>
+
+
+<div class="flex items-center">
+	{#if backButtonLink}
+		<BackButton to={backButtonLink} class="pr-10" />
+	{/if}
+	<div class={$$props.class + " flex flex-wrap gap-5 justify-between w-full"}>
+		<div>
+			<h1 class="text-4xl font-bold">{title}</h1>
+			<p class="text-sm opacity-50">{subtitle}</p>
+			<div class="pt-2">
+				<slot></slot>
+			</div>
+		</div>
+		<div class="justify-items-end">
+			<slot name="action"></slot>
+		</div>
+	</div>
+</div>

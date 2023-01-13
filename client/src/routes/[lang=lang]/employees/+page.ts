@@ -26,6 +26,7 @@ export const load: PageLoad = (async ({ parent }) => {
 			table: {
 				columns: {
 					name: $LL.employees.table.columns.name(),
+					lastUpdated: $LL.lastUpdated(),
 				},
 			},
 			buttons:  {

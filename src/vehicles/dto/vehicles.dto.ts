@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
-import { Power, VehicleType } from '@prisma/client';
+import { PowerType, VehicleType } from '@prisma/client';
 import { MaintenanceGuide } from 'src/maintenance/dto/guides.dto';
 import { MaintenanceTask } from 'src/maintenance/dto/tasks.dto';
 import { VehiclePart } from './parts.dto';
@@ -21,7 +21,7 @@ export class Vehicle {
   vin?: string;
 
   @ApiProperty({ enum: VehicleType, enumName: 'VehicleType' })
-  vehicleType: VehicleType = VehicleType.VEHICLE;
+  vehicleType: VehicleType = VehicleType.TRACTOR;
 
   @ApiProperty({ type: String })
   make: string;
@@ -35,8 +35,8 @@ export class Vehicle {
   @ApiPropertyOptional({ type: String })
   link?: string;
 
-  @ApiProperty({ enum: Power, enumName: 'Power' })
-  power: Power = Power.GAS;
+  @ApiProperty({ enum: PowerType, enumName: 'PowerType' })
+  power: PowerType = PowerType.GAS;
 
   @ApiProperty({ isArray: true, type: () => MaintenanceTask })
   tasks: MaintenanceTask[];

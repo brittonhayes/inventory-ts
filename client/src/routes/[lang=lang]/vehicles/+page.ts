@@ -25,6 +25,9 @@ export const load = (async ({ url, parent }) => {
 			title: $LL.vehicles.title(),
 			subtitle: $LL.vehicles.subtitle(),
 			lastUpdated: $LL.lastUpdated(),
+			button: {
+				add: $LL.vehicles.button.add(),
+			},
 			table: {
 				columns: {
 					name: $LL.vehicles.table.columns.name(),

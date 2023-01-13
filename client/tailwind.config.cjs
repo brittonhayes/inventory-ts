@@ -5,21 +5,23 @@ module.exports = {
 	daisyui: {
 		darkTheme: "dark",
 		themes: [
+			"emerald",
+			"forest",
 			{
 				dark: {
 					...require("daisyui/src/colors/themes")["[data-theme=forest]"],
+					primary: '#458063',
+					neutral: '#458063',
+					'base-100': '#09121F'
 				},
 				light: {
 					...require("daisyui/src/colors/themes")["[data-theme=garden]"],
-					primary: '#10b981',
-					// secondary: '#1FD65F',
-					// accent: '#D99330',
-					// neutral: '#f3f4f6',
-					// 'base-100': '#f5f5f4',
-					// info: '#3ABFF8',
-					// success: '#16a34a',
-					// warning: '#FBBD23',
-					// error: '#F87272'
+					primary: '#6D9C6D',
+					// secondary: '#606C38',
+					accent: '#DDA15E',
+					'base-100': '#EDEDE8',
+					warning: '#FCBF49',
+					error: '#D62828'
 				}
 			}
 		]

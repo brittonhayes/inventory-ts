@@ -6,10 +6,10 @@
 
 <div class="drawer drawer-mobile">
 	<input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col container mx-auto mt-5 px-8">
+	<div class="drawer-content px-5 pb-24">
 		<slot />
 	</div>
-	<div class="drawer-side">
+	<div class="drawer-side shadow-md">
 		<label for="sidebar-toggle" class="drawer-overlay"></label>
 		<ul class="menu p-4 w-20 bg-base-100">
 			{#each links as link}
