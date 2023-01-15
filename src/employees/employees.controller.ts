@@ -1,7 +1,7 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateEmployeeDto, Employee, EmployeeResponse, UpdateEmployeeDto } from 'src/employees/dto/employees.dto';
+import { CreateEmployeeDto, Employee, EmployeeResponse, UpdateEmployeeDto } from './dto/employees.dto';
 import { EmployeesService } from './employees.service';
 
 @ApiTags('employees')

@@ -10,12 +10,11 @@ import {
   Patch,
   Post,
   Query,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart } from 'src/vehicles/dto/parts.dto';
-import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from 'src/vehicles/dto/vehicles.dto';
+import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart } from './dto/parts.dto';
+import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from './dto/vehicles.dto';
 import { VehiclePartsService } from './parts.service';
 import { VehiclesService } from './vehicles.service';
 
@@ -36,7 +35,7 @@ export class VehiclesController {
   @Get(':id')
   @ApiOkResponse({ description: 'Returns the vehicle', type: VehicleResponse })
   async findVehicleById(@Param('id') id: string) {
-    return this.vehiclesService.vehicle(id);
+    return this.vehiclesService.findVehicleById(id);
   }
 
   @Patch(':id')
@@ -55,6 +54,7 @@ export class VehiclesController {
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.VehicleScalarFieldEnum })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiOkResponse({
     description: 'Returns the vehicles',
     isArray: true,
@@ -71,7 +71,7 @@ export class VehiclesController {
     orderBy?: Prisma.VehicleScalarFieldEnum,
     @Query('limit', new ParseIntPipe(), new DefaultValuePipe(15)) limit?: number,
   ) {
-    return this.vehiclesService.vehicles({
+    return this.vehiclesService.listVehicles({
       orderBy: { [orderBy]: sort },
       take: limit ? limit : 15,
       where: {

@@ -20,7 +20,6 @@
 			<tr>
 				<th class="w-full">{data.content.table.columns.name}</th>
 				<th>{data.content.table.columns.assignee}</th>
-				<th>{data.content.table.columns.dueDate}</th>
 				<th class="w-full"></th>
 			</tr>
 		</thead>
@@ -44,7 +43,6 @@
 					{:else}
 						<td class="opacity-50">Nobody</td>
 					{/if}
-					<td>{ new Date(task.dueDate).toLocaleDateString()}</td>
 					<td>
 						<i class="material-icons">chevron_right</i>
 					</td>

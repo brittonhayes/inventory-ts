@@ -23,6 +23,15 @@ export interface paths {
     delete: operations["VehiclesController_deletePart"];
     patch: operations["VehiclesController_updatePart"];
   };
+  "/api/implements": {
+    get: operations["ImplementsController_listImplements"];
+    post: operations["ImplementsController_createImplement"];
+  };
+  "/api/implements/{id}": {
+    get: operations["ImplementsController_findImplementById"];
+    delete: operations["ImplementsController_deleteImplement"];
+    patch: operations["ImplementsController_updateImplement"];
+  };
   "/api/tools": {
     get: operations["ToolsController_listTools"];
     post: operations["ToolsController_createTool"];
@@ -66,69 +75,36 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     /** @enum {string} */
-    VehicleType: "TRACTOR" | "SPRAYER" | "HARVESTER" | "COMBINE" | "TRUCK" | "TRAILER" | "OTHER";
+    Condition: "BROKEN" | "POOR" | "GOOD" | "MINT";
     /** @enum {string} */
-    PowerType: "GAS" | "DIESEL" | "ELECTRIC" | "HYBRID";
+    VehicleType: "TRACTOR" | "SPRAYER" | "COMBINE" | "TRUCK" | "ATV" | "UTV" | "SEMITRUCK" | "OTHER";
+    /** @enum {string} */
+    PowerType: "GAS" | "DIESEL" | "HYBRID" | "ELECTRIC";
     CreateVehicleDto: {
       name?: string;
       /** Format: date-time */
       createdAt: string;
       /** Format: date-time */
       updatedAt: string;
-      vin?: string;
-      vehicleType: components["schemas"]["VehicleType"];
-      make: string;
-      model: string;
-      machineHours?: number;
-      link?: string;
-      power: components["schemas"]["PowerType"];
-    };
-    VehicleResponse: {
-      id: string;
-      name?: string;
-      /** Format: date-time */
-      createdAt: string;
-      /** Format: date-time */
-      updatedAt: string;
-      vin?: string;
-      vehicleType: components["schemas"]["VehicleType"];
-      make: string;
-      model: string;
-      machineHours?: number;
-      link?: string;
-      power: components["schemas"]["PowerType"];
-    };
-    UpdateVehicleDto: {
-      name?: string;
-      /** Format: date-time */
-      createdAt?: string;
-      /** Format: date-time */
-      updatedAt?: string;
-      vin?: string;
-      vehicleType?: components["schemas"]["VehicleType"];
-      make?: string;
-      model?: string;
-      machineHours?: number;
-      link?: string;
-      power?: components["schemas"]["PowerType"];
-    };
-    /** @enum {string} */
-    Condition: "MINT" | "GOOD" | "POOR" | "NEEDS_REPLACEMENT";
-    CreateVehiclePartDto: {
-      name: string;
+      /** @default true */
+      isOwned?: boolean;
+      year?: number;
       condition?: components["schemas"]["Condition"];
-      hours?: number;
-      notes?: string;
-      vehicleId?: string;
+      vehicleType: components["schemas"]["VehicleType"];
+      make: string;
+      model: string;
+      machineHours?: number;
+      link?: string;
+      power: components["schemas"]["PowerType"];
     };
     /** @enum {string} */
-    TaskStatus: "PENDING" | "COMPLETE" | "CANCELLED";
+    ImplementType: "SPRAYER" | "HARROW" | "DRILL" | "MOWER" | "CULTIVATOR" | "CHISEL" | "RODWEEDER" | "TRAILER" | "OTHER";
+    /** @enum {string} */
+    TaskStatus: "INCOMPLETE" | "COMPLETED" | "CANCELLED";
     Tool: {
       id: string;
-      /** @description The name of the tool. */
-      name?: string;
-      maintenanceTask?: components["schemas"]["MaintenanceTask"];
-      maintenanceTaskId?: string;
+      name: string;
+      tasks?: (components["schemas"]["MaintenanceTask"])[];
     };
     Employee: {
       id: string;
@@ -137,19 +113,7 @@ export interface components {
       /** Format: date-time */
       updatedAt: string;
       name: string;
-      tasks: (components["schemas"]["MaintenanceTask"])[];
-    };
-    MaintenanceGuide: {
-      id: string;
-      /** Format: date-time */
-      createdAt: string;
-      /** Format: date-time */
-      updatedAt: string;
-      name: string;
-      content: string;
-      tasks: (components["schemas"]["MaintenanceTask"])[];
-      vehicle?: components["schemas"]["Vehicle"];
-      vehicleId?: string;
+      tasks?: (components["schemas"]["MaintenanceTask"])[];
     };
     MaintenanceTask: {
       id: string;
@@ -159,14 +123,10 @@ export interface components {
       updatedAt: string;
       status: components["schemas"]["TaskStatus"];
       /** Format: date-time */
-      dueDate: string;
-      /** Format: date-time */
-      startedAt?: string;
-      /** Format: date-time */
-      completedAt?: string;
+      dueDate?: string;
       name: string;
+      description?: string;
       machineHours?: number;
-      notes?: string;
       tools?: (components["schemas"]["Tool"])[];
       assigneeId?: string;
       assignee?: components["schemas"]["Employee"];
@@ -175,6 +135,18 @@ export interface components {
       guide?: components["schemas"]["MaintenanceGuide"];
       guideId?: string;
     };
+    MaintenanceGuide: {
+      id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      name: string;
+      content: string;
+      tasks?: (components["schemas"]["MaintenanceTask"])[];
+      vehicle?: components["schemas"]["Vehicle"];
+      vehicleId?: string;
+    };
     VehiclePart: {
       id: string;
       /** Format: date-time */
@@ -182,11 +154,7 @@ export interface components {
       /** Format: date-time */
       updatedAt: string;
       name: string;
-      condition?: components["schemas"]["Condition"];
-      hours?: number;
-      notes?: string;
-      vehicle?: components["schemas"]["Vehicle"];
-      vehicleId?: string;
+      compatibleVehicles?: (components["schemas"]["Vehicle"])[];
     };
     Vehicle: {
       id: string;
@@ -195,40 +163,145 @@ export interface components {
       createdAt: string;
       /** Format: date-time */
       updatedAt: string;
-      vin?: string;
+      /** @default true */
+      isOwned?: boolean;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
       vehicleType: components["schemas"]["VehicleType"];
       make: string;
       model: string;
       machineHours?: number;
       link?: string;
       power: components["schemas"]["PowerType"];
-      tasks: (components["schemas"]["MaintenanceTask"])[];
-      guides: (components["schemas"]["MaintenanceGuide"])[];
-      parts: (components["schemas"]["VehiclePart"])[];
+      guides?: (components["schemas"]["MaintenanceGuide"])[];
+      compatibleParts?: (components["schemas"]["VehiclePart"])[];
+      compatibleAttachments?: (components["schemas"]["VehiclePart"])[];
+      compatibleImplements?: (components["schemas"]["Implement"])[];
+    };
+    Attachment: {
+      id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @default true */
+      isOwned?: boolean;
+      name: string;
+      condition?: components["schemas"]["Condition"];
+      compatibleVehicles?: (components["schemas"]["Vehicle"])[];
+    };
+    Implement: {
+      id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @default true */
+      isOwned?: boolean;
+      name: string;
+      make: string;
+      model: string;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
+      implementType?: components["schemas"]["ImplementType"];
+      compatibleVehicles?: (components["schemas"]["Vehicle"])[];
+      compatibleAttachments?: (components["schemas"]["Attachment"])[];
+    };
+    VehicleResponse: {
+      id: string;
+      name?: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @default true */
+      isOwned?: boolean;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
+      vehicleType: components["schemas"]["VehicleType"];
+      make: string;
+      model: string;
+      machineHours?: number;
+      link?: string;
+      power: components["schemas"]["PowerType"];
+      compatibleImplements?: (components["schemas"]["Implement"])[];
+    };
+    UpdateVehicleDto: {
+      name?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** @default true */
+      isOwned?: boolean;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
+      vehicleType?: components["schemas"]["VehicleType"];
+      make?: string;
+      model?: string;
+      machineHours?: number;
+      link?: string;
+      power?: components["schemas"]["PowerType"];
+    };
+    CreateVehiclePartDto: {
+      name: string;
     };
     UpdateVehiclePartDto: {
       name?: string;
+    };
+    CreateImplementDto: {
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @default true */
+      isOwned?: boolean;
+      name: string;
+      make: string;
+      model: string;
+      year?: number;
       condition?: components["schemas"]["Condition"];
-      hours?: number;
-      notes?: string;
-      vehicleId?: string;
+      implementType?: components["schemas"]["ImplementType"];
+    };
+    ImplementResponse: {
+      id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** @default true */
+      isOwned?: boolean;
+      name: string;
+      make: string;
+      model: string;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
+      implementType?: components["schemas"]["ImplementType"];
+    };
+    UpdateImplementDto: {
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** @default true */
+      isOwned?: boolean;
+      name?: string;
+      make?: string;
+      model?: string;
+      year?: number;
+      condition?: components["schemas"]["Condition"];
+      implementType?: components["schemas"]["ImplementType"];
     };
     CreateToolDto: {
-      /** @description The name of the tool. */
-      name?: string;
-      maintenanceTaskId?: string;
+      name: string;
     };
     ToolResponse: {
       id: string;
-      /** @description The name of the tool. */
-      name?: string;
-      maintenanceTask?: components["schemas"]["MaintenanceTask"];
-      maintenanceTaskId?: string;
+      name: string;
+      tasks?: (components["schemas"]["MaintenanceTask"])[];
     };
     UpdateToolDto: {
-      /** @description The name of the tool. */
       name?: string;
-      maintenanceTaskId?: string;
     };
     CreateEmployeeDto: {
       name: string;
@@ -255,14 +328,10 @@ export interface components {
     CreateMaintenanceTaskDto: {
       status: components["schemas"]["TaskStatus"];
       /** Format: date-time */
-      dueDate: string;
-      /** Format: date-time */
-      startedAt?: string;
-      /** Format: date-time */
-      completedAt?: string;
+      dueDate?: string;
       name: string;
+      description?: string;
       machineHours?: number;
-      notes?: string;
       assigneeId?: string;
       vehicleId?: string;
       guideId?: string;
@@ -271,13 +340,9 @@ export interface components {
       status?: components["schemas"]["TaskStatus"];
       /** Format: date-time */
       dueDate?: string;
-      /** Format: date-time */
-      startedAt?: string;
-      /** Format: date-time */
-      completedAt?: string;
       name?: string;
+      description?: string;
       machineHours?: number;
-      notes?: string;
       assigneeId?: string;
       vehicleId?: string;
       guideId?: string;
@@ -295,11 +360,11 @@ export type external = Record<string, never>;
 export interface operations {
 
   VehiclesController_listVehicles: {
-    parameters: {
-      query: {
+    parameters?: {
+      query?: {
         name?: string;
-        limit: number;
-        orderBy?: "id" | "name" | "createdAt" | "updatedAt" | "vin" | "vehicleType" | "make" | "model" | "machineHours" | "link" | "power";
+        limit?: number;
+        orderBy?: "id" | "name" | "createdAt" | "updatedAt" | "isOwned" | "year" | "condition" | "vehicleType" | "make" | "model" | "machineHours" | "link" | "power";
         sort?: "asc" | "desc";
       };
     };
@@ -381,7 +446,7 @@ export interface operations {
     parameters?: {
       query?: {
         name?: string;
-        orderBy?: "id" | "createdAt" | "updatedAt" | "name" | "condition" | "hours" | "notes" | "vehicleId";
+        orderBy?: "id" | "createdAt" | "updatedAt" | "name";
         sort?: "asc" | "desc";
       };
     };
@@ -459,11 +524,94 @@ export interface operations {
       };
     };
   };
+  ImplementsController_listImplements: {
+    parameters?: {
+      query?: {
+        name?: string;
+        limit?: number;
+        orderBy?: "id" | "createdAt" | "updatedAt" | "name" | "make" | "model" | "isOwned" | "year" | "condition" | "implementType";
+        sort?: "asc" | "desc";
+      };
+    };
+    responses: {
+      /** @description Returns the implements */
+      200: {
+        content: {
+          "application/json": (components["schemas"]["ImplementResponse"])[];
+        };
+      };
+    };
+  };
+  ImplementsController_createImplement: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateImplementDto"];
+      };
+    };
+    responses: {
+      /** @description Returns the created implement */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ImplementResponse"];
+        };
+      };
+    };
+  };
+  ImplementsController_findImplementById: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the implement */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ImplementResponse"];
+        };
+      };
+    };
+  };
+  ImplementsController_deleteImplement: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the deleted implement */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ImplementResponse"];
+        };
+      };
+    };
+  };
+  ImplementsController_updateImplement: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateImplementDto"];
+      };
+    };
+    responses: {
+      /** @description Returns the updated implement */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ImplementResponse"];
+        };
+      };
+    };
+  };
   ToolsController_listTools: {
     parameters?: {
       query?: {
         name?: string;
-        orderBy?: "id" | "name" | "maintenanceTaskId";
+        orderBy?: "id" | "createdAt" | "updatedAt" | "name";
         sort?: "asc" | "desc";
       };
     };
@@ -626,7 +774,7 @@ export interface operations {
     parameters?: {
       query?: {
         name?: string;
-        orderBy?: "id" | "createdAt" | "updatedAt" | "name" | "content" | "vehicleId";
+        orderBy?: "id" | "createdAt" | "updatedAt" | "name" | "content" | "manual" | "machineHours" | "vehicleId";
         sort?: "asc" | "desc";
       };
     };
@@ -708,7 +856,7 @@ export interface operations {
     parameters?: {
       query?: {
         name?: string;
-        orderBy?: "id" | "createdAt" | "updatedAt" | "status" | "dueDate" | "startedAt" | "completedAt" | "name" | "machineHours" | "notes" | "assigneeId" | "vehicleId" | "guideId";
+        orderBy?: "id" | "createdAt" | "updatedAt" | "status" | "dueDate" | "name" | "description" | "assigneeId" | "guideId";
         sort?: "asc" | "desc";
       };
     };

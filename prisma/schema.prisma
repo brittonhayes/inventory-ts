@@ -11,28 +11,28 @@ datasource db {
 }
 
 enum TaskStatus {
-  PENDING
-  COMPLETE
+  INCOMPLETE
+  COMPLETED
   CANCELLED
 }
 
 enum Condition {
-  MINT
-  GOOD
+  BROKEN
   POOR
-  NEEDS_REPLACEMENT
+  GOOD
+  MINT
 }
 
 enum PowerType {
   GAS
   DIESEL
-  ELECTRIC
   HYBRID
+  ELECTRIC
 }
 
 enum FuelType {
-  DIESEL
   GAS
+  DIESEL
 }
 
 enum VehicleType {
@@ -64,26 +64,33 @@ enum FuelStorageType {
   OTHER
 }
 
-model FuelEvent {
-  id            String       @id @default(cuid())
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  gallons       Int?         @default(0)
-  category      FuelType?    @default(DIESEL)
-  fuelStorageId String?
-  fuelStorage   FuelStorage? @relation(fields: [fuelStorageId], references: [id])
+enum FuelEventAction {
+  FILL
+  DRAIN
 }
 
-model FuelStorage {
+model FuelEvent {
+  id        String          @id @default(cuid())
+  timestamp DateTime        @default(now())
+  gallons   Int?            @default(0)
+  action    FuelEventAction @default(FILL)
+  notes     String?
+
+  fuelStorageLocation   FuelStorageLocation? @relation(fields: [fuelStorageLocationId], references: [id])
+  fuelStorageLocationId String?
+}
+
+model FuelStorageLocation {
   id          String          @id @default(cuid())
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
   name        String
-  gallons     Int?            @default(0)
+  unit        String          @default("gallons")
+  quantity    Int?            @default(0)
   capacity    Int?            @default(0)
   storageType FuelStorageType @default(TANK)
-  category    FuelType?       @default(DIESEL)
-  FuelEvent   FuelEvent[]
+  fuelType    FuelType?       @default(DIESEL)
+  events      FuelEvent[]
 }
 
 model Employee {
@@ -95,94 +102,94 @@ model Employee {
 }
 
 model VehiclePart {
-  id               String             @id @default(cuid())
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  name             String
-  condition        Condition?
-  hours            Int?
-  notes            String?
-  vehicles         Vehicle[]
-  maintenanceGuide MaintenanceGuide[]
+  id                 String    @id @default(cuid())
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  name               String
+  compatibleVehicles Vehicle[]
 }
 
 model Tool {
-  id                String           @id @default(cuid())
-  name              String?          @unique
-  maintenanceTask   MaintenanceTask? @relation(fields: [maintenanceTaskId], references: [id])
-  maintenanceTaskId String?
-}
-
-model MaintenanceGuide {
   id        String            @id @default(cuid())
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   name      String
-  content   String
-  manual    String?
-  parts     VehiclePart[]
   tasks     MaintenanceTask[]
-  vehicle   Vehicle?          @relation(fields: [vehicleId], references: [id])
-  vehicleId String?
 }
 
-model MaintenanceTask {
+model MaintenanceGuide {
   id           String            @id @default(cuid())
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
-  status       TaskStatus        @default(PENDING)
-  dueDate      DateTime
-  startedAt    DateTime?
-  completedAt  DateTime?
   name         String
-  machineHours Int?
-  notes        String?
-  tools        Tool[]
-  assigneeId   String?
-  assignee     Employee?         @relation(fields: [assigneeId], references: [id])
-  vehicle      Vehicle?          @relation(fields: [vehicleId], references: [id])
+  content      String
+  manual       String?
+  machineHours Int               @default(0)
+  tasks        MaintenanceTask[]
   vehicleId    String?
-  guide        MaintenanceGuide? @relation(fields: [guideId], references: [id])
-  guideId      String?
+  vehicle      Vehicle?          @relation(fields: [vehicleId], references: [id])
+}
+
+model MaintenanceTask {
+  id          String            @id @default(cuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  status      TaskStatus        @default(INCOMPLETE)
+  dueDate     DateTime?
+  name        String
+  description String?
+  tools       Tool[]
+  assigneeId  String?
+  assignee    Employee?         @relation(fields: [assigneeId], references: [id])
+  guide       MaintenanceGuide? @relation(fields: [guideId], references: [id])
+  guideId     String?
 }
 
 model Vehicle {
-  id           String             @id @default(cuid())
-  name         String?            @unique
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
-  vin          String?            @unique
+  id           String       @id @default(cuid())
+  name         String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  isOwned      Boolean      @default(true)
   year         Int?
-  vehicleType  VehicleType
+  condition    Condition?   @default(GOOD)
+  vehicleType  VehicleType?
   make         String
   model        String
   machineHours Int?
   link         String?
-  power        PowerType?         @default(DIESEL)
-  tasks        MaintenanceTask[]
-  guides       MaintenanceGuide[]
-  parts        VehiclePart[]
-  attachments  Attachment[]
-  implement    Implement?         @relation(fields: [implementId], references: [id])
-  implementId  String?
+  power        PowerType?   @default(DIESEL)
+
+  guides                MaintenanceGuide[]
+  compatibleParts       VehiclePart[]
+  compatibleAttachments Attachment[]
+  compatibleImplements  Implement[]
 }
 
 model Attachment {
-  id          String     @id @default(cuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  name        String
-  implement   Implement? @relation(fields: [implementId], references: [id])
-  implementId String?
-  vehicleId   String?
-  vehicle     Vehicle?   @relation(fields: [vehicleId], references: [id])
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  isOwned   Boolean    @default(true)
+  name      String
+  condition Condition? @default(GOOD)
+
+  compatibleImplements Implement[]
+  compatibleVehicles   Vehicle[]
 }
 
 model Implement {
-  id          String       @id @default(cuid())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  name        String
-  vehicles    Vehicle[]
-  attachments Attachment[]
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  name          String
+  make          String
+  model         String
+  isOwned       Boolean        @default(true)
+  year          Int?
+  condition     Condition?     @default(GOOD)
+  implementType ImplementType?
+
+  compatibleVehicles    Vehicle[]
+  compatibleAttachments Attachment[]
 }

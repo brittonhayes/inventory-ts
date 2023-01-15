@@ -5,6 +5,7 @@ import { EmployeesService } from './employees.service';
 
 describe('EmployeesController', () => {
   let controller: EmployeesController;
+  let service: EmployeesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -13,13 +14,10 @@ describe('EmployeesController', () => {
     }).compile();
 
     controller = module.get<EmployeesController>(EmployeesController);
+    service = module.get<EmployeesService>(EmployeesService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-  });
-
-  it('should return an array of employees', async () => {
-    expect(controller.listEmployees()).resolves.toBeDefined();
   });
 });

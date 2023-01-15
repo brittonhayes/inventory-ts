@@ -1,5 +1,5 @@
-import { MaintenanceTask } from 'src/maintenance/dto/tasks.dto';
-import { ApiProperty, OmitType, PartialType, PickType } from '@nestjs/swagger';
+import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
+import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Length } from 'class-validator';
 
 export class Employee {
@@ -16,8 +16,8 @@ export class Employee {
   @Length(1, 100)
   name: string;
 
-  @ApiProperty({ isArray: true, type: () => MaintenanceTask })
-  tasks: MaintenanceTask[];
+  @ApiPropertyOptional({ isArray: true, type: () => MaintenanceTask })
+  tasks?: MaintenanceTask[];
 }
 
 export class EmployeeResponse extends OmitType(Employee, ['tasks'] as const) {}

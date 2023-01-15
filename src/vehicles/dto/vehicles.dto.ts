@@ -1,8 +1,9 @@
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
-import { PowerType, VehicleType } from '@prisma/client';
-import { MaintenanceGuide } from 'src/maintenance/dto/guides.dto';
-import { MaintenanceTask } from 'src/maintenance/dto/tasks.dto';
+import { Condition, PowerType, VehicleType } from '@prisma/client';
+import { MaintenanceGuide } from '../../maintenance/dto/guides.dto';
+import { Implement } from './implements.dto';
 import { VehiclePart } from './parts.dto';
+import { Attachment } from './attachments.dto';
 
 export class Vehicle {
   @ApiProperty({ type: String })
@@ -17,11 +18,17 @@ export class Vehicle {
   @ApiProperty({ type: Date })
   updatedAt: Date;
 
-  @ApiPropertyOptional({ type: String })
-  vin?: string;
+  @ApiPropertyOptional({ type: Boolean, default: true })
+  isOwned?: boolean = true;
+
+  @ApiPropertyOptional({ type: Number })
+  year: number;
+
+  @ApiPropertyOptional({ enum: Condition, enumName: 'Condition' })
+  condition?: Condition = Condition.GOOD;
 
   @ApiProperty({ enum: VehicleType, enumName: 'VehicleType' })
-  vehicleType: VehicleType = VehicleType.TRACTOR;
+  vehicleType: VehicleType;
 
   @ApiProperty({ type: String })
   make: string;
@@ -38,19 +45,32 @@ export class Vehicle {
   @ApiProperty({ enum: PowerType, enumName: 'PowerType' })
   power: PowerType = PowerType.GAS;
 
-  @ApiProperty({ isArray: true, type: () => MaintenanceTask })
-  tasks: MaintenanceTask[];
+  @ApiPropertyOptional({ isArray: true, type: () => MaintenanceGuide })
+  guides?: MaintenanceGuide[];
 
-  @ApiProperty({ isArray: true, type: () => MaintenanceGuide })
-  guides: MaintenanceGuide[];
+  @ApiPropertyOptional({ isArray: true, type: () => VehiclePart })
+  compatibleParts?: VehiclePart[];
 
-  @ApiProperty({ isArray: true, type: () => VehiclePart })
-  parts: VehiclePart[];
+  @ApiPropertyOptional({ isArray: true, type: () => VehiclePart })
+  compatibleAttachments?: Attachment[];
+
+  @ApiPropertyOptional({ isArray: true, type: () => Implement })
+  compatibleImplements?: Implement[];
 }
 
-export class VehicleResponse extends OmitType(Vehicle, ['tasks', 'parts', 'guides'] as const) {}
+export class VehicleResponse extends OmitType(Vehicle, [
+  'guides',
+  'compatibleParts',
+  'compatibleAttachments',
+] as const) {}
 
-export class CreateVehicleDto extends OmitType(Vehicle, ['id', 'tasks', 'guides', 'parts'] as const) {}
+export class CreateVehicleDto extends OmitType(Vehicle, [
+  'id',
+  'guides',
+  'compatibleParts',
+  'compatibleAttachments',
+  'compatibleImplements',
+] as const) {}
 
 export class UpdateVehicleDto extends PartialType(CreateVehicleDto) {}
 

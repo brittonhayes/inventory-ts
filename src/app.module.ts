@@ -7,10 +7,10 @@ import { LoggerMiddleware } from './middleware/logger/logger.middleware';
 
 @Module({
   imports: [
-    CacheModule.register({
-      ttl: 5, // seconds
-      max: 100, // maximum number of items in cache
-    }),
+    // CacheModule.register({
+    //   ttl: 5, // seconds
+    //   max: 100, // maximum number of items in cache
+    // }),
     VehiclesModule,
     ToolsModule,
     EmployeesModule,

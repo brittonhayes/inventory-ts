@@ -7,7 +7,7 @@ import { CreateVehicleDto, UpdateVehicleDto } from './dto/vehicles.dto';
 export class VehiclesService {
   constructor(private prisma: PrismaService) {}
 
-  async vehicles(params: {
+  async listVehicles(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.VehicleWhereUniqueInput;
@@ -26,7 +26,7 @@ export class VehiclesService {
     });
   }
 
-  async vehicle(id: string) {
+  async findVehicleById(id: string) {
     return this.prisma.vehicle.findUnique({ where: { id } });
   }
 

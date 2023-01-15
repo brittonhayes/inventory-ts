@@ -1,9 +1,9 @@
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { TaskStatus } from '@prisma/client';
-import { Employee } from 'src/employees/dto/employees.dto';
-import { MaintenanceGuide } from 'src/maintenance/dto/guides.dto';
-import { Tool } from 'src/tools/dto/tools.dto';
-import { Vehicle } from 'src/vehicles/dto/vehicles.dto';
+import { Employee } from '../../employees/dto/employees.dto';
+import { MaintenanceGuide } from './guides.dto';
+import { Tool } from '../../tools/dto/tools.dto';
+import { Vehicle } from '../../vehicles/dto/vehicles.dto';
 
 export class MaintenanceTask {
   @ApiProperty({ type: String })
@@ -16,25 +16,19 @@ export class MaintenanceTask {
   updatedAt: Date;
 
   @ApiProperty({ enum: TaskStatus, enumName: 'TaskStatus' })
-  status: TaskStatus = TaskStatus.PENDING;
-
-  @ApiProperty({ type: Date })
-  dueDate: Date;
+  status: TaskStatus = TaskStatus.INCOMPLETE;
 
   @ApiPropertyOptional({ type: Date })
-  startedAt?: Date;
-
-  @ApiPropertyOptional({ type: Date })
-  completedAt?: Date;
+  dueDate?: Date;
 
   @ApiProperty({ type: String })
   name: string;
 
+  @ApiPropertyOptional({ type: String })
+  description?: string;
+
   @ApiPropertyOptional({ type: Number })
   machineHours?: number;
-
-  @ApiPropertyOptional({ type: String })
-  notes?: string;
 
   @ApiPropertyOptional({ isArray: true, type: () => Tool })
   tools?: Tool[];

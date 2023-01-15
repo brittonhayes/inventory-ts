@@ -1,7 +1,8 @@
-import { ApiProperty, ApiPropertyOptional, OmitType, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Condition } from '@prisma/client';
 import { Vehicle } from './vehicles.dto';
 
-export class VehiclePart {
+export class Attachment {
   @ApiProperty({ type: String })
   id: string;
 
@@ -11,18 +12,15 @@ export class VehiclePart {
   @ApiProperty({ type: Date })
   updatedAt: Date;
 
+  @ApiPropertyOptional({ type: Boolean, default: true })
+  isOwned?: boolean = true;
+
   @ApiProperty({ type: String })
   name: string;
+
+  @ApiPropertyOptional({ enum: Condition, enumName: 'Condition' })
+  condition?: Condition;
 
   @ApiPropertyOptional({ isArray: true, type: () => Vehicle })
   compatibleVehicles?: Vehicle[];
 }
-
-export class CreateVehiclePartDto extends OmitType(VehiclePart, [
-  'id',
-  'createdAt',
-  'updatedAt',
-  'compatibleVehicles',
-] as const) {}
-
-export class UpdateVehiclePartDto extends PartialType(CreateVehiclePartDto) {}

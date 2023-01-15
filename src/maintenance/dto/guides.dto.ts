@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Length } from 'class-validator';
-import { MaintenanceTask } from 'src/maintenance/dto/tasks.dto';
-import { Vehicle } from 'src/vehicles/dto/vehicles.dto';
+import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
+import { Vehicle } from '../../vehicles/dto/vehicles.dto';
 
 export class MaintenanceGuide {
   @ApiProperty({ type: String })
@@ -21,8 +21,8 @@ export class MaintenanceGuide {
   @Length(1, 2000)
   content: string;
 
-  @ApiProperty({ isArray: true, type: () => MaintenanceTask })
-  tasks: MaintenanceTask[];
+  @ApiPropertyOptional({ isArray: true, type: () => MaintenanceTask })
+  tasks?: MaintenanceTask[];
 
   @ApiPropertyOptional({ type: () => Vehicle })
   vehicle?: Vehicle;

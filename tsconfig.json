@@ -16,14 +16,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@app/inventory-sdk": [
-        "libs/inventory-sdk/src"
-      ],
-      "@app/inventory-sdk/*": [
-        "libs/inventory-sdk/src/*"
-      ]
-    }
+    "noFallthroughCasesInSwitch": false
   }
 }

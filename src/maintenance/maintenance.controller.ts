@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiInternalServerErrorResponse, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from 'src/maintenance/dto/tasks.dto';
+import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
 import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';
 import { MaintenanceGuidesService } from './guides.service';
 import { MaintenanceTasksService } from './tasks.service';
