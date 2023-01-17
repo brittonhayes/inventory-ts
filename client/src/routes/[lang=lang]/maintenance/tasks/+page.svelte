@@ -35,7 +35,7 @@
 						</div>
 					</td>
 					{#if task.assignee}
-						<td class="link no-underline hover:text-primary">
+						<td class="link no-underline hover:text-accent">
 							<a href="/employees/{task.assignee.id}">
 								{task.assignee.name}
 							</a>

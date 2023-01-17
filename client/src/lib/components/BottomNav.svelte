@@ -3,7 +3,7 @@
     import type { Route } from '$lib/types';
     export let links: Route[];
 </script>
-<div class={ $$props.class + " btm-nav btm-nav-md border-t-2 border-base-200"}>
+<div class={ $$props.class + " bg-base-100 text-base-content btm-nav btm-nav-md"}>
     {#each links as link}
         <li>
             <a

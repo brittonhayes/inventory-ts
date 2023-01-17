@@ -4,7 +4,7 @@
 	export let links: Route[];
 </script>
 
-<div class="drawer drawer-mobile">
+<div class="drawer drawer-mobile bg-neutral">
 	<input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content px-5 pb-24">
 		<slot />
