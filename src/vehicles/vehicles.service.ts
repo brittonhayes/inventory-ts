@@ -45,6 +45,14 @@ export class VehiclesService {
     });
   }
 
+  async listCompatibleImplements(id: string) {
+    return this.prisma.vehicle.findUnique({ where: { id } }).compatibleImplements();
+  }
+
+  async listCompatibleParts(id: string) {
+    return this.prisma.vehicle.findUnique({ where: { id } }).compatibleParts();
+  }
+
   async deleteVehicle(id: string) {
     return this.prisma.vehicle.delete({
       where: { id },

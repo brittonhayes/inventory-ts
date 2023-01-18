@@ -45,6 +45,14 @@ export class MaintenanceGuidesService {
     });
   }
 
+  async findMaintenanceGuideByVehicle(id: string) {
+    return this.prisma.maintenanceGuide.findMany({
+      where: {
+        vehicleId: id,
+      },
+    });
+  }
+
   async deleteMaintenanceGuide(id: string) {
     return this.prisma.maintenanceGuide.delete({
       where: {

@@ -14,6 +14,7 @@ export interface Application {
 
 export type ListMaintenanceGuidesResponse = paths['/api/maintenance/guides']['get']['responses']['200']['content']['application/json'];
 export type FindMaintenanceGuideResponse = paths['/api/maintenance/guides/{id}']['get']['responses']['200']['content']['application/json'];
+export type FindMaintenanceGuideForVehicleResponse = paths['/api/maintenance/guides/vehicle/{id}']['get']['responses']['200']['content']['application/json']; 
 export type CreateMaintenanceGuideRequest = components['schemas']['CreateMaintenanceGuideDto'];
 export type CreateMaintenanceGuideResponse = paths['/api/maintenance/guides']['post']['responses']['200']['content']['application/json'];
 
@@ -25,6 +26,8 @@ export type CreateMaintenanceTaskResponse = paths['/api/maintenance/tasks']['pos
 
 export type ListVehiclesResponse = paths['/api/vehicles']['get']['responses']['200']['content']['application/json'];
 export type FindVehicleResponse = paths['/api/vehicles/{id}']['get']['responses']['200']['content']['application/json'];
+export type FindVehicleImplementsResponse = paths['/api/vehicles/{id}/implements']['get']['responses']['200']['content']['application/json'];
+export type FindVehiclePartsResponse = paths['/api/vehicles/{id}/parts']['get']['responses']['200']['content']['application/json'];
 
 export type ListEmployeesResponse = paths['/api/employees']['get']['responses']['200']['content']['application/json'];
 export type FindEmployeeResponse = paths['/api/employees/{id}']['get']['responses']['200']['content']['application/json'];

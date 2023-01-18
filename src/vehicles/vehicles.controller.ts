@@ -13,7 +13,8 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart } from './dto/parts.dto';
+import { ImplementResponse } from './dto/implements.dto';
+import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart, VehiclePartResponse } from './dto/parts.dto';
 import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from './dto/vehicles.dto';
 import { VehiclePartsService } from './parts.service';
 import { VehiclesService } from './vehicles.service';
@@ -125,5 +126,25 @@ export class VehiclesController {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
       },
     });
+  }
+
+  @Get(':id/implements')
+  @ApiOkResponse({
+    description: 'Returns the compatible implements for the vehicle',
+    isArray: true,
+    type: ImplementResponse,
+  })
+  async getCompatibleImplements(@Param('id') id: string) {
+    return this.vehiclesService.listCompatibleImplements(id);
+  }
+
+  @Get(':id/parts')
+  @ApiOkResponse({
+    description: 'Returns the compatible parts for the vehicle',
+    isArray: true,
+    type: VehiclePartResponse,
+  })
+  async getCompatibleParts(@Param('id') id: string) {
+    return this.vehiclesService.listCompatibleParts(id);
   }
 }

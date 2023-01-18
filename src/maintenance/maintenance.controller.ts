@@ -10,10 +10,10 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiInternalServerErrorResponse, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
 import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';
+import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
 import { MaintenanceGuidesService } from './guides.service';
 import { MaintenanceTasksService } from './tasks.service';
 
@@ -29,6 +29,16 @@ export class MaintenanceController {
   @ApiOkResponse({ description: 'Returns the created maintenance guide', type: MaintenanceGuide })
   async createGuide(@Body() createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
     return this.maintenanceGuidesService.createMaintenanceGuide(createMaintenanceGuideDto);
+  }
+
+  @Get('/guides/vehicle/:id')
+  @ApiOkResponse({
+    description: 'Returns the maintenance guides for the vehicle',
+    type: MaintenanceGuide,
+    isArray: true,
+  })
+  async findGuideByVehicle(@Param('id') id: string) {
+    return this.maintenanceGuidesService.findMaintenanceGuideByVehicle(id);
   }
 
   @Get('/guides/:id')

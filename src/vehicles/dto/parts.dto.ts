@@ -18,6 +18,8 @@ export class VehiclePart {
   compatibleVehicles?: Vehicle[];
 }
 
+export class VehiclePartResponse extends OmitType(VehiclePart, ['compatibleVehicles'] as const) {}
+
 export class CreateVehiclePartDto extends OmitType(VehiclePart, [
   'id',
   'createdAt',

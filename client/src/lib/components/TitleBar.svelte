@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class="justify-items-end">
-			<slot name="action"></slot>
+			<slot name="action" class="w-full lg:w-1/3"></slot>
 		</div>
 	</div>
 </div>

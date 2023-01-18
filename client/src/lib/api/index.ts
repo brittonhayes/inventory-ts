@@ -23,6 +23,12 @@ export interface paths {
     delete: operations["VehiclesController_deletePart"];
     patch: operations["VehiclesController_updatePart"];
   };
+  "/api/vehicles/{id}/implements": {
+    get: operations["VehiclesController_getCompatibleImplements"];
+  };
+  "/api/vehicles/{id}/parts": {
+    get: operations["VehiclesController_getCompatibleParts"];
+  };
   "/api/implements": {
     get: operations["ImplementsController_listImplements"];
     post: operations["ImplementsController_createImplement"];
@@ -53,6 +59,9 @@ export interface paths {
   "/api/maintenance/guides": {
     get: operations["MaintenanceController_listGuides"];
     post: operations["MaintenanceController_createGuide"];
+  };
+  "/api/maintenance/guides/vehicle/{id}": {
+    get: operations["MaintenanceController_findGuideByVehicle"];
   };
   "/api/maintenance/guides/{id}": {
     get: operations["MaintenanceController_findGuideById"];
@@ -249,7 +258,8 @@ export interface components {
     UpdateVehiclePartDto: {
       name?: string;
     };
-    CreateImplementDto: {
+    ImplementResponse: {
+      id: string;
       /** Format: date-time */
       createdAt: string;
       /** Format: date-time */
@@ -263,8 +273,15 @@ export interface components {
       condition?: components["schemas"]["Condition"];
       implementType?: components["schemas"]["ImplementType"];
     };
-    ImplementResponse: {
+    VehiclePartResponse: {
       id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      name: string;
+    };
+    CreateImplementDto: {
       /** Format: date-time */
       createdAt: string;
       /** Format: date-time */
@@ -520,6 +537,36 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["VehiclePart"];
+        };
+      };
+    };
+  };
+  VehiclesController_getCompatibleImplements: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the compatible implements for the vehicle */
+      200: {
+        content: {
+          "application/json": (components["schemas"]["ImplementResponse"])[];
+        };
+      };
+    };
+  };
+  VehiclesController_getCompatibleParts: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the compatible parts for the vehicle */
+      200: {
+        content: {
+          "application/json": (components["schemas"]["VehiclePartResponse"])[];
         };
       };
     };
@@ -798,6 +845,21 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["MaintenanceGuide"];
+        };
+      };
+    };
+  };
+  MaintenanceController_findGuideByVehicle: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the maintenance guides for the vehicle */
+      200: {
+        content: {
+          "application/json": (components["schemas"]["MaintenanceGuide"])[];
         };
       };
     };
