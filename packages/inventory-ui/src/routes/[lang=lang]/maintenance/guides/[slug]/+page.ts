@@ -12,17 +12,17 @@ export const load = (async ({ params, parent }) => {
 	const guide = await Fetcher.get<FindMaintenanceGuideResponse>(`/api/maintenance/guides/${params.slug}`);
 	const tasks = await Fetcher.get<FindMaintenanceGuideTasksResponse>(`/api/maintenance/guides/${params.slug}/tasks`);
 
-	const $LL = get(LL)
+	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
 		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
 		{ label: $LL.guides.title(), href: `/${locale}/maintenance/guides`, icon: '' },
-		{ label: guide.name, href: `/${locale}/maintenance/guides/${guide.id}`, icon: '' },
-	])
+		{ label: guide.name, href: `/${locale}/maintenance/guides/${guide.id}`, icon: '' }
+	]);
 
 	return {
 		locale: locale,
 		guide: guide,
-		tasks: tasks,
+		tasks: tasks
 	};
 }) satisfies PageLoad;

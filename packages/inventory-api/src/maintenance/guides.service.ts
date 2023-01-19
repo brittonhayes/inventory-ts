@@ -29,6 +29,9 @@ export class MaintenanceGuidesService {
       where: {
         id,
       },
+      include: {
+        vehicle: true,
+      },
     });
   }
 
