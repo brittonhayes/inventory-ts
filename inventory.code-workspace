@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "✨ @brittonhayes/inventory",
+			"path": "."
+		},
+		{
+			"name": "🚀 @brittonhayes/inventory-api",
+			"path": "packages/inventory-api"
+		},
+		{
+			"name": "📦 @brittonhayes/inventory-ui",
+			"path": "packages/inventory-ui"
+		}
+	],
+	"settings": {}
+}
