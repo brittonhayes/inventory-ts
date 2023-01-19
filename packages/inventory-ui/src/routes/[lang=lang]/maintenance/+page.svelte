@@ -4,4 +4,4 @@
 	export let data: PageData;
 </script>
 
-<TitleBar title={data.content.title} subtitle={data.content.subtitle} />
+<TitleBar title="{data.content.title}" subtitle="{data.content.subtitle}" />

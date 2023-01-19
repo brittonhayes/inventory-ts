@@ -1,47 +1,47 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	darkMode: ["class", '[data-mode="dark"]'] ,
+	darkMode: ['class', '[data-mode="dark"]'],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	daisyui: {
-		darkTheme: "dark",
+		darkTheme: 'dark',
 		themes: [
-			"emerald",
-			"forest",
+			'emerald',
+			'forest',
 			{
 				dark: {
-					...require("daisyui/src/colors/themes")["[data-theme=dark]"],
-					primary: "#f9bc60",
-					"primary-content": "#201C1C",
-					secondary: "#078080",
-					"secondary-content": "#f8f5f2",
-					accent: "#f45d48",
-					"accent-content": "#232323",
+					...require('daisyui/src/colors/themes')['[data-theme=dark]'],
+					primary: '#f9bc60',
+					'primary-content': '#201C1C',
+					secondary: '#078080',
+					'secondary-content': '#f8f5f2',
+					accent: '#f45d48',
+					'accent-content': '#232323',
 					// neutral: "#004643",
-					"neutral-content": "#fffffe",
+					'neutral-content': '#fffffe',
 					// "neutral-focus": "#0f3433",
 					// "base-100": "#001e1d",
 					// "base-200": "#0f3433",
 					// "base-300": "#006661",
-					"base-content": "#fffffe",
+					'base-content': '#fffffe'
 					// "base-300-content": "#001E1D",
 					// info: "#119DA4",
-					// success: "#79C99E", 
+					// success: "#79C99E",
 					// warning: "#F25C54",
 					// error: "#A22C29",
 					// "error-content": "#FCDBD9",
 					// "--rounded-btn": "1.9rem",
 				},
 				light: {
-					primary: "#397F3E",
-					"primary-content": "#fffffe",
-					secondary: "#72C077",
-					accent: "#D8973C",
-					neutral: "#F0F4EF",
-					"info": "#009F93",
-					"base-100": "#EEF0EB",
-					"base-200": "#D2DECF",
-					"base-content": "#182225",
-					"error": "#A4243B",
+					primary: '#397F3E',
+					'primary-content': '#fffffe',
+					secondary: '#72C077',
+					accent: '#D8973C',
+					neutral: '#F0F4EF',
+					info: '#009F93',
+					'base-100': '#EEF0EB',
+					'base-200': '#D2DECF',
+					'base-content': '#182225',
+					error: '#A4243B'
 				}
 			}
 		]
@@ -49,16 +49,16 @@ module.exports = {
 	theme: {
 		colors: {
 			yellow: {
-				100: "#fef2df",
-				200: "#fde4bf",
-				300: "#fbd7a0",
-				400: "#fac980",
-				500: "#f9bc60",
-				600: "#c7964d",
-				700: "#95713a",
-				800: "#644b26",
-				900: "#322613"
-			},
+				100: '#fef2df',
+				200: '#fde4bf',
+				300: '#fbd7a0',
+				400: '#fac980',
+				500: '#f9bc60',
+				600: '#c7964d',
+				700: '#95713a',
+				800: '#644b26',
+				900: '#322613'
+			}
 		}
 	},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')]

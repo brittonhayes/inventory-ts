@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<TitleBar class="mb-10" title={data.content.title} subtitle={data.content.subtitle}>
+<TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
 	<svelte:fragment slot="action">
 		<a href="/{data.locale}/vehicles/create" class="btn btn-primary gap-1">
 			<i class="material-icons">add</i>
@@ -27,12 +27,20 @@
 		</thead>
 		<tbody>
 			{#each data.vehicles as vehicle}
-				<tr class="hover:cursor-pointer hover" on:click={()=> { goto(`/${data.locale}/vehicles/${vehicle.id}`)}}>
+				<tr
+					class="hover:cursor-pointer hover"
+					on:click="{() => {
+						goto(`/${data.locale}/vehicles/${vehicle.id}`);
+					}}"
+				>
 					<td>
 						<div class="flex items-center space-x-3">
 							<div>
 								<div class="font-bold">{vehicle.name}</div>
-								<div class="text-xs opacity-30">{data.content.lastUpdated} <span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span></div>
+								<div class="text-xs opacity-30">
+									{data.content.lastUpdated}
+									<span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span>
+								</div>
 							</div>
 						</div>
 					</td>

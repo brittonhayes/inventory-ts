@@ -6,18 +6,18 @@ import type { PageLoad } from './$types';
 export const load = (async ({ parent }) => {
 	const { locale } = await parent();
 
-	setLocale(locale)
-	const $LL = get(LL)
+	setLocale(locale);
+	const $LL = get(LL);
 
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
-		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
-	])
+		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' }
+	]);
 
 	return {
 		content: {
 			title: $LL.maintenance.title(),
-			subtitle: $LL.maintenance.subtitle(),
+			subtitle: $LL.maintenance.subtitle()
 		}
 	};
 }) satisfies PageLoad;

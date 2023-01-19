@@ -11,12 +11,12 @@ export const load = (async ({ parent }) => {
 
 	const guides = await Fetcher.get<ListMaintenanceGuidesResponse>('/api/maintenance/guides');
 
-	const $LL = get(LL)
+	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
 		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
-		{ label: $LL.guides.title(), href: `/${locale}/maintenance/guides`, icon: 'menu_book' },
-	])
+		{ label: $LL.guides.title(), href: `/${locale}/maintenance/guides`, icon: 'menu_book' }
+	]);
 
 	return {
 		content: {
@@ -25,14 +25,14 @@ export const load = (async ({ parent }) => {
 			table: {
 				columns: {
 					name: $LL.guides.table.columns.name(),
-					vehicle: $LL.guides.table.columns.vehicle(),
+					vehicle: $LL.guides.table.columns.vehicle()
 				}
 			},
 			buttons: {
-				add: $LL.guides.button.add(),
+				add: $LL.guides.button.add()
 			},
-			lastUpdated: $LL.lastUpdated(),
+			lastUpdated: $LL.lastUpdated()
 		},
-		guides: guides,
+		guides: guides
 	};
 }) satisfies PageLoad;

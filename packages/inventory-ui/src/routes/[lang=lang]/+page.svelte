@@ -2,9 +2,9 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 
-	let pages = data.links.filter((link)=>{
-		return link.label !== 'Home'
-	})
+	let pages = data.links.filter((link) => {
+		return link.label !== 'Home';
+	});
 </script>
 
 <div class="grid gap-12 grid-cols-2">
@@ -18,9 +18,11 @@
 	{#each pages as link}
 		<div class="lg:col-span-4 col-span-4">
 			<a href="{link.href}">
-				<div class="stat flex justify-start items-center border-2 lg:h-36 bg-base-100 hover:cursor-pointer hover:text-primary-content hover:bg-primary">
+				<div
+					class="stat flex justify-start items-center border-2 lg:h-36 bg-base-100 hover:cursor-pointer hover:text-primary-content hover:bg-primary"
+				>
 					<div class="stat-figure">
-							<i class="material-icons text-3xl">{link.icon}</i>
+						<i class="material-icons text-3xl">{link.icon}</i>
 					</div>
 					<div class="stat-title text-2xl w-full">{link.label}</div>
 					<button class="btn btn-ghost">

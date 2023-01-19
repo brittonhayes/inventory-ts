@@ -9,16 +9,16 @@ export const load = (async ({ parent, params }) => {
 	const { locale } = await parent();
 	setLocale(locale);
 	const response = await Fetcher.get<FindEmployeeResponse>(`/api/employees/${params.slug}`);
-	const $LL = get(LL)
+	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
 		{ label: $LL.employees.title(), href: `/${locale}/employees`, icon: 'groups' },
-		{ label: response.name, href: `/${locale}/employees/${response.name}`, icon: ''}
-	])
+		{ label: response.name, href: `/${locale}/employees/${response.name}`, icon: '' }
+	]);
 	return {
 		content: {
-			lastUpdated: $LL.lastUpdated(),
+			lastUpdated: $LL.lastUpdated()
 		},
-		employee: response,
+		employee: response
 	};
 }) satisfies PageLoad;

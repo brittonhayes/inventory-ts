@@ -1,21 +1,21 @@
-import type { Translation } from '../i18n-types'
+import type { Translation } from '../i18n-types';
 
 const es: Translation = {
 	lastUpdated: 'Fecha actualización',
 	create: 'Crear',
 	home: {
 		title: 'Tablero',
-		subtitle: 'Inconclusa...',
+		subtitle: 'Inconclusa...'
 	},
 	maintenance: {
 		title: 'Mantenimiento',
-		subtitle: 'Tareas de mantenimiento y guías.',
+		subtitle: 'Tareas de mantenimiento y guías.'
 	},
 	guides: {
 		title: 'Guías de mantenimiento',
 		subtitle: 'Lista de guías de mantenimiento.',
 		button: {
-			add: 'Agregar guía',
+			add: 'Agregar guía'
 		},
 		create: {
 			title: 'Crear guía',
@@ -23,13 +23,13 @@ const es: Translation = {
 			form: {
 				name: 'Nombre',
 				vehicle: 'Vehículo',
-				selectVehicle: 'Seleccionar vehículo',
-			},
+				selectVehicle: 'Seleccionar vehículo'
+			}
 		},
 		table: {
 			columns: {
 				name: 'Nombre',
-				vehicle: 'Vehículo',	
+				vehicle: 'Vehículo'
 			}
 		}
 	},
@@ -37,7 +37,7 @@ const es: Translation = {
 		title: 'Tareas de mantenimiento',
 		subtitle: 'Lista de tareas de mantenimiento.',
 		button: {
-			add: 'Agregar tarea',
+			add: 'Agregar tarea'
 		},
 		create: {
 			title: 'Crear tarea',
@@ -50,14 +50,14 @@ const es: Translation = {
 				selectStatus: 'Seleccionar estado',
 				pending: 'Pendiente',
 				completed: 'Completado',
-				cancelled: 'Cancelado',
-			},
+				cancelled: 'Cancelado'
+			}
 		},
 		table: {
 			columns: {
 				name: 'Nombre',
 				assignee: 'Cesionario',
-				dueDate: 'Fecha de vencimiento',
+				dueDate: 'Fecha de vencimiento'
 			}
 		}
 	},
@@ -73,22 +73,22 @@ const es: Translation = {
 				make: 'Marca',
 				model: 'Modelo',
 				hours: 'Hora',
-				type: 'Categoría',
+				type: 'Categoría'
 			}
-		},
+		}
 	},
 	employees: {
 		title: 'Trabajadores',
 		subtitle: 'Lista de trabajadores.',
 		button: {
-			add: 'Agregar trabajadores',
+			add: 'Agregar trabajadores'
 		},
-		table: {	
+		table: {
 			columns: {
 				name: 'Nombre'
 			}
 		}
-	},
-}
+	}
+};
 
-export default es
+export default es;

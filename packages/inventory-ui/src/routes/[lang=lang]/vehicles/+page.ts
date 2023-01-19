@@ -8,18 +8,18 @@ import type { PageLoad } from './$types';
 export const load = (async ({ url, parent }) => {
 	const { locale } = await parent();
 
-	setLocale(locale)
-	const $LL = get(LL)
+	setLocale(locale);
+	const $LL = get(LL);
 
-	url.searchParams.get('limit') ?? url.searchParams.set('limit', '10')
+	url.searchParams.get('limit') ?? url.searchParams.set('limit', '10');
 	const params = url.searchParams.toString() ?? '';
-	const vehicles = await Fetcher.get<ListVehiclesResponse>('/api/vehicles' + `?${params}` );
+	const vehicles = await Fetcher.get<ListVehiclesResponse>('/api/vehicles' + `?${params}`);
 
 	breadcrumbs.set([
 		{ href: `/${locale}/`, label: $LL.home.title(), icon: 'home' },
-		{ href: `/${locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' },
-	])
-	
+		{ href: `/${locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' }
+	]);
+
 	return {
 		title: $LL.vehicles.title(),
 		content: {
@@ -27,7 +27,7 @@ export const load = (async ({ url, parent }) => {
 			subtitle: $LL.vehicles.subtitle(),
 			lastUpdated: $LL.lastUpdated(),
 			button: {
-				add: $LL.vehicles.button.add(),
+				add: $LL.vehicles.button.add()
 			},
 			table: {
 				columns: {
@@ -35,10 +35,10 @@ export const load = (async ({ url, parent }) => {
 					make: $LL.vehicles.table.columns.make(),
 					model: $LL.vehicles.table.columns.model(),
 					hours: $LL.vehicles.table.columns.hours(),
-					type: $LL.vehicles.table.columns.type(),
-				},
+					type: $LL.vehicles.table.columns.type()
+				}
 			}
 		},
-		vehicles: vehicles,
+		vehicles: vehicles
 	};
 }) satisfies PageLoad;

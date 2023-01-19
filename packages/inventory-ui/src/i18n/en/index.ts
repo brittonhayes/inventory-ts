@@ -1,21 +1,21 @@
-import type { BaseTranslation } from '../i18n-types'
+import type { BaseTranslation } from '../i18n-types';
 
 const en: BaseTranslation = {
 	lastUpdated: 'Last updated',
 	create: 'Create',
 	home: {
 		title: 'Home',
-		subtitle: 'Work in progress ...',
+		subtitle: 'Work in progress ...'
 	},
 	maintenance: {
 		title: 'Maintenance',
-		subtitle: 'Maintenance tasks and guides.',
+		subtitle: 'Maintenance tasks and guides.'
 	},
 	guides: {
 		title: 'Guides',
 		subtitle: 'Your available vehicle maintenance guides.',
 		button: {
-			add: 'Add guide',
+			add: 'Add guide'
 		},
 		create: {
 			title: 'Create guide',
@@ -23,13 +23,13 @@ const en: BaseTranslation = {
 			form: {
 				name: 'Name',
 				vehicle: 'Vehicle',
-				selectVehicle: 'Select vehicle',
-			},
+				selectVehicle: 'Select vehicle'
+			}
 		},
 		table: {
 			columns: {
 				name: 'Name',
-				vehicle: 'Vehicle',	
+				vehicle: 'Vehicle'
 			}
 		}
 	},
@@ -37,7 +37,7 @@ const en: BaseTranslation = {
 		title: 'Maintenance Tasks',
 		subtitle: 'List of maintenance tasks.',
 		button: {
-			add: 'Add task',
+			add: 'Add task'
 		},
 		create: {
 			title: 'Create task',
@@ -50,14 +50,14 @@ const en: BaseTranslation = {
 				selectStatus: 'Select status',
 				pending: 'Pending',
 				completed: 'Completed',
-				cancelled: 'Cancelled',
-			},
+				cancelled: 'Cancelled'
+			}
 		},
 		table: {
 			columns: {
 				name: 'Name',
 				assignee: 'Assignee',
-				dueDate: 'Due date',
+				dueDate: 'Due date'
 			}
 		}
 	},
@@ -65,7 +65,7 @@ const en: BaseTranslation = {
 		title: 'Vehicles',
 		subtitle: 'Your currently active vehicles.',
 		button: {
-			add: 'Add vehicle',
+			add: 'Add vehicle'
 		},
 		table: {
 			columns: {
@@ -73,22 +73,22 @@ const en: BaseTranslation = {
 				make: 'Make',
 				model: 'Model',
 				hours: 'Hours',
-				type: 'Type',
+				type: 'Type'
 			}
-		},
+		}
 	},
 	employees: {
 		title: 'Employees',
 		subtitle: 'List of employees.',
 		button: {
-			add: 'Add employee',
+			add: 'Add employee'
 		},
 		table: {
 			columns: {
 				name: 'Name'
 			}
 		}
-	},
-}
+	}
+};
 
-export default en
+export default en;

@@ -1,5 +1,5 @@
 import type { ListMaintenanceTasksResponse } from '$lib/types';
-import LL, { setLocale } from '$i18n/i18n-svelte'
+import LL, { setLocale } from '$i18n/i18n-svelte';
 import { Fetcher } from '$lib/common/fetcher';
 import type { PageLoad } from './$types';
 import { breadcrumbs } from '$lib/stores/navigation';
@@ -10,12 +10,12 @@ export const load = (async ({ parent }) => {
 	setLocale(locale);
 
 	const response = await Fetcher.get<ListMaintenanceTasksResponse>('/api/maintenance/tasks');
-	const $LL = get(LL)
+	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
 		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
-		{ label: $LL.tasks.title(), href: `/${locale}/maintenance/tasks`, icon: 'task_alt' },
-	])
+		{ label: $LL.tasks.title(), href: `/${locale}/maintenance/tasks`, icon: 'task_alt' }
+	]);
 
 	return {
 		title: $LL.tasks.title(),
@@ -26,14 +26,14 @@ export const load = (async ({ parent }) => {
 				columns: {
 					name: $LL.tasks.table.columns.name(),
 					assignee: $LL.tasks.table.columns.assignee(),
-					dueDate: $LL.tasks.table.columns.dueDate(),
+					dueDate: $LL.tasks.table.columns.dueDate()
 				}
 			},
 			buttons: {
-				add: $LL.tasks.button.add(),
+				add: $LL.tasks.button.add()
 			},
-			lastUpdated: $LL.lastUpdated(),
+			lastUpdated: $LL.lastUpdated()
 		},
-		tasks: response,
+		tasks: response
 	};
 }) satisfies PageLoad;

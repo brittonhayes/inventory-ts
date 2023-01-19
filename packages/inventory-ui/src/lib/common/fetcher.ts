@@ -14,7 +14,10 @@ type TypedRequestPath = keyof paths | string;
  */
 async function http<T>(path: TypedRequestPath, config: RequestInit): Promise<T> {
 	// create the request
-	const request = new Request(PUBLIC_API_BASE_URL + path, {...config, headers: { 'Content-Type': 'application/json', ...config.headers }});
+	const request = new Request(PUBLIC_API_BASE_URL + path, {
+		...config,
+		headers: { 'Content-Type': 'application/json', ...config.headers }
+	});
 
 	// send the request
 	const response = await fetch(request);
@@ -30,7 +33,7 @@ async function http<T>(path: TypedRequestPath, config: RequestInit): Promise<T> 
 
 export class Fetcher {
 	static get = get;
-	static post = post; 
+	static post = post;
 }
 
 /**

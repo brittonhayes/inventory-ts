@@ -11,11 +11,11 @@
 	export let data: LayoutData;
 
 	let links = [
-		{ href: `/${data.locale}`, label: $LL.home.title() , icon: 'home' },
+		{ href: `/${data.locale}`, label: $LL.home.title(), icon: 'home' },
 		{ href: `/${data.locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' },
 		{ href: `/${data.locale}/maintenance/tasks`, label: $LL.tasks.title(), icon: 'task_alt' },
 		{ href: `/${data.locale}/maintenance/guides`, label: $LL.guides.title(), icon: 'menu_book' },
-		{ href: `/${data.locale}/employees`, label: $LL.employees.title(), icon: 'groups'},
+		{ href: `/${data.locale}/employees`, label: $LL.employees.title(), icon: 'groups' }
 	];
 </script>
 
@@ -27,5 +27,5 @@
 <AppDrawer links="{links}">
 	<Navigation />
 	<slot />
-	<BottomNav class="index-1000 lg:hidden" links="{links}"></BottomNav>
+	<BottomNav class="index-1000 lg:hidden" links="{links}" />
 </AppDrawer>
