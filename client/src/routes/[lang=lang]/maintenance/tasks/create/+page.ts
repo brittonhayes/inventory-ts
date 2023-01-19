@@ -1,9 +1,7 @@
-import type { ListMaintenanceTasksResponse } from '$lib/types';
-import LL, { setLocale } from '$i18n/i18n-svelte'
-import { Fetcher } from '$lib/common/fetcher';
-import type { PageLoad } from './$types';
+import LL, { setLocale } from '$i18n/i18n-svelte';
 import { breadcrumbs } from '$lib/stores/navigation';
 import { get } from 'svelte/store';
+import type { PageLoad } from './$types';
 
 export const load = (async ({ parent }) => {
 	const { locale } = await parent();
@@ -18,6 +16,7 @@ export const load = (async ({ parent }) => {
 	])
 
 	return {
+		title: $LL.tasks.create.title(),
 		content: {
 			title: $LL.tasks.create.title(),
 			subtitle: $LL.tasks.create.subtitle(),

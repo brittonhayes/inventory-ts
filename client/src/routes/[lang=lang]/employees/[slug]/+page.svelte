@@ -9,5 +9,5 @@
 <TitleBar 
 	title={data.employee.name} 
 	subtitle={`${data.content.lastUpdated} ${new Date(data.employee.updatedAt).toLocaleDateString()}`} 
-	backButtonLink={`/${data.locale}/employees`}
+	backButton
 />

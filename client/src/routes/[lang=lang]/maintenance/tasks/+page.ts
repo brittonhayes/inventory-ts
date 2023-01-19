@@ -18,6 +18,7 @@ export const load = (async ({ parent }) => {
 	])
 
 	return {
+		title: $LL.tasks.title(),
 		content: {
 			title: $LL.tasks.title(),
 			subtitle: $LL.tasks.subtitle(),

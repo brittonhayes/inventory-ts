@@ -9,7 +9,8 @@ export const load = (async ({ parent }) => {
 	const { locale } = await parent();
 	setLocale(locale);
 
-	const response = await Fetcher.get<ListMaintenanceGuidesResponse>('/api/maintenance/guides');
+	const guides = await Fetcher.get<ListMaintenanceGuidesResponse>('/api/maintenance/guides');
+
 	const $LL = get(LL)
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
@@ -32,6 +33,6 @@ export const load = (async ({ parent }) => {
 			},
 			lastUpdated: $LL.lastUpdated(),
 		},
-		guides: response,
+		guides: guides,
 	};
 }) satisfies PageLoad;

@@ -17,6 +17,7 @@ export type FindMaintenanceGuideResponse = paths['/api/maintenance/guides/{id}']
 export type FindMaintenanceGuideForVehicleResponse = paths['/api/maintenance/guides/vehicle/{id}']['get']['responses']['200']['content']['application/json']; 
 export type CreateMaintenanceGuideRequest = components['schemas']['CreateMaintenanceGuideDto'];
 export type CreateMaintenanceGuideResponse = paths['/api/maintenance/guides']['post']['responses']['200']['content']['application/json'];
+export type FindMaintenanceGuideTasksResponse = paths['/api/maintenance/guides/{id}/tasks']['get']['responses']['200']['content']['application/json'];
 
 export type MaintenanceTaskStatus = components['schemas']['CreateMaintenanceTaskDto']['status'];
 export type FindMaintenanceTaskResponse = paths['/api/maintenance/tasks/{id}']['get']['responses']['200']['content']['application/json'];

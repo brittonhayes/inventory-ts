@@ -41,6 +41,12 @@ export class MaintenanceController {
     return this.maintenanceGuidesService.findMaintenanceGuideByVehicle(id);
   }
 
+  @Get('/guides/:id/tasks')
+  @ApiOkResponse({ description: 'Returns the maintenance tasks for the guide', type: MaintenanceTask, isArray: true })
+  async findGuideTasks(@Param('id') id: string) {
+    return this.maintenanceGuidesService.findMaintenanceGuideTasks(id);
+  }
+
   @Get('/guides/:id')
   @ApiOkResponse({ description: 'Returns the maintenance guide', type: MaintenanceGuide })
   async findGuideById(@Param('id') id: string) {

@@ -43,7 +43,12 @@
 	"dependencies": {
 		"@dicebear/collection": "^5.0.2",
 		"@dicebear/core": "^5.0.2",
+		"@tiptap/extension-floating-menu": "^2.0.0-beta.209",
+		"@tiptap/extension-task-item": "^2.0.0-beta.209",
+		"@tiptap/extension-task-list": "^2.0.0-beta.209",
+		"@tiptap/starter-kit": "^2.0.0-beta.209",
 		"@zerodevx/svelte-toast": "1.0.0-rc.1",
+		"material-symbols": "^0.4.2",
 		"typesafe-i18n": "^5.18.1"
 	}
 }

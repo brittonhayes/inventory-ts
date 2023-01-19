@@ -27,7 +27,7 @@
 		</thead>
 		<tbody>
 			{#each data.vehicles as vehicle}
-				<tr class="hover hover:cursor-pointer" on:click={()=> { goto(`/${data.locale}/vehicles/${vehicle.id}`)}}>
+				<tr class="hover:cursor-pointer hover" on:click={()=> { goto(`/${data.locale}/vehicles/${vehicle.id}`)}}>
 					<td>
 						<div class="flex items-center space-x-3">
 							<div>

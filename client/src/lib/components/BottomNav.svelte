@@ -1,9 +1,10 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import type { Route } from '$lib/types';
+	import { fly } from 'svelte/transition';
     export let links: Route[];
 </script>
-<div class={ $$props.class + " bg-base-100 text-base-content btm-nav btm-nav-md"}>
+<div class={ $$props.class + " bg-base-100 text-base-content btm-nav btm-nav-md"} transition:fly="{{ y: 200, duration: 500 }}">
     {#each links as link}
         <li>
             <a

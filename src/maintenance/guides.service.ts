@@ -32,6 +32,16 @@ export class MaintenanceGuidesService {
     });
   }
 
+  async findMaintenanceGuideTasks(id: string) {
+    return this.prisma.maintenanceGuide
+      .findUnique({
+        where: {
+          id,
+        },
+      })
+      .tasks();
+  }
+
   async createMaintenanceGuide(createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
     return this.prisma.maintenanceGuide.create({
       data: createMaintenanceGuideDto,

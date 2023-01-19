@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import LL, { locale, setLocale } from '$i18n/i18n-svelte';
+	import LL from '$i18n/i18n-svelte';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
-	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import '../app.postcss';

@@ -63,6 +63,9 @@ export interface paths {
   "/api/maintenance/guides/vehicle/{id}": {
     get: operations["MaintenanceController_findGuideByVehicle"];
   };
+  "/api/maintenance/guides/{id}/tasks": {
+    get: operations["MaintenanceController_findGuideTasks"];
+  };
   "/api/maintenance/guides/{id}": {
     get: operations["MaintenanceController_findGuideById"];
     delete: operations["MaintenanceController_deleteGuide"];
@@ -860,6 +863,21 @@ export interface operations {
       200: {
         content: {
           "application/json": (components["schemas"]["MaintenanceGuide"])[];
+        };
+      };
+    };
+  };
+  MaintenanceController_findGuideTasks: {
+    parameters: {
+      path: {
+        id: string;
+      };
+    };
+    responses: {
+      /** @description Returns the maintenance tasks for the guide */
+      200: {
+        content: {
+          "application/json": (components["schemas"]["MaintenanceTask"])[];
         };
       };
     };

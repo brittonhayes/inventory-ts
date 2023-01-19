@@ -65,7 +65,10 @@ async function main() {
   await prisma.maintenanceGuide.create({
     data: {
       name: '1000 Hour Service',
-      content: faker.lorem.paragraphs(5),
+      content: `
+        <p>${faker.lorem.paragraph(5)}</p>
+        
+      `,
       tasks: {
         create: {
           name: faker.random.words(2),
@@ -94,7 +97,7 @@ async function main() {
   await prisma.maintenanceGuide.create({
     data: {
       name: '5000 Hour Service',
-      content: faker.lorem.paragraphs(5),
+      content: faker.lorem.paragraphs(3).replace(/\n/gi, '\n\n'),
       tasks: {
         create: {
           name: faker.random.words(2),

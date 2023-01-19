@@ -10,7 +10,7 @@
 </script>
 
 
-<TitleBar title={data.content.title} subtitle={data.content.subtitle} backButtonLink={`/${data.locale}/vehicles`} />
+<TitleBar title={data.content.title} subtitle={data.content.subtitle} backButton/>
 
 <div class="grid gap-5 grid-cols-2">
 	<div class="col-span-2 rounded">

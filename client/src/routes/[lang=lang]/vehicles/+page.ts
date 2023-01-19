@@ -21,6 +21,7 @@ export const load = (async ({ url, parent }) => {
 	])
 	
 	return {
+		title: $LL.vehicles.title(),
 		content: {
 			title: $LL.vehicles.title(),
 			subtitle: $LL.vehicles.subtitle(),
