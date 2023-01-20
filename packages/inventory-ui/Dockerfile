@@ -1,5 +1,7 @@
 FROM node:18-alpine AS builder
 
+LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
+
 WORKDIR /app
 COPY . .
 RUN npm install
