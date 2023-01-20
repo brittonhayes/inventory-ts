@@ -2,17 +2,16 @@
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import { onDestroy, onMount } from 'svelte';
-	import { dataset_dev } from 'svelte/internal';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	let element: HTMLElement;
 	let editor: Editor;
 
-	$: editable = false;
+	export let editable = false;
 	export let title = '';
 	export let subitle = '';
 	export let content = '';
-	export let meta: Record<string, { icon?: string; text: string }> = {};
+	export let meta: Record<string, { icon?: string; text: string }> | undefined = undefined;
 
 	onMount(() => {
 		editor = new Editor({
@@ -37,7 +36,6 @@
 	const toggleEditMode = () => {
 		editable = !editable;
 		editor.setOptions({ editable: editable });
-		console.log('editable', editor.isEditable);
 	};
 
 	onDestroy(() => {
@@ -107,32 +105,34 @@
 {/if}
 
 <article class="{$$props.class}" bind:this="{element}">
-	<span class="flex flex-wrap gap-2 px-5">
-		<span class="mr-auto">
-			{#each Object.entries(meta) as key}
-				<span class="my-3 grid grid-cols-2">
-					<p class="opacity-50 text-sm flex justify-start items-center gap-1">
-						{#if key[1].icon}
-							<i class="material-icons text-sm">{key[1].icon}</i>
-						{/if}
-						{key[0]}
-					</p>
-					<p class="text-sm">{key[1].text}</p>
-				</span>
-			{/each}
+		<span class="flex flex-wrap gap-2 px-5">
+			{#if meta}
+			<span class="mr-auto">
+				{#each Object.entries(meta) as key}
+					<span class="my-3 grid grid-cols-2">
+						<p class="opacity-50 text-sm flex justify-start items-center gap-1">
+							{#if key[1].icon}
+								<i class="material-icons text-sm">{key[1].icon}</i>
+							{/if}
+							{key[0]}
+						</p>
+						<p class="text-sm">{key[1].text}</p>
+					</span>
+				{/each}
+			</span>
+			{/if}
+			<div class="btn-group btn-group-vertical">
+				<button
+					class:btn-disabled="{!editable}"
+					on:click="{() => toggleEditMode()}"
+					class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center"
+				>
+					<i class="material-icons">save</i>
+				</button>
+				<button on:click="{() => toggleEditMode()}" class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center">
+					<i class="material-icons">edit</i>
+				</button>
+			</div>
 		</span>
-		<div class="btn-group btn-group-vertical">
-			<button
-				class:btn-disabled="{!editable}"
-				on:click="{() => toggleEditMode()}"
-				class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center"
-			>
-				<i class="material-icons">save</i>
-			</button>
-			<button on:click="{() => toggleEditMode()}" class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center">
-				<i class="material-icons">edit</i>
-			</button>
-		</div>
-	</span>
-	<div class="divider px-5 mt-0 opacity-70"></div>
+		<div class="divider px-5 mt-0 opacity-70"></div>
 </article>

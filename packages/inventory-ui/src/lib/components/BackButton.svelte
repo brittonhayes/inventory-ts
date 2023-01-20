@@ -4,8 +4,13 @@
 	import type { NavigationTarget } from '@sveltejs/kit';
 
 	export let to = '';
-	export let icon = 'arrow_back';
-	let text = 'Back';
+	export let icon = 'chevron_left';
+	export let text = 'Back';
+
+	/**
+	 * Minumum depth of nested navigation required to show the back button
+	 */
+	export let minumumDepth = 1;
 
 	const getPreviousPage = (from: NavigationTarget | null): string => {
 		if (!from) {
@@ -20,13 +25,13 @@
 	});
 </script>
 
-<div class="{$$props.class}">
-	<div class="flex flex-row">
-		<a href="{to}" class="btn rounded-xl btn-sm btn-ghost gap-2">
-			<i class="material-icons text-xl">{icon}</i>
-			{#if text}
-				{text}
-			{/if}
-		</a>
+{#if $breadcrumbs.length > minumumDepth }
+	<div class="{$$props.class}">
+			<a href="{to}" class="btn bg-base-100 gap-2 flex flex-row justify-center items-center">
+				<i class="material-icons">{icon}</i>
+				{#if text}
+					{text}
+				{/if}
+			</a>
 	</div>
-</div>
+{/if}

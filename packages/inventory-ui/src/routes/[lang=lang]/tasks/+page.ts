@@ -12,9 +12,8 @@ export const load = (async ({ parent }) => {
 	const response = await Fetcher.get<ListMaintenanceTasksResponse>('/api/maintenance/tasks');
 	const $LL = get(LL);
 	breadcrumbs.set([
-		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
-		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
-		{ label: $LL.tasks.title(), href: `/${locale}/maintenance/tasks`, icon: 'task_alt' }
+		{ label: $LL.home.title(), href: `/${locale}/home`, icon: '' },
+		{ label: $LL.tasks.title(), href: `/${locale}/tasks`, icon: 'task_alt' }
 	]);
 
 	return {

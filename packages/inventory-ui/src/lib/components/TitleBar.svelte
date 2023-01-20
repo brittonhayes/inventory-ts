@@ -1,15 +1,9 @@
 <script lang="ts">
-	import BackButton from './BackButton.svelte';
-
 	export let title: string;
 	export let subtitle: string;
-	export let backButton = false;
 </script>
 
 <div class="flex items-center">
-	{#if backButton}
-		<BackButton class="pr-10" />
-	{/if}
 	<div class="{$$props.class + ' flex flex-wrap gap-5 justify-between w-full'}">
 		<div>
 			<h1 class="text-4xl text-neutral-content font-bold">{title}</h1>

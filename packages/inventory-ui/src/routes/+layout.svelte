@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
+	import AlertBanner from '$lib/components/AlertBanner.svelte';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
@@ -13,8 +14,8 @@
 	let links = [
 		{ href: `/${data.locale}`, label: $LL.home.title(), icon: 'home' },
 		{ href: `/${data.locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' },
-		{ href: `/${data.locale}/maintenance/tasks`, label: $LL.tasks.title(), icon: 'task_alt' },
-		{ href: `/${data.locale}/maintenance/guides`, label: $LL.guides.title(), icon: 'menu_book' },
+		{ href: `/${data.locale}/tasks`, label: $LL.tasks.title(), icon: 'task_alt' },
+		{ href: `/${data.locale}/guides`, label: $LL.guides.title(), icon: 'menu_book' },
 		{ href: `/${data.locale}/employees`, label: $LL.employees.title(), icon: 'groups' }
 	];
 </script>
@@ -28,4 +29,5 @@
 	<Navigation />
 	<slot />
 	<BottomNav class="index-1000 lg:hidden" links="{links}" />
+	<!-- <AlertBanner text="Page under construction" icon="construction" /> -->
 </AppDrawer>

@@ -5,51 +5,51 @@
 	export let data: PageData;
 </script>
 
+<section class="flex flex-col mx-auto w-full md:w-3/4">
 <TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
 	<svelte:fragment slot="action">
-		<a href="/{data.locale}/maintenance/guides/create" class="btn btn-primary">
+		<a href="/{data.locale}/tasks/create" class="btn btn-primary">
 			<i class="material-icons">add</i>
 			<span>{data.content.buttons.add}</span>
 		</a>
 	</svelte:fragment>
 </TitleBar>
 
-<div class="overflow-x-auto w-full">
+<div class="overflow-x-auto ">
 	<table class="table table-compact xl:table-normal">
 		<thead>
 			<tr>
 				<th class="w-full">{data.content.table.columns.name}</th>
-				<th>{data.content.table.columns.vehicle}</th>
+				<th>{data.content.table.columns.assignee}</th>
 				<th class="w-full"></th>
 			</tr>
 		</thead>
 		<tbody>
-			{#each data.guides as guide}
+			{#each data.tasks as task}
 				<tr
 					class="hover hover:cursor-pointer"
 					on:click="{() => {
-						goto(`/${data.locale}/maintenance/guides/${guide.id}`);
+						goto(`/${data.locale}/tasks/${task.id}`);
 					}}"
 				>
 					<td>
 						<div class="flex items-center space-x-3">
 							<div>
-								<div class="font-bold">{guide.name}</div>
+								<div class="font-bold">{task.name}</div>
 								<div class="text-xs opacity-30">
-									{data.content.lastUpdated}
-									<span class="italic">{new Date(guide.updatedAt).toLocaleDateString()}</span>
+									{data.content.lastUpdated} <span class="italic">{new Date(task.updatedAt).toLocaleDateString()}</span>
 								</div>
 							</div>
 						</div>
 					</td>
-					{#if guide.vehicle}
-						<td class="link no-underline hover:text-primary">
-							<a href="/{data.locale}/vehicles/{guide.vehicle?.id}">
-								{guide.vehicle?.name}
+					{#if task.assignee}
+						<td class="link no-underline hover:text-accent">
+							<a href="/employees/{task.assignee.id}">
+								{task.assignee.name}
 							</a>
 						</td>
 					{:else}
-						<td class="opacity-50">None</td>
+						<td class="opacity-50">Nobody</td>
 					{/if}
 					<td>
 						<i class="material-icons">chevron_right</i>
@@ -59,3 +59,4 @@
 		</tbody>
 	</table>
 </div>
+</section>

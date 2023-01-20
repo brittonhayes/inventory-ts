@@ -14,6 +14,7 @@
 	export let data: PageData;
 </script>
 
+<section class="flex flex-col mx-auto w-full md:w-3/4">
 <TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
 	<svelte:fragment slot="action">
 		<button on:click="{() => goto(`/${data.locale}/employees/create`)}" aria-disabled disabled class="btn btn-primary">
@@ -67,3 +68,4 @@
 		</tbody>
 	</table>
 </div>
+</section>

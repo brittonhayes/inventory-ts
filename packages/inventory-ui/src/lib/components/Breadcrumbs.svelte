@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Route } from '$lib/types';
 	import { breadcrumbs } from '$lib/stores/navigation';
+	import type { Route } from '$lib/types';
 
 	let crumbs: Route[] = [];
 	export let maxItems = 5;
@@ -15,7 +15,7 @@
 		<ul>
 			{#each crumbs as crumb}
 				<li>
-					<a href="{crumb.href}" class="opacity-80 link-hover">{crumb.label}</a>
+					<a href="{crumb.href}" class="opacity-50 link-hover">{crumb.label}</a>
 				</li>
 			{/each}
 		</ul>

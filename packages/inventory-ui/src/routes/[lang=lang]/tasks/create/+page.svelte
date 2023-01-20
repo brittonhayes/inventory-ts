@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { Fetcher } from '$lib/common/fetcher';
-	import { toast } from '@zerodevx/svelte-toast';
-	import type { CreateMaintenanceTaskRequest, CreateMaintenanceTaskResponse, MaintenanceTaskStatus } from '$lib/types';
-	import type { PageData } from './$types';
 	import TitleBar from '$lib/components/TitleBar.svelte';
+	import type { CreateMaintenanceTaskRequest, CreateMaintenanceTaskResponse, MaintenanceTaskStatus } from '$lib/types';
+	import { toast } from '@zerodevx/svelte-toast';
+	import type { PageData } from './$types';
 
 	let taskName = '';
 	let taskDueDate = '';
-	let taskStatus: MaintenanceTaskStatus = 'PENDING';
+	let taskStatus: MaintenanceTaskStatus = 'INCOMPLETE';
 
 	export let data: PageData;
 
@@ -24,7 +24,7 @@
 <TitleBar
 	title="{data.content.title}"
 	subtitle="{data.content.subtitle}"
-	backButtonLink="{`/${data.locale}/maintenance/tasks`}"
+	backButtonLink="{`/${data.locale}/tasks`}"
 />
 
 <div class="indented-page">

@@ -5,14 +5,16 @@
 	export let data: PageData;
 </script>
 
-<TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
-	<svelte:fragment slot="action">
-		<a href="/{data.locale}/vehicles/create" class="btn btn-primary gap-1">
-			<i class="material-icons">add</i>
-			<span>{data.content.button.add}</span>
-		</a>
-	</svelte:fragment>
-</TitleBar>
+
+<section class="flex flex-col mx-auto w-full md:w-3/4">
+	<TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
+		<svelte:fragment slot="action">
+			<a href="/{data.locale}/vehicles/create" class="btn btn-primary gap-1">
+				<i class="material-icons">add</i>
+				<span>{data.content.button.add}</span>
+			</a>
+		</svelte:fragment>
+	</TitleBar>
 
 <div class="overflow-x-auto pb-24">
 	<table class="table table-compact xl:table-normal">
@@ -64,6 +66,8 @@
 		</tbody>
 	</table>
 </div>
+</section>
 
 <style lang="postcss">
 </style>
+

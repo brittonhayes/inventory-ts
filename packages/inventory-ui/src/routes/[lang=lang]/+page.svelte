@@ -1,4 +1,6 @@
 <script lang="ts">
+	import AlertBanner from '$lib/components/AlertBanner.svelte';
+import TitleBar from '$lib/components/TitleBar.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -6,30 +8,16 @@
 		return link.label !== 'Home';
 	});
 </script>
-
-<div class="grid gap-12 grid-cols-2">
-	<div class="col-span-2">
-		<h1 class="text-4xl font-bold">{data.title}</h1>
-		<p class="text-base-300">{data.subtitle}</p>
-	</div>
-</div>
-
-<div class="grid grid-cols-4 gap-4 lg:w-1/3 md:w-1/2 w-full">
-	{#each pages as link}
-		<div class="lg:col-span-4 col-span-4">
-			<a href="{link.href}">
-				<div
-					class="stat flex justify-start items-center border-2 lg:h-36 bg-base-100 hover:cursor-pointer hover:text-primary-content hover:bg-primary"
-				>
-					<div class="stat-figure">
-						<i class="material-icons text-3xl">{link.icon}</i>
-					</div>
-					<div class="stat-title text-2xl w-full">{link.label}</div>
-					<button class="btn btn-ghost">
-						<i class="material-icons text-3xl">chevron_right</i>
-					</button>
+<section class="flex flex-col mx-auto w-full md:w-3/4">
+	<TitleBar title={data.title} subtitle={data.subtitle} />
+	<div class="flex flex-row flex-wrap gap-10 justify-center items-center h-full">
+		{#each pages as link}
+			<a href={link.href} class="card transition-colors hover:bg-base-200/30 border-2 flex-grow rounded-none min-w-[24rem] min-h-[12rem] bg-base-100 shadow-lg col-span-1">
+				<div class="card-body flex justify-center items-center">
+					<h2 class="card-title text-3xl">{link.label}</h2>
 				</div>
 			</a>
-		</div>
-	{/each}
-</div>
+		{/each}
+	</div>
+	<AlertBanner text="Page under construction"/>
+</section>

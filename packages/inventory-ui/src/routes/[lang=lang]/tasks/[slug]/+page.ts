@@ -13,9 +13,8 @@ export const load = (async ({ params, parent }) => {
 	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}`, icon: 'home' },
-		{ label: $LL.maintenance.title(), href: `/${locale}/maintenance`, icon: '' },
-		{ label: $LL.tasks.title(), href: `/${locale}/maintenance/tasks`, icon: 'task_alt' },
-		{ label: response.name, href: `/${locale}/maintenance/tasks/${response.id}`, icon: 'task_alt' }
+		{ label: $LL.tasks.title(), href: `/${locale}/tasks`, icon: 'task_alt' },
+		{ label: response.name, href: `/${locale}/tasks/${response.id}`, icon: 'task_alt' }
 	]);
 
 	return {

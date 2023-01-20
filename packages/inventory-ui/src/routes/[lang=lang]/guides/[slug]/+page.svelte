@@ -1,5 +1,4 @@
 <script lang="ts">
-	import BackButton from '$lib/components/BackButton.svelte';
 	import Editor from '$lib/components/Editor.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData = {} as PageData;
@@ -18,8 +17,6 @@
 		}
 	} satisfies Record<string, { icon?: string; text: string }>;
 </script>
-
-<BackButton class="w-24" />
 
 <div class="justify-center items-center w-full md:w-4/5 xl:w-1/2 mt-10 mx-auto">
 	<Editor

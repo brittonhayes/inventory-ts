@@ -41,14 +41,6 @@ async function main() {
     ],
   });
 
-  await prisma.implement.create({
-    data: {
-      name: 'Grizzly 7ft Rear Discharge Estate Mower',
-      make: 'Grizly',
-      model: '7ft Rear Discharge Estate Mower',
-    },
-  });
-
   await prisma.fuelStorageLocation.createMany({
     data: [
       { name: 'On-Road Stand Tank', quantity: 600, capacity: 1000, storageType: 'TANK' },
@@ -89,6 +81,23 @@ async function main() {
           power: 'DIESEL',
           vehicleType: 'TRACTOR',
           link: faker.internet.url(),
+          compatibleImplements: {
+            create: [
+              {
+                name: 'Grizzly 7ft Rear Discharge Estate Mower',
+                make: 'Grizly',
+                model: '7ft Rear Discharge Estate Mower',
+                implementType: 'MOWER',
+              },
+            ],
+          },
+          compatibleParts: {
+            create: [
+              {
+                name: 'Diesel Fuel Filter',
+              },
+            ],
+          },
         },
       },
     },
