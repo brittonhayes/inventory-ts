@@ -1,20 +1,11 @@
-import type { paths } from '$lib/api';
-import { PUBLIC_API_BASE_URL } from '$env/static/public';
-
-/**
- * Allowing strings until this issue is fixed
- * @see https://github.com/drwpow/openapi-typescript/issues/1003
- */
-type TypedRequestPath = keyof paths | string;
-
 /**
  * @param path - the api path to hit
  * @param config - the request configuration
  * @returns the response from the api
  */
-async function http<T>(path: TypedRequestPath, config: RequestInit): Promise<T> {
+async function http<T>(path: string, config: RequestInit): Promise<T> {
 	// create the request
-	const request = new Request(PUBLIC_API_BASE_URL + path, {
+	const request = new Request(path, {
 		...config,
 		headers: { 'Content-Type': 'application/json', ...config.headers }
 	});
@@ -33,7 +24,11 @@ async function http<T>(path: TypedRequestPath, config: RequestInit): Promise<T> 
 
 export class Fetcher {
 	static get = get;
+	static patch = patch;
 	static post = post;
+
+	public fetch = fetch;
+	public baseUrl = window.location.origin;
 }
 
 /**
@@ -41,7 +36,7 @@ export class Fetcher {
  * @param config - the request configuration
  * @returns the response from the api
  */
-async function get<T>(path: TypedRequestPath, config?: RequestInit): Promise<T> {
+async function get<T>(path: string, config?: RequestInit): Promise<T> {
 	// create the request
 	const init = { method: 'get', ...config };
 
@@ -55,7 +50,21 @@ async function get<T>(path: TypedRequestPath, config?: RequestInit): Promise<T> 
  * @param config - the request configuration
  * @returns the response from the api
  */
-async function post<T, U>(path: TypedRequestPath, body: T, config?: RequestInit): Promise<U> {
+async function patch<T, U>(path: string, body: T, config?: RequestInit): Promise<U> {
+	// create the request
+	const init = { method: 'patch', body: JSON.stringify(body), ...config };
+
+	// send the request
+	return await http<U>(path, init);
+}
+
+/**
+ * @param path - the api path to hit
+ * @param body - the body to send
+ * @param config - the request configuration
+ * @returns the response from the api
+ */
+async function post<T, U>(path: string, body: T, config?: RequestInit): Promise<U> {
 	// create the request
 	const init = { method: 'post', body: JSON.stringify(body), ...config };
 
@@ -69,7 +78,7 @@ async function post<T, U>(path: TypedRequestPath, body: T, config?: RequestInit)
  * @param config - the request configuration
  * @returns the response from the api
  */
-export async function put<T, U>(path: TypedRequestPath, body: T, config?: RequestInit): Promise<U> {
+export async function put<T, U>(path: string, body: T, config?: RequestInit): Promise<U> {
 	// create the request
 	const init = { method: 'put', body: JSON.stringify(body), ...config };
 

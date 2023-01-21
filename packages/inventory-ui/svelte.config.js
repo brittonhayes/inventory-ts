@@ -1,4 +1,4 @@
-import adapterStatic from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -11,9 +11,7 @@ const config = {
 		})
 	],
 	kit: {
-		adapter: adapterStatic({
-			fallback: '200.html'
-		}),
+		adapter: adapter(),
 		alias: {
 			$components: './src/components',
 			$i18n: './src/i18n'

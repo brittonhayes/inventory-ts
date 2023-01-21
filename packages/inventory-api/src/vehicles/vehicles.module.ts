@@ -8,6 +8,6 @@ import { ImplementsController } from './implements.controller';
 
 @Module({
   controllers: [VehiclesController, ImplementsController],
-  providers: [VehiclesService, VehiclePartsService, PrismaService, ImplementsService],
+  providers: [VehiclesService, VehiclePartsService, ImplementsService, PrismaService],
 })
 export class VehiclesModule {}

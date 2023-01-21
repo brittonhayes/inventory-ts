@@ -1,16 +1,26 @@
-FROM node:18-alpine AS builder
-
-LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
-
-WORKDIR /app
+### Build Step
+# pull the Node.js Docker image
+FROM node:18-alpine as builder
+# change working directory
+WORKDIR /usr/src/app
+# copy the package.json files from local machine to the workdir in container
+COPY package*.json ./
+# run npm install in our local machine
+RUN npm ci
+# copy the generated modules and all other files to the container
 COPY . .
-RUN npm install
+# build the application
 RUN npm run build
-
-FROM nginx:1.18-alpine AS runner
-
-WORKDIR /usr/share/nginx/html
-
-RUN rm -rf ./*
-COPY --from=builder /app/build .
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+### Serve Step
+# pull the Node.js Docker image
+FROM node:18.0-alpine
+# change working directory
+WORKDIR /app
+# copy files from previous step
+COPY --from=builder /usr/src/app/build .
+COPY --from=builder /usr/src/app/package.json .
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+# our app is running on port 3000 within the container, so need to expose it
+EXPOSE 3000
+# the command that starts our app
+CMD ["node", "index.js"]
