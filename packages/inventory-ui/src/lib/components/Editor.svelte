@@ -105,8 +105,8 @@
 {/if}
 
 <article class="{$$props.class}" bind:this="{element}">
-		<span class="flex flex-wrap gap-2 px-5">
-			{#if meta}
+	<span class="flex flex-wrap gap-2 px-5">
+		{#if meta}
 			<span class="mr-auto">
 				{#each Object.entries(meta) as key}
 					<span class="my-3 grid grid-cols-2">
@@ -120,19 +120,19 @@
 					</span>
 				{/each}
 			</span>
-			{/if}
-			<div class="btn-group btn-group-vertical">
-				<button
-					class:btn-disabled="{!editable}"
-					on:click="{() => toggleEditMode()}"
-					class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center"
-				>
-					<i class="material-icons">save</i>
-				</button>
-				<button on:click="{() => toggleEditMode()}" class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center">
-					<i class="material-icons">edit</i>
-				</button>
-			</div>
-		</span>
-		<div class="divider px-5 mt-0 opacity-70"></div>
+		{/if}
+		<div class="btn-group btn-group-vertical">
+			<button
+				class:btn-disabled="{!editable}"
+				on:click="{() => toggleEditMode()}"
+				class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center"
+			>
+				<i class="material-icons">save</i>
+			</button>
+			<button on:click="{() => toggleEditMode()}" class="btn btn-ghost btn-lg gap-2 flex flex-row justify-center">
+				<i class="material-icons">edit</i>
+			</button>
+		</div>
+	</span>
+	<div class="divider px-5 mt-0 opacity-70"></div>
 </article>

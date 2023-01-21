@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
-	import AlertBanner from '$lib/components/AlertBanner.svelte';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
@@ -29,5 +28,4 @@
 	<Navigation />
 	<slot />
 	<BottomNav class="index-1000 lg:hidden" links="{links}" />
-	<!-- <AlertBanner text="Page under construction" icon="construction" /> -->
 </AppDrawer>

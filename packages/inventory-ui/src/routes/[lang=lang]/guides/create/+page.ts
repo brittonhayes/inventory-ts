@@ -1,7 +1,5 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
-import { Fetcher } from '$lib/common/fetcher';
 import { breadcrumbs } from '$lib/stores/navigation';
-import type { ListMaintenanceGuidesResponse } from '$lib/types';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 

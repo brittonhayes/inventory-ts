@@ -25,13 +25,13 @@
 	});
 </script>
 
-{#if $breadcrumbs.length > minumumDepth }
+{#if $breadcrumbs.length > minumumDepth}
 	<div class="{$$props.class}">
-			<a href="{to}" class="btn bg-base-100 gap-2 flex flex-row justify-center items-center">
-				<i class="material-icons">{icon}</i>
-				{#if text}
-					{text}
-				{/if}
-			</a>
+		<a href="{to}" class="btn bg-base-100 gap-2 flex flex-row justify-center items-center">
+			<i class="material-icons">{icon}</i>
+			{#if text}
+				{text}
+			{/if}
+		</a>
 	</div>
 {/if}

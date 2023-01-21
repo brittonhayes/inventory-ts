@@ -21,11 +21,7 @@
 	};
 </script>
 
-<TitleBar
-	title="{data.content.title}"
-	subtitle="{data.content.subtitle}"
-	backButtonLink="{`/${data.locale}/tasks`}"
-/>
+<TitleBar title="{data.content.title}" subtitle="{data.content.subtitle}" backButtonLink="{`/${data.locale}/tasks`}" />
 
 <div class="indented-page">
 	<form on:submit|preventDefault="{submit}">

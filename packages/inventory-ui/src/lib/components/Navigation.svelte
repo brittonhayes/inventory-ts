@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BackButton from './BackButton.svelte';
-import Breadcrumbs from './Breadcrumbs.svelte';
+	import Breadcrumbs from './Breadcrumbs.svelte';
 	import Lightswitch from './Lightswitch.svelte';
 </script>
 

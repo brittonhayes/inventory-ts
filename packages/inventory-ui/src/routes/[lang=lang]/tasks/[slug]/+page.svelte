@@ -6,5 +6,5 @@
 </script>
 
 <section class="flex flex-col mx-auto w-full md:w-3/4">
-	<TitleBar title="{data.task.name}" subtitle={data.task.assignee?.name || 'No assignee'}  />
+	<TitleBar title="{data.task.name}" subtitle="{data.task.assignee?.name || 'No assignee'}" />
 </section>
