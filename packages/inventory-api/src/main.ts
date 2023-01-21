@@ -20,7 +20,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Security
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false,
+    }),
+  );
   app.enableCors();
 
   // Documentation
@@ -45,5 +49,8 @@ async function bootstrap() {
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
   await app.listen(process.env.PORT || 5000);
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`GraphQL Playground: ${await app.getUrl()}/graphql`);
 }
 bootstrap();

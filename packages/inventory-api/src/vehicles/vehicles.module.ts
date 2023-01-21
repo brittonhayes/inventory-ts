@@ -5,9 +5,10 @@ import { VehiclesController } from './vehicles.controller';
 import { VehiclesService } from './vehicles.service';
 import { ImplementsService } from './implements.service';
 import { ImplementsController } from './implements.controller';
+import { VehiclesResolver } from './vehicles.resolver';
 
 @Module({
   controllers: [VehiclesController, ImplementsController],
-  providers: [VehiclesService, VehiclePartsService, ImplementsService, PrismaService],
+  providers: [VehiclesResolver, VehiclesService, VehiclePartsService, ImplementsService, PrismaService],
 })
 export class VehiclesModule {}
