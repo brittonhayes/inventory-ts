@@ -1,7 +1,6 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
-import { Fetcher } from '$lib/common/fetcher';
 import { breadcrumbs } from '$lib/stores/navigation';
-import type { ListVehiclesResponse } from '$lib/types';
+import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
@@ -11,14 +10,12 @@ export const load = (async ({ url, parent }) => {
 	setLocale(locale);
 	const $LL = get(LL);
 
-	url.searchParams.get('limit') ?? url.searchParams.set('limit', '10');
-	const params = url.searchParams.toString() ?? '';
-	const vehicles = await Fetcher.get<ListVehiclesResponse>('/api/vehicles' + `?${params}`);
-
 	breadcrumbs.set([
 		{ href: `/${locale}/`, label: $LL.home.title(), icon: 'home' },
 		{ href: `/${locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' }
 	]);
+
+	const vehicles: AxiosResponse<Components.Schemas.VehicleResponse[]> = await axios.get(`/api/vehicles`);
 
 	return {
 		title: $LL.vehicles.title(),
@@ -39,6 +36,6 @@ export const load = (async ({ url, parent }) => {
 				}
 			}
 		},
-		vehicles: vehicles
+		vehicles: vehicles.data
 	};
 }) satisfies PageLoad;

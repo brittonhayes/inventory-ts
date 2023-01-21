@@ -1,20 +1,20 @@
-import type { ListMaintenanceTasksResponse } from '$lib/types';
 import LL, { setLocale } from '$i18n/i18n-svelte';
-import { Fetcher } from '$lib/common/fetcher';
-import type { PageLoad } from './$types';
 import { breadcrumbs } from '$lib/stores/navigation';
+import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
+import type { PageLoad } from './$types';
 
 export const load = (async ({ parent }) => {
 	const { locale } = await parent();
 	setLocale(locale);
 
-	const response = await Fetcher.get<ListMaintenanceTasksResponse>('/api/maintenance/tasks');
 	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}/home`, icon: '' },
 		{ label: $LL.tasks.title(), href: `/${locale}/tasks`, icon: 'task_alt' }
 	]);
+
+	const tasks: AxiosResponse<Components.Schemas.MaintenanceTask[]> = await axios.get('/api/maintenance/tasks');
 
 	return {
 		title: $LL.tasks.title(),
@@ -33,6 +33,6 @@ export const load = (async ({ parent }) => {
 			},
 			lastUpdated: $LL.lastUpdated()
 		},
-		tasks: response
+		tasks: tasks.data
 	};
 }) satisfies PageLoad;

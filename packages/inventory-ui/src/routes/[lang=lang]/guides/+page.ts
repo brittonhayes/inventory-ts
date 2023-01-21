@@ -1,7 +1,6 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
-import { Fetcher } from '$lib/common/fetcher';
 import { breadcrumbs } from '$lib/stores/navigation';
-import type { ListMaintenanceGuidesResponse } from '$lib/types';
+import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
@@ -9,13 +8,13 @@ export const load = (async ({ parent }) => {
 	const { locale } = await parent();
 	setLocale(locale);
 
-	const guides = await Fetcher.get<ListMaintenanceGuidesResponse>('/api/maintenance/guides');
-
 	const $LL = get(LL);
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}/home`, icon: '' },
 		{ label: $LL.guides.title(), href: `/${locale}/guides`, icon: 'menu_book' }
 	]);
+
+	const guides: AxiosResponse<Components.Schemas.MaintenanceGuide[]> = await axios.get('/api/maintenance/guides/');
 
 	return {
 		content: {
@@ -32,6 +31,6 @@ export const load = (async ({ parent }) => {
 			},
 			lastUpdated: $LL.lastUpdated()
 		},
-		guides: guides
+		guides: guides.data
 	};
 }) satisfies PageLoad;

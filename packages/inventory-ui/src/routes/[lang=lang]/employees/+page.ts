@@ -1,9 +1,8 @@
-import { breadcrumbs } from '$lib/stores/navigation';
-import type { ListEmployeesResponse } from '$lib/types';
-import type { PageLoad } from './$types';
 import LL, { setLocale } from '$i18n/i18n-svelte';
+import { breadcrumbs } from '$lib/stores/navigation';
+import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
-import { Fetcher } from '$lib/common/fetcher';
+import type { PageLoad } from './$types';
 
 export const load: PageLoad = (async ({ parent }) => {
 	const { locale } = await parent();
@@ -16,10 +15,10 @@ export const load: PageLoad = (async ({ parent }) => {
 		{ label: $LL.employees.title(), href: `/${locale}/employees/`, icon: 'groups' }
 	]);
 
-	const employees = await Fetcher.get<ListEmployeesResponse>('/api/employees');
+	const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/');
 
 	return {
-		employees: employees,
+		employees: employees.data,
 		content: {
 			title: $LL.employees.title(),
 			subtitle: $LL.employees.subtitle(),

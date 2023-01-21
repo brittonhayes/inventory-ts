@@ -70,7 +70,7 @@ export class VehiclesController {
       new ParseEnumPipe(Prisma.VehicleScalarFieldEnum),
     )
     orderBy?: Prisma.VehicleScalarFieldEnum,
-    @Query('limit', new ParseIntPipe(), new DefaultValuePipe(15)) limit?: number,
+    @Query('limit', new DefaultValuePipe(15), new ParseIntPipe()) limit?: number,
   ) {
     return this.vehiclesService.listVehicles({
       orderBy: { [orderBy]: sort },
