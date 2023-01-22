@@ -27,7 +27,7 @@ jobs:
     - name: Earthly version
       run: earthly --version
     - name: Run unit tests
-      run: earthly --ci +test
+      run: earthly --ci +unit-test
       working-directory: ./packages/inventory-api/
     - name: Run e2e tests
       run: earthly --ci +e2e-test
