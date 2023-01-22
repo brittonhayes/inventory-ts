@@ -64,7 +64,7 @@ export class ImplementsController {
       new ParseEnumPipe(Prisma.ImplementScalarFieldEnum),
     )
     orderBy?: Prisma.ImplementScalarFieldEnum,
-    @Query('limit', new ParseIntPipe(), new DefaultValuePipe(15)) limit?: number,
+    @Query('limit', new DefaultValuePipe(15), ParseIntPipe) limit?: number,
   ) {
     return this.implementsService.listImplements({
       orderBy: { [orderBy]: sort },

@@ -14,6 +14,9 @@ RUN npm run build
 ### Serve Step
 # pull the Node.js Docker image
 FROM node:18.0-alpine
+
+LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
+
 # change working directory
 WORKDIR /app
 # copy files from previous step
