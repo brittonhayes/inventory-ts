@@ -3,7 +3,7 @@ import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { loggingMiddleware, PrismaModule } from 'nestjs-prisma';
-import config from 'src/common/config/config';
+import config from './common/config/config';
 import { HttpLoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { EmployeesModule } from './employees/employees.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';

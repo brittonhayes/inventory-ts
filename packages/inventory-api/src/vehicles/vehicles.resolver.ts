@@ -17,7 +17,7 @@ export class VehiclesResolver {
     return vehicle;
   }
 
-  @Query((returns) => [Vehicle], { name: 'vehicles' })
+  @Query(() => [Vehicle], { name: 'vehicles' })
   vehicles(): Promise<Vehicle[]> {
     return this.vehiclesService.listVehicles({
       orderBy: { name: Prisma.SortOrder.asc },

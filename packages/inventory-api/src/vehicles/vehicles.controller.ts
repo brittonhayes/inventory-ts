@@ -4,6 +4,7 @@ import {
   DefaultValuePipe,
   Delete,
   Get,
+  HttpStatus,
   Param,
   ParseEnumPipe,
   ParseIntPipe,
@@ -40,7 +41,7 @@ export class VehiclesController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ description: 'Returns the updated vehicle', type: VehicleResponse })
+  @ApiOkResponse({ description: 'Returns the updated vehicle', type: VehicleResponse, status: HttpStatus.OK })
   async updateVehicle(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto) {
     return this.vehiclesService.updateVehicle(id, updateVehicleDto);
   }
@@ -81,53 +82,6 @@ export class VehiclesController {
     });
   }
 
-  @Post('parts')
-  @ApiOkResponse({ description: 'Returns the created part', type: VehiclePart })
-  async createPart(@Body() createVehiclePartDto: CreateVehiclePartDto) {
-    return this.vehiclePartsService.createVehiclePart(createVehiclePartDto);
-  }
-
-  @Get('parts/:id')
-  @ApiOkResponse({ description: 'Returns the part', type: VehiclePart })
-  async findPartById(@Param('id') id: string) {
-    return this.vehiclePartsService.findVehiclePart(id);
-  }
-
-  @Patch('parts/:id')
-  @ApiOkResponse({ description: 'Returns the updated part', type: VehiclePart })
-  async updatePart(@Param('id') id: string, @Body() updatePartDto: UpdateVehiclePartDto) {
-    return this.vehiclePartsService.updateVehiclePart(id, updatePartDto);
-  }
-
-  @Delete('parts/:id')
-  @ApiOkResponse({ description: 'Returns the deleted part', type: VehiclePart })
-  async deletePart(@Param('id') id: string) {
-    return this.vehiclePartsService.deleteVehiclePart(id);
-  }
-
-  @Get('parts')
-  @ApiQuery({ name: 'name', required: false })
-  @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
-  @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.VehiclePartScalarFieldEnum })
-  @ApiOkResponse({ type: VehiclePart, isArray: true, description: 'Returns the parts' })
-  async listParts(
-    @Query('name') name?: string,
-    @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
-    @Query(
-      'orderBy',
-      new DefaultValuePipe(Prisma.VehiclePartScalarFieldEnum.updatedAt),
-      new ParseEnumPipe(Prisma.VehiclePartScalarFieldEnum),
-    )
-    orderBy?: Prisma.VehiclePartScalarFieldEnum,
-  ) {
-    return this.vehiclePartsService.listVehicleParts({
-      orderBy: { [orderBy]: sort },
-      where: {
-        AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
-      },
-    });
-  }
-
   @Get(':id/implements')
   @ApiOkResponse({
     description: 'Returns the compatible implements for the vehicle',
@@ -146,5 +100,52 @@ export class VehiclesController {
   })
   async getCompatibleParts(@Param('id') id: string) {
     return this.vehiclesService.listCompatibleParts(id);
+  }
+
+  @Post('parts')
+  @ApiOkResponse({ description: 'Returns the created part', type: VehiclePart })
+  async createVehiclePart(@Body() createVehiclePartDto: CreateVehiclePartDto) {
+    return this.vehiclePartsService.createVehiclePart(createVehiclePartDto);
+  }
+
+  @Get('parts/:id')
+  @ApiOkResponse({ description: 'Returns the part', type: VehiclePart })
+  async findVehiclePartById(@Param('id') id: string) {
+    return this.vehiclePartsService.findVehiclePartById(id);
+  }
+
+  @Patch('parts/:id')
+  @ApiOkResponse({ description: 'Returns the updated part', type: VehiclePart })
+  async updateVehiclePart(@Param('id') id: string, @Body() updatePartDto: UpdateVehiclePartDto) {
+    return this.vehiclePartsService.updateVehiclePart(id, updatePartDto);
+  }
+
+  @Delete('parts/:id')
+  @ApiOkResponse({ description: 'Returns the deleted part', type: VehiclePart })
+  async deleteVehiclePart(@Param('id') id: string) {
+    return this.vehiclePartsService.deleteVehiclePart(id);
+  }
+
+  @Get('parts')
+  @ApiQuery({ name: 'name', required: false })
+  @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
+  @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.VehiclePartScalarFieldEnum })
+  @ApiOkResponse({ type: VehiclePart, isArray: true, description: 'Returns the parts' })
+  async listVehicleParts(
+    @Query('name') name?: string,
+    @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
+    @Query(
+      'orderBy',
+      new DefaultValuePipe(Prisma.VehiclePartScalarFieldEnum.updatedAt),
+      new ParseEnumPipe(Prisma.VehiclePartScalarFieldEnum),
+    )
+    orderBy?: Prisma.VehiclePartScalarFieldEnum,
+  ) {
+    return this.vehiclePartsService.listVehicleParts({
+      orderBy: { [orderBy]: sort },
+      where: {
+        AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
+      },
+    });
   }
 }
