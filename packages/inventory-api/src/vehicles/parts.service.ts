@@ -24,7 +24,7 @@ export class VehiclePartsService {
     });
   }
 
-  async findVehiclePart(id: string) {
+  async findVehiclePartById(id: string) {
     return this.prisma.vehiclePart.findUnique({ where: { id } });
   }
 
