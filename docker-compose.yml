@@ -1,34 +1,46 @@
 version: '3.8'
 services:
-  inventory-ui:
-    build:
-      context: ./packages/inventory-ui
-      dockerfile: Dockerfile
-    restart: unless-stopped
+  traefik:
+    image: "traefik:v2.6"
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
-      - 3000:3000
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  inventory-ui:
+    image: ghcr.io/brittonhayes/inventory-ui:latest
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.inventory-ui.rule=Host(`localhost`)"
+      - "traefik.http.routers.inventory-ui.entrypoints=web"
 
   inventory-api:
-    build:
-      context: ./packages/inventory-api
-      dockerfile: Dockerfile
+    image: ghcr.io/brittonhayes/inventory-api:latest
     restart: unless-stopped
-    ports:
-      - 5000:5000
     environment:
       PORT: ${PORT:-5000}
       DB_PORT: ${DB_PORT:-5432}
       DB_HOST: ${DB_HOST:-inventory-db}
       DB_SCHEMA: ${DB_SCHEMA:-inventory}
       DATABASE_URL: postgres://${POSTGRES_USER:-prisma}:${POSTGRES_PASSWORD:-topsecret}@inventory-db:5432/${POSTGRES_DB:-inventory}?schema=${DB_SCHEMA:-inventory}&sslmode=prefer
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.inventory-api.rule=Host(`localhost`) && Path(`/api/*`)"
+      - "traefik.http.routers.inventory-api.entrypoints=web"
     depends_on:
       - inventory-db
 
   inventory-db:
     image: postgres:13
     restart: unless-stopped
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-prisma}
       POSTGRES_DB: ${POSTGRES_DB:-inventory}

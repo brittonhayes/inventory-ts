@@ -16,9 +16,8 @@ export class GqlConfigService implements GqlOptionsFactory {
       buildSchemaOptions: {
         numberScalarMode: 'integer',
       },
+      introspection: graphqlConfig.introspection,
       cache: graphqlConfig.cache,
-      // subscription
-      installSubscriptionHandlers: true,
       debug: graphqlConfig.debug,
       playground: graphqlConfig.playgroundEnabled,
       context: ({ req }) => ({ req }),

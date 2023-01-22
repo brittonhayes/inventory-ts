@@ -7,17 +7,20 @@ const config: Config = {
   },
   cors: {
     enabled: true,
+    origin: ['http://localhost:3000', 'http://inventory-api'],
   },
   swagger: {
     enabled: true,
-    title: 'Nestjs FTW',
-    description: 'The nestjs API description',
+    title: 'Open Farms Agriculture Inventory API',
+    description: 'Open Farms Agriculture Inventory API',
     version: '1.5',
     path: 'api',
   },
   graphql: {
     playgroundEnabled: true,
-    debug: true,
+    introspection: true,
+    debug: false,
+    cache: 'bounded',
     schemaDestination: './src/schema.graphql',
     sortSchema: true,
   },

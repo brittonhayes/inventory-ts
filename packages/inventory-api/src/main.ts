@@ -46,7 +46,10 @@ async function bootstrap() {
   }
 
   if (corsConfig.enabled) {
-    app.enableCors();
+    app.enableCors({
+      origin: corsConfig.origin,
+      credentials: corsConfig.credentials,
+    });
   }
 
   if (nestConfig.prefix) {

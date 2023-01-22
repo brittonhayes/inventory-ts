@@ -15,6 +15,8 @@ export interface NestConfig {
 
 export interface CorsConfig {
   enabled: boolean;
+  credentials?: boolean;
+  origin?: string[] | RegExp;
 }
 
 export interface SwaggerConfig {
@@ -31,6 +33,7 @@ export interface GraphqlConfig {
   schemaDestination: string;
   sortSchema: boolean;
   cache?: 'bounded';
+  introspection: boolean;
 }
 
 export interface SecurityConfig {

@@ -1,11 +1,11 @@
 VERSION 0.6
 FROM node:lts-alpine
-WORKDIR /app
+WORKDIR /usr/src/app
 
 deps:
     COPY package*.json ./
-    COPY prisma ./prisma/
     COPY tsconfig.json ./
+    COPY .svelte-kit ./.svelte-kit
     COPY src src
     RUN npm ci
     # Output these back in case npm install changes them.
@@ -16,25 +16,12 @@ build:
     FROM +deps
     COPY . .
     RUN npm run build
-    SAVE ARTIFACT dist /dist AS LOCAL dist
-
-test-setup:
-    FROM +deps
-    COPY package.json package-lock.json ./
-    COPY test test
-
-unit-test:
-    FROM +test-setup
-    RUN npm run test
-
-e2e-test:
-    FROM +test-setup
-    RUN npm run test:e2e
+    SAVE ARTIFACT build /build AS LOCAL build
 
 docker:
     FROM +build
     LABEL org.opencontainers.image.source=https://github.com/brittonhayes/inventory-ts
     ENV NODE_ENV=production
-    EXPOSE 5000
-    ENTRYPOINT ["node", "./dist/main.js"]
-    SAVE IMAGE --push ghcr.io/brittonhayes/inventory-api:latest
+    EXPOSE 3000
+    CMD ["node", "./build/index.js"]
+    SAVE IMAGE --push ghcr.io/brittonhayes/inventory-ui:latest

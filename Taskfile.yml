@@ -1,0 +1,34 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  release:
+    desc: "Release all docker images"
+    cmds:
+      - task: release:api:docker
+      - task: release:ui:docker
+
+  build:api:
+    desc: "Build API"
+    cmds:
+      - earthly +docker
+    dir: packages/inventory-api
+
+  build:ui:
+    desc: "Build UI"
+    cmds:
+      - earthly +docker
+    dir: packages/inventory-ui
+
+  release:api:
+    desc: "Release API docker image"
+    cmds:
+      - task: build:api
+    dir: packages/inventory-api
+
+  release:ui:
+    desc: "Release UI docker image"
+    cmds:
+      - task: build:ui
+    dir: packages/inventory-ui

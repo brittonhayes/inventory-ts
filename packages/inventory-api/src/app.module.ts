@@ -6,16 +6,13 @@ import { loggingMiddleware, PrismaModule } from 'nestjs-prisma';
 import config from './common/config/config';
 import { HttpLoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { EmployeesModule } from './employees/employees.module';
+import { GqlConfigService } from './graphql.service';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { ToolsModule } from './tools/tools.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
   imports: [
-    // CacheModule.register({
-    //   ttl: 5, // seconds
-    //   max: 100, // maximum number of items in cache
-    // }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
@@ -31,12 +28,9 @@ import { VehiclesModule } from './vehicles/vehicles.module';
         ],
       },
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
-      sortSchema: true,
-      cache: process.env.NODE_ENV === 'production' ? 'bounded' : undefined,
-      installSubscriptionHandlers: true,
+      useClass: GqlConfigService,
     }),
     VehiclesModule,
     ToolsModule,
