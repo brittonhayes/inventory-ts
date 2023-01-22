@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MaintenanceTasksService } from './tasks.service';
-import { MaintenanceController } from './maintenance.controller';
 import { MaintenanceGuidesService } from './guides.service';
-import { PrismaService } from 'nestjs-prisma';
+import { MaintenanceController } from './maintenance.controller';
+import { MaintenanceTasksService } from './tasks.service';
 
 @Module({
-  providers: [MaintenanceTasksService, MaintenanceGuidesService, PrismaService],
+  providers: [MaintenanceTasksService, MaintenanceGuidesService],
   controllers: [MaintenanceController],
 })
 export class MaintenanceModule {}

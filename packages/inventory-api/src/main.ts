@@ -1,44 +1,17 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
-import { MaintenanceTask } from './maintenance/dto/tasks.dto';
+import { CorsConfig, NestConfig, SecurityConfig, SwaggerConfig } from './common/config/config.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Validation
-  app.useGlobalPipes(
-    new ValidationPipe({
-      forbidUnknownValues: false,
-    }),
-  );
-
-  // API Prefix
-  app.setGlobalPrefix('api');
-
-  // Security
-  app.use(
-    helmet({
-      contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false,
-    }),
-  );
-  app.enableCors();
-
-  // Documentation
-  const config = new DocumentBuilder()
-    .setTitle('Open Farms Inventory Service')
-    .addServer('http://localhost:5000', 'development')
-    .setDescription('Agriculture inventory management service.')
-    .setVersion('1.0')
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [MaintenanceTask],
-  });
-  SwaggerModule.setup('docs', app, document);
+  app.useGlobalPipes(new ValidationPipe());
 
   // enable shutdown hook
   const prismaService: PrismaService = app.get(PrismaService);
@@ -48,9 +21,41 @@ async function bootstrap() {
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
-  await app.listen(process.env.PORT || 5000);
+  const configService = app.get(ConfigService);
+  const nestConfig = configService.get<NestConfig>('nest');
+  const corsConfig = configService.get<CorsConfig>('cors');
+  const swaggerConfig = configService.get<SwaggerConfig>('swagger');
+  const securityConfig = configService.get<SecurityConfig>('security');
 
-  console.log(`Application is running on: ${await app.getUrl()}`);
-  console.log(`GraphQL Playground: ${await app.getUrl()}/graphql`);
+  // Security
+  if (securityConfig.helmet) {
+    app.use(helmet(securityConfig.helmet));
+  }
+
+  if (swaggerConfig.enabled) {
+    // Documentation
+    const options = new DocumentBuilder()
+      .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
+      .addServer('http://localhost:5000', 'development')
+      .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
+      .setVersion(swaggerConfig.version || '1.0')
+      .build();
+
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup(swaggerConfig.path || 'api', app, document);
+  }
+
+  if (corsConfig.enabled) {
+    app.enableCors();
+  }
+
+  if (nestConfig.prefix) {
+    app.setGlobalPrefix(nestConfig.prefix);
+  }
+
+  await app.listen(process.env.PORT || nestConfig.port || 5000);
+
+  Logger.log(`Application is running on: ${await app.getUrl()}`);
+  Logger.log(`GraphQL Playground: ${await app.getUrl()}/graphql`);
 }
 bootstrap();

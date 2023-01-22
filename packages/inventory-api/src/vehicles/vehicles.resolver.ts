@@ -21,6 +21,12 @@ export class VehiclesResolver {
   vehicles(): Promise<Vehicle[]> {
     return this.vehiclesService.listVehicles({
       orderBy: { name: Prisma.SortOrder.asc },
+      include: {
+        guides: true,
+        compatibleAttachments: true,
+        compatibleParts: true,
+        compatibleImplements: true,
+      },
     });
   }
 

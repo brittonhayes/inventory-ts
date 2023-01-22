@@ -1,7 +1,5 @@
 FROM node:18 AS builder
 
-LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
-
 # Create app directory
 WORKDIR /app
 
@@ -17,6 +15,8 @@ COPY . .
 RUN npm run build
 
 FROM node:18
+
+LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
 
 WORKDIR /app
 

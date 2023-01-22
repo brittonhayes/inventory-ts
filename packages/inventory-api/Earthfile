@@ -1,0 +1,36 @@
+VERSION 0.6
+FROM node:lts-alpine
+WORKDIR /app
+
+deps:
+    COPY package*.json ./
+    COPY prisma ./prisma/
+    COPY tsconfig.json ./
+    COPY src src
+    RUN npm ci
+    # Output these back in case npm install changes them.
+    SAVE ARTIFACT package.json AS LOCAL ./package.json
+    SAVE ARTIFACT package-lock.json AS LOCAL ./package-lock.json
+
+build:
+    FROM +deps
+    COPY . .
+    RUN npm run build
+    SAVE ARTIFACT dist /dist AS LOCAL dist
+
+test-setup:
+    FROM +deps
+    COPY package.json package-lock.json ./
+    COPY test test
+
+unit-test:
+    FROM +test-setup
+    RUN npm run test
+
+docker:
+    FROM +build
+    LABEL org.opencontainers.image.source=https://github.com/brittonhayes/inventory-ts
+    ENV NODE_ENV=production
+    EXPOSE 5000
+    ENTRYPOINT ["node", "./dist/main.js"]
+    SAVE IMAGE ghcr.io/brittonhayes/inventory-api:latest
