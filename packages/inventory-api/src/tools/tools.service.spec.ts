@@ -4,6 +4,7 @@ import { ToolsService } from './tools.service';
 
 describe('ToolsService', () => {
   let service: ToolsService;
+  let prisma: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -11,9 +12,36 @@ describe('ToolsService', () => {
     }).compile();
 
     service = module.get<ToolsService>(ToolsService);
+    prisma = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should create a tool', async () => {
+    const want = {};
+
+    prisma.tool.create = jest.fn().mockResolvedValue(want);
+    const tool = await service.createTool({
+      name: 'test',
+    });
+    expect(tool).toBe(want);
+  });
+
+  it('should find a tool by id', async () => {
+    const want = {};
+
+    prisma.tool.findUnique = jest.fn().mockResolvedValue(want);
+    const tool = await service.findToolById('test');
+    expect(tool).toBe(want);
+  });
+
+  it('should list tools', async () => {
+    const want = {};
+
+    prisma.tool.findMany = jest.fn().mockResolvedValue(want);
+    const tools = await service.listTools({});
+    expect(tools).toBe(want);
   });
 });

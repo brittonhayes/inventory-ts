@@ -5,10 +5,12 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { breadcrumbs } from '$lib/stores/navigation';
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+	console.log('Breadcrumbs', $breadcrumbs);
 
 	let links = [
 		{ href: `/${data.locale}`, label: $LL.home.title(), icon: 'home' },

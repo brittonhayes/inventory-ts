@@ -24,7 +24,7 @@ export class ToolsService {
     });
   }
 
-  async findTool(id: string) {
+  async findToolById(id: string) {
     return this.prisma.tool.findUnique({ where: { id } });
   }
 

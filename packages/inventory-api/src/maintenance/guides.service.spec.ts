@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
+import { shouldListGuides, shouldReturnGuideById } from '../../test/fixtures/guides';
 import { MaintenanceGuidesService } from './guides.service';
 
 describe('MaintenanceService', () => {
@@ -20,8 +21,7 @@ describe('MaintenanceService', () => {
   });
 
   it('should return an array of maintenance guides', async () => {
-    const want = [];
-
+    const want = shouldListGuides;
     prisma.maintenanceGuide.findMany = jest.fn().mockResolvedValueOnce(want);
     const result = await service.listMaintenanceGuides({
       orderBy: { name: 'asc' },
@@ -31,12 +31,7 @@ describe('MaintenanceService', () => {
   });
 
   it('should return a maintenance guide by id', async () => {
-    const want = {
-      id: '1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      name: 'Challenger MT 845C',
-    };
+    const want = shouldReturnGuideById;
 
     prisma.maintenanceGuide.findUnique = jest.fn().mockResolvedValueOnce(want);
     expect(await service.findMaintenanceGuide(want.id)).toEqual(want);
