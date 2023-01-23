@@ -1,26 +1,17 @@
 version: '3.8'
 services:
-  traefik:
+  inventory-proxy:
     image: "traefik:v2.6"
     command:
-      - "--log.level=DEBUG"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
-      - "80:80"
+      - "8090:80"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-  inventory-ui:
-    image: ghcr.io/brittonhayes/inventory-ui:latest
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.inventory-ui.rule=Host(`localhost`)"
-      - "traefik.http.routers.inventory-ui.entrypoints=web"
 
   inventory-api:
     image: ghcr.io/brittonhayes/inventory-api:latest
@@ -33,10 +24,18 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER:-prisma}:${POSTGRES_PASSWORD:-topsecret}@inventory-db:5432/${POSTGRES_DB:-inventory}?schema=${DB_SCHEMA:-inventory}&sslmode=prefer
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.inventory-api.rule=Host(`localhost`) && Path(`/api/*`)"
+      - "traefik.http.routers.inventory-api.rule=Host(`localhost`) && PathPrefix(`/api`) || PathPrefix(`/graphql`)"
       - "traefik.http.routers.inventory-api.entrypoints=web"
     depends_on:
       - inventory-db
+
+  inventory-ui:
+    image: ghcr.io/brittonhayes/inventory-ui:latest
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.inventory-ui.rule=Host(`localhost`)"
+      - "traefik.http.routers.inventory-ui.entrypoints=web"
 
   inventory-db:
     image: postgres:13

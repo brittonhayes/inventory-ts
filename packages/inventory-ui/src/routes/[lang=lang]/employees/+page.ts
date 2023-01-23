@@ -10,8 +10,6 @@ export const load: PageLoad = (async ({ parent, route }) => {
 	setLocale(locale);
 	const $LL = get(LL);
 
-	console.log(route);
-
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}/`, icon: 'home' },
 		{ label: $LL.employees.title(), href: `/${locale}/employees/`, icon: 'groups' }
