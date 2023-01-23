@@ -5,6 +5,7 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { breadcrumbs } from '$lib/stores/navigation';
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 

@@ -29,7 +29,7 @@ export class ToolsController {
   @Get(':id')
   @ApiOkResponse({ description: 'Returns the tool', type: ToolResponse })
   async findToolById(@Param('id') id: string) {
-    return this.toolsService.findTool(id);
+    return this.toolsService.findToolById(id);
   }
 
   @Patch(':id')

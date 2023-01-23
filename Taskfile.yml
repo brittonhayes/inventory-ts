@@ -2,6 +2,9 @@
 
 version: '3'
 
+includes:
+  win: ./Taskfile_windows.yml
+
 tasks:
   release:
     desc: "Release all docker images"
@@ -21,14 +24,3 @@ tasks:
       - earthly +docker
     dir: packages/inventory-ui
 
-  release:api:
-    desc: "Release API docker image"
-    cmds:
-      - task: build:api
-    dir: packages/inventory-api
-
-  release:ui:
-    desc: "Release UI docker image"
-    cmds:
-      - task: build:ui
-    dir: packages/inventory-ui

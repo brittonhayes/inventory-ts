@@ -1,29 +1,27 @@
-### Build Step
-# pull the Node.js Docker image
-FROM node:18-alpine as builder
-# change working directory
+FROM node:lts-alpine as builder
+
 WORKDIR /usr/src/app
-# copy the package.json files from local machine to the workdir in container
+
 COPY package*.json ./
-# run npm install in our local machine
+COPY tsconfig.json ./
+COPY .svelte-kit ./.svelte-kit
+COPY src src
+
 RUN npm ci
-# copy the generated modules and all other files to the container
+
 COPY . .
-# build the application
+
 RUN npm run build
-### Serve Step
-# pull the Node.js Docker image
-FROM node:18.0-alpine
+
+FROM node:lts-alpine
 
 LABEL org.opencontainers.image.source https://github.com/brittonhayes/inventory-ts
 
-# change working directory
 WORKDIR /app
-# copy files from previous step
-COPY --from=builder /usr/src/app/build .
-COPY --from=builder /usr/src/app/package.json .
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-# our app is running on port 3000 within the container, so need to expose it
+
+ENV NODE_ENV=production
+COPY --from=builder /usr/src/app/ .
+
 EXPOSE 3000
-# the command that starts our app
-CMD ["node", "index.js"]
+
+CMD ["node", "./build/index.js"]

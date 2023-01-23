@@ -4,7 +4,7 @@ import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = (async ({ parent }) => {
+export const load: PageLoad = (async ({ parent, route }) => {
 	const { locale } = await parent();
 
 	setLocale(locale);

@@ -1,0 +1,40 @@
+version: '3'
+
+tasks:
+  build:
+    desc: "Build all docker images"
+    cmds:
+      - task: build:api
+      - task: build:ui
+
+  release:
+    desc: "Release all docker images"
+    cmds:
+      - task: release:api
+      - task: release:ui
+  
+  build:api:
+    desc: "Build API"
+    cmds:
+      - docker build -t ghcr.io/brittonhayes/inventory-api:latest .
+    dir: packages/inventory-api
+
+  build:ui:
+    desc: "Build UI"
+    cmds:
+      - docker build -t ghcr.io/brittonhayes/inventory-ui:latest .
+    dir: packages/inventory-ui
+
+  release:api:
+    desc: "Release API docker image"
+    cmds:
+      - docker push ghcr.io/brittonhayes/inventory-api:latest
+    dir: packages/inventory-api
+    deps: [build:api]
+
+  release:ui:
+    desc: "Release UI docker image"
+    cmds:
+      - docker push ghcr.io/brittonhayes/inventory-ui:latest
+    dir: packages/inventory-ui
+    deps: [build:ui]
