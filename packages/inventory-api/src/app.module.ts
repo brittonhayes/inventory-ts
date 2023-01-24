@@ -1,6 +1,7 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { loggingMiddleware, PrismaModule } from 'nestjs-prisma';
 import config from './common/config/config';

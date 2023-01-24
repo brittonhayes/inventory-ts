@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType, registerEnumType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType, registerEnumType, GraphQLISODateTime } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { TaskStatus } from '@prisma/client';
 import { Employee } from '../../employees/dto/employees.dto';
@@ -16,11 +16,11 @@ export class MaintenanceTask {
   @ApiProperty({ type: String })
   id: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 

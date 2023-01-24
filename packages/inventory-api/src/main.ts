@@ -11,7 +11,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidUnknownValues: false,
+    }),
+  );
 
   // enable shutdown hook
   const prismaService: PrismaService = app.get(PrismaService);
@@ -36,7 +40,8 @@ async function bootstrap() {
     // Documentation
     const options = new DocumentBuilder()
       .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
-      .addServer('http://localhost:5000', 'development')
+      .addServer(swaggerConfig.servers.dev, 'development')
+      .addServer(swaggerConfig.servers.prod, 'production')
       .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
       .setVersion(swaggerConfig.version || '1.0')
       .build();
