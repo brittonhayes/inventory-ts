@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType, InputType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType, InputType, GraphQLISODateTime } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Condition, PowerType, VehicleType } from '@prisma/client';
 import { MaintenanceGuide } from '../../maintenance/dto/guides.dto';
@@ -28,11 +28,11 @@ export class Vehicle {
   @ApiPropertyOptional({ type: String })
   name?: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 
@@ -89,6 +89,21 @@ export class Vehicle {
   compatibleImplements?: Implement[];
 }
 
+@InputType()
+export class VehicleQuery {
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
+  includeAttachments?: boolean;
+
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
+  includeGuides?: boolean;
+
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
+  includeParts?: boolean;
+
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
+  includeImplements?: boolean;
+}
+
 @ObjectType()
 export class VehicleResponse extends OmitType(Vehicle, [
   'guides',
@@ -99,7 +114,7 @@ export class VehicleResponse extends OmitType(Vehicle, [
 @InputType()
 export class CreateVehicleDto {
   @ApiProperty({ type: String })
-  @Field((type) => String)
+  @Field(() => String)
   name: string;
 
   @ApiProperty({ type: Number })

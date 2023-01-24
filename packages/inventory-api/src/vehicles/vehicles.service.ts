@@ -26,8 +26,8 @@ export class VehiclesService {
     });
   }
 
-  async findVehicleById(id: string) {
-    return this.prisma.vehicle.findUnique({ where: { id } });
+  async findVehicleById(id: string, params: { include?: Prisma.VehicleInclude } = {}) {
+    return this.prisma.vehicle.findUnique({ where: { id }, ...params });
   }
 
   async createVehicle(createVehicleDto: CreateVehicleDto) {

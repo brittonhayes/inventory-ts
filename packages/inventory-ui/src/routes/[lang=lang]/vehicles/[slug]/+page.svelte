@@ -23,7 +23,7 @@
 				<i class="material-icons">menu_book</i>
 				Maintenance Guides
 			</h2>
-			{#if data.guides.length > 0}
+			{#if data.guides && data.guides.length > 0}
 				<div class="flex flex-wrap flex-col md:flex-row gap-4 mt-4">
 					{#each data.guides as guide}
 						<div class="card card-bordered bg-base-300 p-5 md:w-1/3 w-full">
@@ -59,7 +59,7 @@
 				<i class="material-icons">rv_hookup</i>
 				Compatible Implements
 			</h2>
-			{#if data.implements.length > 0}
+			{#if data.implements && data.implements.length > 0}
 				<div class="flex flex-wrap flex-col gap-4 mt-4">
 					<table class="table xl:table-normal table-compact w-full">
 						<thead>
@@ -109,7 +109,7 @@
 				<i class="material-icons">home_repair_service</i>
 				Compatible Parts
 			</h2>
-			{#if data.parts.length > 0}
+			{#if data.parts && data.parts.length > 0}
 				<div class="flex flex-wrap flex-col gap-4 mt-4">
 					<table class="table xl:table-normal table-compact w-full">
 						<thead>

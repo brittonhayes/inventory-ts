@@ -1,19 +1,19 @@
-import { ObjectType, Field, InputType } from '@nestjs/graphql';
-import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Length } from 'class-validator';
+import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
 
 @ObjectType()
 export class Employee {
-  @Field((type) => String)
+  @Field(() => String)
   @ApiProperty({ type: String })
   id: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 
@@ -29,13 +29,10 @@ export class Employee {
 
 export class EmployeeResponse extends OmitType(Employee, ['tasks'] as const) {}
 
-@InputType()
 export class CreateEmployeeDto extends PickType(Employee, ['name'] as const) {}
 
-@InputType()
 export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {}
 
-@InputType()
 export class DeleteEmployeeDto extends PickType(Employee, ['id'] as const) {}
 
 export class ConnectEmployeeDto extends PickType(Employee, ['id'] as const) {}

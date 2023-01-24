@@ -7,7 +7,8 @@ const config: Config = {
   },
   cors: {
     enabled: true,
-    origin: ['http://localhost:3000', 'http://inventory-api'],
+    origin: ['http://localhost:3000', 'https://openfarms.brittonhayes.com', 'http://localhost:5173'],
+    credentials: true,
   },
   swagger: {
     enabled: true,
@@ -15,6 +16,10 @@ const config: Config = {
     description: 'Open Farms Agriculture Inventory API',
     version: '1.5',
     path: 'api',
+    servers: {
+      prod: 'https://openfarms.brittonhayes.com/api',
+      dev: 'http://localhost:5000/api',
+    },
   },
   graphql: {
     playgroundEnabled: true,

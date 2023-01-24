@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType, registerEnumType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType, registerEnumType, GraphQLISODateTime } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType } from '@nestjs/swagger';
 import { Condition, ImplementType } from '@prisma/client';
 import { Attachment } from './attachments.dto';
@@ -10,15 +10,15 @@ registerEnumType(ImplementType, {
 
 @ObjectType()
 export class Implement {
-  @Field((type) => String)
+  @Field(() => String)
   @ApiProperty({ type: String })
   id: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 

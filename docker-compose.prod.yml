@@ -34,10 +34,13 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER:-prisma}:${POSTGRES_PASSWORD:-topsecret}@inventory-db:5432/${POSTGRES_DB:-inventory}?schema=${DB_SCHEMA:-inventory}&sslmode=prefer
     labels:
       caddy: "openfarms.brittonhayes.com"
-      caddy.0_handle_path: "/api*"
-      caddy.0_handle_path.0_reverse_proxy: "{{upstreams 5000}}"
-      caddy.1_handle_path: "/grapqhl"
-      caddy.1_handle_path.0_reverse_proxy: "{{upstreams 5000}}"
+      caddy.0_handle: "/api*"
+      caddy.0_handle.0_reverse_proxy: "{{upstreams 5000}}"
+      caddy.1_handle: "/graphql"
+      caddy.1_handle.0_reverse_proxy: "{{upstreams 5000}}"
+      caddy.1_reverse_proxy: "@ws {{upstreams 5000}}"
+      caddy.@ws.0_header: "Connection *Upgrade*"
+      caddy.@ws.1_header: "Upgrade websocket"
     depends_on:
       - inventory-db
 

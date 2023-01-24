@@ -23,6 +23,10 @@ export interface SwaggerConfig {
   enabled: boolean;
   title: string;
   description: string;
+  servers: {
+    prod: string;
+    dev: string;
+  };
   version: string;
   path: string;
 }
