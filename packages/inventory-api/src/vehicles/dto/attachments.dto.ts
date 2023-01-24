@@ -1,19 +1,19 @@
-import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Condition } from '@prisma/client';
 import { Vehicle } from './vehicles.dto';
 
 @ObjectType()
 export class Attachment {
-  @Field((type) => String)
+  @Field(() => String)
   @ApiProperty({ type: String })
   id: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 

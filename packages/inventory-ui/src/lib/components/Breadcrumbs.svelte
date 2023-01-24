@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { breadcrumbs } from '$lib/stores/navigation';
-	
-	export let maxItems = 5;
 </script>
 
 {#if $breadcrumbs.length > 0}

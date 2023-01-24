@@ -1,3 +1,4 @@
+import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import LL, { setLocale } from '$i18n/i18n-svelte';
 import { breadcrumbs } from '$lib/stores/navigation';
 import axios, { type AxiosResponse } from 'axios';

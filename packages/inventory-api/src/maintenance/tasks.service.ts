@@ -27,8 +27,12 @@ export class MaintenanceTasksService {
     });
   }
 
-  async findMaintenanceTask(where: Prisma.MaintenanceTaskWhereUniqueInput) {
-    return this.prisma.maintenanceTask.findUnique({ where });
+  async findMaintenanceTask(id: string) {
+    return this.prisma.maintenanceTask.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
   async createMaintenanceTask(createMaintenanceTaskDto: CreateMaintenanceTaskDto) {

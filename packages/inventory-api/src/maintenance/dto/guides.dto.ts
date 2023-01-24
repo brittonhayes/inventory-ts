@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType, GraphQLISODateTime } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Length } from 'class-validator';
 import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
@@ -10,11 +10,11 @@ export class MaintenanceGuide {
   @ApiProperty({ type: String })
   id: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   createdAt: Date;
 
-  @Field(() => String)
+  @Field(() => GraphQLISODateTime)
   @ApiProperty({ type: Date })
   updatedAt: Date;
 

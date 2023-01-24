@@ -97,7 +97,7 @@ export class MaintenanceController {
   @Get('/tasks/:id')
   @ApiOkResponse({ description: 'Returns the maintenance', type: MaintenanceTask })
   async findByTaskId(@Param('id') id: string) {
-    return this.maintenanceTasksService.findMaintenanceTask({ id });
+    return this.maintenanceTasksService.findMaintenanceTask(id);
   }
 
   @Patch('/tasks/:id')
