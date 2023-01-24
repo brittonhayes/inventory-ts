@@ -1,0 +1,22 @@
+query ListVehicles(
+	$includeAttachments: Boolean = false
+	$includeImplements: Boolean = false
+	$includeParts: Boolean = false
+) {
+	vehicles(
+		filters: {
+			includeAttachments: $includeAttachments
+			includeImplements: $includeImplements
+			includeParts: $includeParts
+		}
+	) {
+		id
+		name
+		make
+		model
+		vehicleType
+		machineHours
+		updatedAt
+		createdAt
+	}
+}

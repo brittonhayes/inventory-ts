@@ -17,13 +17,6 @@ export const load: PageLoad = async ({ parent }) => {
 
 	return {
 		title: $LL.home.title(),
-		subtitle: $LL.home.subtitle(),
-		links: [
-			{ href: `/${locale}`, label: $LL.home.title(), icon: 'home' },
-			{ href: `/${locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' },
-			{ href: `/${locale}/tasks`, label: $LL.tasks.title(), icon: 'task_alt' },
-			{ href: `/${locale}/guides`, label: $LL.guides.title(), icon: 'menu_book' },
-			{ href: `/${locale}/employees`, label: $LL.employees.title(), icon: 'groups' }
-		]
+		subtitle: $LL.home.subtitle()
 	};
 };

@@ -1,9 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Query, Resolver, Mutation } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { OrderDirection } from '../common/filters/order-direction';
-import { Implement } from './dto/implements.dto';
-import { VehiclePart } from './dto/parts.dto';
 import { CreateVehicleDto, Vehicle, VehicleQuery } from './dto/vehicles.dto';
 import { VehiclesService } from './vehicles.service';
 

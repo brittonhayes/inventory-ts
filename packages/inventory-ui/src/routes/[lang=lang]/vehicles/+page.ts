@@ -1,41 +1,29 @@
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import LL, { setLocale } from '$i18n/i18n-svelte';
+import { ListVehiclesDocument } from '$lib/gql/graphql';
 import { breadcrumbs } from '$lib/stores/navigation';
-import axios, { type AxiosResponse } from 'axios';
-import { gql } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
-export const load = (async ({ url, parent }) => {
+export const prerender = false;
+export const load = (async ({ parent }) => {
 	const { locale } = await parent();
 
 	setLocale(locale);
 	const $LL = get(LL);
 
+	const client = new GraphQLClient(PUBLIC_API_BASE_URL + '/graphql');
+	const response = await client.request(ListVehiclesDocument, {
+		includeAttachments: false,
+		includeImplements: false,
+		includeParts: false
+	});
+
 	breadcrumbs.set([
 		{ href: `/${locale}/`, label: $LL.home.title(), icon: 'home' },
 		{ href: `/${locale}/vehicles`, label: $LL.vehicles.title(), icon: 'agriculture' }
 	]);
-
-	const vehicles: AxiosResponse<Components.Schemas.VehicleResponse[]> = await axios.get(`/api/vehicles`);
-
-	const query = gql`
-		{
-			vehicles {
-				id
-				name
-				make
-				model
-				updatedAt
-				machineHours
-				vehicleType
-			}
-		}
-	`;
-
-	const response = await axios.post(PUBLIC_API_BASE_URL + '/graphql', {
-		query
-	});
 
 	return {
 		title: $LL.vehicles.title(),
@@ -56,6 +44,6 @@ export const load = (async ({ url, parent }) => {
 				}
 			}
 		},
-		vehicles: response.data.data.vehicles
+		vehicles: response.vehicles
 	};
 }) satisfies PageLoad;

@@ -10,18 +10,23 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
 		"gen:api-client": "npx dtsgenerator --url http://localhost:5000/docs-json -o ./src/lib/types/inventory-api.d.ts",
+		"gen:gql-client": "graphql-codegen -v",
+		"gen:gql-client:watch": "graphql-codegen -w",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write . && eslint . --fix",
 		"typesafe-i18n": "typesafe-i18n"
 	},
 	"type": "module",
 	"dependencies": {
+		"@apollo/client": "^3.7.4",
 		"@dicebear/collection": "^5.0.2",
 		"@dicebear/core": "^5.0.2",
+		"@graphql-codegen/gql-tag-operations-preset": "^1.7.4",
 		"@tiptap/starter-kit": "^2.0.0-beta.209",
 		"@zerodevx/svelte-toast": "1.0.0-rc.1",
 		"axios": "^1.2.3",
 		"es6-promise": "^4.2.4",
+		"graphql": "^16.6.0",
 		"graphql-request": "^5.1.0",
 		"material-symbols": "^0.4.2",
 		"typesafe-i18n": "^5.18.1",
@@ -29,6 +34,8 @@
 		"whatwg-fetch": "^3.0.0"
 	},
 	"devDependencies": {
+		"@graphql-codegen/cli": "^2.16.4",
+		"@graphql-codegen/client-preset": "^1.2.6",
 		"@sveltejs/adapter-auto": "^1.0.0",
 		"@sveltejs/adapter-node": "^1.1.4",
 		"@sveltejs/adapter-static": "^1.0.0",

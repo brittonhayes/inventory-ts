@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { breadcrumbs } from '$lib/stores/navigation';
+	import type { Route } from '$lib/types';
+	export let crumbs: Route[];
 </script>
 
-{#if $breadcrumbs.length > 0}
-	<div class="{$$props.class + ' text-sm breadcrumbs'}">
-		<ul>
-			{#each $breadcrumbs as crumb}
-				<li>
-					<a href="{crumb.href}" class="opacity-50 link-hover">{crumb.label}</a>
-				</li>
-			{/each}
-		</ul>
-	</div>
-{/if}
+<div class="{$$props.class + ' text-sm breadcrumbs'}">
+	<ul>
+		{#each crumbs as crumb}
+			<li>
+				<a href="{crumb.href}" class="opacity-50 link-hover">{crumb.label}</a>
+			</li>
+		{/each}
+	</ul>
+</div>

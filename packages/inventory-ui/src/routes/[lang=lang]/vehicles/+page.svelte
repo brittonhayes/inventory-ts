@@ -30,20 +30,19 @@
 				{#each data.vehicles as vehicle}
 					<tr
 						class="hover:cursor-pointer hover"
-						on:click="{() => {
-							goto(`/${data.locale}/vehicles/${vehicle.id}`);
-						}}"
 					>
 						<td>
-							<div class="flex items-center space-x-3">
-								<div>
-									<div class="font-bold">{vehicle.name}</div>
-									<div class="text-xs opacity-30">
-										{data.content.lastUpdated}
-										<span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span>
+							<a href={`/${data.locale}/vehicles/${vehicle.id}`}>
+								<div class="flex items-center space-x-3">
+									<div>
+										<div class="font-bold">{vehicle.name}</div>
+										<div class="text-xs opacity-30">
+											{data.content.lastUpdated}
+											<span class="italic">{new Date(vehicle.updatedAt).toLocaleDateString()}</span>
+										</div>
 									</div>
 								</div>
-							</div>
+							</a>
 						</td>
 						<td>
 							<div class="flex items-center space-x-3">
