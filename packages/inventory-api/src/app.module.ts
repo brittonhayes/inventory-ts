@@ -11,6 +11,7 @@ import { GqlConfigService } from './graphql.service';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { ToolsModule } from './tools/tools.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { VehiclesModule } from './vehicles/vehicles.module';
     ToolsModule,
     EmployeesModule,
     MaintenanceModule,
+    HealthModule,
   ],
 })
 export class AppModule implements NestModule {
