@@ -31,7 +31,7 @@
 		"@sveltejs/kit": "^1.0.0",
 		"@tailwindcss/typography": "^0.5.8",
 		"@types/feather-icons": "^4.29.1",
-		"@types/url-parse": "1.4.4",
+		"@types/url-parse": "1.4.8",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.7",
