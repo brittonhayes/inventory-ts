@@ -41,15 +41,4 @@ export class VehiclesResolver {
         : undefined,
     });
   }
-
-  @Mutation(() => Vehicle)
-  async addVehicle(@Args('createVehicleDto') createVehicleDto: CreateVehicleDto): Promise<Vehicle> {
-    const vehicle = await this.vehiclesService.createVehicle(createVehicleDto);
-    return vehicle;
-  }
-
-  @Mutation(() => Boolean)
-  async removeVehicle(@Args('id') id: string) {
-    return this.vehiclesService.deleteVehicle(id);
-  }
 }

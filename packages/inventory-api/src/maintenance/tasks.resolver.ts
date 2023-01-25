@@ -5,7 +5,7 @@ import { MaintenanceTask } from './dto/tasks.dto';
 import { MaintenanceTasksService } from './tasks.service';
 
 @Resolver(() => MaintenanceTask)
-export class TasksResolver {
+export class MaintenanceTasksResolver {
   constructor(private readonly tasksService: MaintenanceTasksService) {}
 
   @Query(() => MaintenanceTask, { name: 'task' })

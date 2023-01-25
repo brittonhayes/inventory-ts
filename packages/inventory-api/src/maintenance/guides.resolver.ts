@@ -5,7 +5,7 @@ import { MaintenanceGuide } from './dto/guides.dto';
 import { MaintenanceGuidesService } from './guides.service';
 
 @Resolver(() => MaintenanceGuide)
-export class GuidesResolver {
+export class MaintenanceGuidesResolver {
   constructor(private readonly guidesService: MaintenanceGuidesService) {}
 
   @Query(() => MaintenanceGuide, { name: 'guide' })
