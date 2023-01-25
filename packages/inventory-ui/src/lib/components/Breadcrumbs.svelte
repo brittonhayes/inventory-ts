@@ -3,7 +3,7 @@
 </script>
 
 {#if $breadcrumbs.length > 0}
-	<div class="{$$props.class + ' text-sm breadcrumbs'}">
+	<div class="{$$props.class + ' text-sm breadcrumbs hidden sm:block'}">
 		<ul>
 			{#each $breadcrumbs as crumb}
 				<li>
