@@ -3,11 +3,11 @@
 	import { breadcrumbs } from '$lib/stores/navigation';
 
 	export let to = '';
-	export let icon = 'chevron_left';
+	export let icon = 'arrow_back';
 	export let text = 'Back';
 
 	afterNavigate(({ from }) => {
-		to = from?.url.pathname || '/';
+		to = from?.url.pathname || $breadcrumbs.at(-2)?.href || '/';
 	});
 </script>
 
@@ -15,9 +15,11 @@
 	<div class="{$$props.class}">
 		<a href="{to}" class="btn bg-base-100 gap-2 flex flex-row justify-center items-center">
 			<i class="material-icons">{icon}</i>
-			{#if text}
-				{text}
-			{/if}
+			<span class="hidden md:block">
+				{#if text}
+					{text}
+				{/if}
+			</span>
 		</a>
 	</div>
 {/if}

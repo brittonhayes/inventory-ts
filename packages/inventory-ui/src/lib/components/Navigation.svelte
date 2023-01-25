@@ -5,7 +5,7 @@
 	import Lightswitch from './Lightswitch.svelte';
 </script>
 
-<div class="{$$props.class + ' navbar mb-10 mt-2'}">
+<div class="{$$props.class + ' navbar mb-2 md:mb-10 mt-2'}">
 	<div class="navbar-start">
 		{#if $breadcrumbs.length > 1}
 			<BackButton />
