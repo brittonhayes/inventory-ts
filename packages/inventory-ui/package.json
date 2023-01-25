@@ -21,11 +21,8 @@
 		"@tiptap/starter-kit": "^2.0.0-beta.209",
 		"axios": "^1.2.3",
 		"es6-promise": "^4.2.4",
-		"graphql-request": "^5.1.0",
 		"material-symbols": "^0.4.2",
-		"typesafe-i18n": "^5.18.1",
-		"url-parse": "^1.4.3",
-		"whatwg-fetch": "^3.0.0"
+		"typesafe-i18n": "^5.18.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0",

@@ -3,8 +3,6 @@ import { breadcrumbs } from '$lib/stores/navigation';
 import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
-import { gql, request } from 'graphql-request';
-import { PUBLIC_API_BASE_URL } from '$env/static/public';
 
 export const load: PageLoad = (async ({ parent, route }) => {
 	const { locale } = await parent();
@@ -17,24 +15,10 @@ export const load: PageLoad = (async ({ parent, route }) => {
 		{ label: $LL.employees.title(), href: `/${locale}/employees/`, icon: 'groups' }
 	]);
 
-	// const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/');
-
-	const query = gql`
-		{
-			employees {
-				id
-				name
-				updatedAt
-				createdAt
-			}
-		}
-	`;
-
-	const response = await request(PUBLIC_API_BASE_URL + '/graphql', query);
-	console.log(response);
+	const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/');
 
 	return {
-		employees: response.employees,
+		employees: employees.data,
 		content: {
 			title: $LL.employees.title(),
 			subtitle: $LL.employees.subtitle(),

@@ -15,7 +15,7 @@ const config: Config = {
     title: 'Open Farms Agriculture Inventory API',
     description: 'Open Farms Agriculture Inventory API',
     version: '1.5',
-    path: 'api',
+    path: 'docs',
     servers: {
       prod: 'https://openfarms.brittonhayes.com/api',
       dev: 'http://localhost:5000/api',

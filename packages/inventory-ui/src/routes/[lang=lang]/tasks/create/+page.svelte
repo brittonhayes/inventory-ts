@@ -1,11 +1,10 @@
 <script lang="ts">
 	import TitleBar from '$lib/components/TitleBar.svelte';
-	import type { MaintenanceTaskStatus } from '$lib/types';
 	import type { PageData } from './$types';
 
 	let taskName = '';
 	let taskDueDate = '';
-	let taskStatus: MaintenanceTaskStatus = 'INCOMPLETE';
+	let taskStatus: Components.Schemas.TaskStatus = 'INCOMPLETE';
 
 	export let data: PageData;
 </script>
