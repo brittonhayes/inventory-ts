@@ -23,15 +23,4 @@ export class EmployeesResolver {
       orderBy: { name: Prisma.SortOrder.asc },
     });
   }
-
-  //   @Mutation(() => Employee)
-  //   async createEmployee(@Args('createEmployeeDto') createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
-  //     const employee = await this.employeesService.createEmployee(createEmployeeDto);
-  //     return employee;
-  //   }
-
-  //   @Mutation(() => Boolean)
-  //   async deleteEmployee(@Args('id') id: string) {
-  //     return this.employeesService.deleteEmployee(id);
-  //   }
 }

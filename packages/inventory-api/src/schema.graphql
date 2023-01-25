@@ -19,18 +19,6 @@ enum Condition {
   POOR
 }
 
-input CreateVehicleDto {
-  condition: Condition = GOOD
-  link: String
-  machineHours: Int
-  make: String!
-  model: String!
-  name: String!
-  power: PowerType! = GAS
-  vehicleType: VehicleType!
-  year: Int
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -100,11 +88,6 @@ type MaintenanceTask {
   vehicleId: String
 }
 
-type Mutation {
-  addVehicle(createVehicleDto: CreateVehicleDto!): Vehicle!
-  removeVehicle(id: String!): Boolean!
-}
-
 enum PowerType {
   DIESEL
   ELECTRIC
@@ -115,10 +98,14 @@ enum PowerType {
 type Query {
   employee(id: String!): Employee!
   employees: [Employee!]!
+  guide(id: String!): MaintenanceGuide!
+  guides: [MaintenanceGuide!]!
   implement(id: String!): Implement!
   implements(attachmentId: String, vehicleId: String): [Implement!]!
   part(id: String!): VehiclePart!
   parts: [VehiclePart!]!
+  task(id: String!): MaintenanceTask!
+  tasks: [MaintenanceTask!]!
   vehicle(filters: VehicleQuery, id: String!): Vehicle!
   vehicles(filters: VehicleQuery): [Vehicle!]!
 }
