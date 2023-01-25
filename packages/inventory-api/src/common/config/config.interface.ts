@@ -42,7 +42,6 @@ export interface GraphqlConfig {
 
 export interface SecurityConfig {
   helmet: HelmetOptions;
-  expiresIn: string;
-  refreshIn: string;
-  bcryptSaltOrRound: string | number;
+  issuer: string;
+  audience: string;
 }

@@ -7,7 +7,12 @@ const config: Config = {
   },
   cors: {
     enabled: true,
-    origin: ['http://localhost:3000', 'https://openfarms.brittonhayes.com', 'http://localhost:5173'],
+    origin: [
+      'http://localhost:3000',
+      'https://openfarms.brittonhayes.com',
+      'http://localhost:5173',
+      'http://localhost:4173',
+    ],
     credentials: true,
   },
   swagger: {
@@ -30,9 +35,8 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    expiresIn: '2m',
-    refreshIn: '7d',
-    bcryptSaltOrRound: 10,
+    audience: process.env.AUTH0_AUDIENCE,
+    issuer: process.env.AUTH0_ISSUER_URL,
     helmet: {
       contentSecurityPolicy: false,
     },

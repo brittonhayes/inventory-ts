@@ -12,6 +12,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
 import { ToolsModule } from './tools/tools.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { HealthModule } from './health/health.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { HealthModule } from './health/health.module';
     EmployeesModule,
     MaintenanceModule,
     HealthModule,
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule {
