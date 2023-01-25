@@ -12,6 +12,18 @@ tasks:
       - task: release:api:docker
       - task: release:ui:docker
 
+  release:api:docker:
+    desc: "Release API docker image"
+    cmds:
+      - earthly --push +docker
+    dir: packages/inventory-api
+
+  release:ui:docker:
+    desc: "Release UI docker image"
+    cmds:
+      - earthly --push +docker
+    dir: packages/inventory-ui
+
   build:api:
     desc: "Build API"
     cmds:
@@ -23,4 +35,3 @@ tasks:
     cmds:
       - earthly +docker
     dir: packages/inventory-ui
-
