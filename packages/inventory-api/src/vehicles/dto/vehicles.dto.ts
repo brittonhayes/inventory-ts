@@ -1,6 +1,7 @@
-import { Field, ObjectType, registerEnumType, InputType, GraphQLISODateTime } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType, InputType, GraphQLISODateTime, ArgsType } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional, OmitType, PartialType, PickType } from '@nestjs/swagger';
 import { Condition, PowerType, VehicleType } from '@prisma/client';
+import { MinLength } from 'class-validator';
 import { MaintenanceGuide } from '../../maintenance/dto/guides.dto';
 import { Attachment } from './attachments.dto';
 import { Implement } from './implements.dto';
@@ -68,9 +69,9 @@ export class Vehicle {
   @ApiPropertyOptional({ type: String })
   link?: string;
 
-  @Field(() => PowerType)
-  @ApiProperty({ enum: PowerType, enumName: 'PowerType' })
-  power: PowerType = PowerType.GAS;
+  @Field(() => PowerType, { defaultValue: PowerType.DIESEL })
+  @ApiProperty({ default: PowerType.DIESEL, enum: PowerType, enumName: 'PowerType' })
+  power: PowerType = PowerType.DIESEL;
 
   @Field((type) => [MaintenanceGuide], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => MaintenanceGuide })
@@ -87,21 +88,6 @@ export class Vehicle {
   @Field((type) => [Implement], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => Implement })
   compatibleImplements?: Implement[];
-}
-
-@InputType()
-export class VehicleQuery {
-  @Field(() => Boolean, { defaultValue: false, nullable: true })
-  includeAttachments?: boolean;
-
-  @Field(() => Boolean, { defaultValue: false, nullable: true })
-  includeGuides?: boolean;
-
-  @Field(() => Boolean, { defaultValue: false, nullable: true })
-  includeParts?: boolean;
-
-  @Field(() => Boolean, { defaultValue: false, nullable: true })
-  includeImplements?: boolean;
 }
 
 @ObjectType()
@@ -138,16 +124,19 @@ export class CreateVehicleDto {
   model: string;
 
   @ApiPropertyOptional({ type: Number })
-  @Field(() => Number, { nullable: true })
+  @Field(() => Number, {
+    description: 'Find machine hours greater than or equal to the number provided',
+    nullable: true,
+  })
   machineHours?: number;
 
   @ApiPropertyOptional({ type: String })
   @Field(() => String, { nullable: true })
   link?: string;
 
-  @ApiProperty({ enum: PowerType, enumName: 'PowerType' })
-  @Field(() => PowerType)
-  power: PowerType = PowerType.GAS;
+  @Field(() => PowerType, { defaultValue: PowerType.DIESEL })
+  @ApiProperty({ default: PowerType.DIESEL, enum: PowerType, enumName: 'PowerType' })
+  power: PowerType = PowerType.DIESEL;
 }
 
 @InputType()
