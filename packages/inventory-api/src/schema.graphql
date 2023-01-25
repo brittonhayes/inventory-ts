@@ -106,8 +106,28 @@ type Query {
   parts: [VehiclePart!]!
   task(id: String!): MaintenanceTask!
   tasks: [MaintenanceTask!]!
-  vehicle(filters: VehicleQuery, id: String!): Vehicle!
-  vehicles(filters: VehicleQuery): [Vehicle!]!
+  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: vehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
+  vehicles(
+    condition: Condition = GOOD
+    includeAttachments: Boolean = false
+    includeGuides: Boolean = false
+    includeImplements: Boolean = false
+    includeParts: Boolean = false
+    link: String
+
+    """Find machine hours greater than or equal to the number provided"""
+    machineHours: Int
+    make: String
+    model: String
+    name: String
+    orderBy: vehiclesOrder = updatedAt
+    power: PowerType = DIESEL
+    skip: Int = 0
+    sort: vehiclesSort
+    take: Int
+    vehicleType: VehicleType
+    year: Int
+  ): [Vehicle!]!
 }
 
 enum TaskStatus {
@@ -150,13 +170,6 @@ type VehiclePart {
   updatedAt: DateTime!
 }
 
-input VehicleQuery {
-  includeAttachments: Boolean = false
-  includeGuides: Boolean = false
-  includeImplements: Boolean = false
-  includeParts: Boolean = false
-}
-
 enum VehicleType {
   ATV
   COMBINE
@@ -166,4 +179,25 @@ enum VehicleType {
   TRACTOR
   TRUCK
   UTV
+}
+
+enum vehiclesOrder {
+  condition
+  createdAt
+  id
+  isOwned
+  link
+  machineHours
+  make
+  model
+  name
+  power
+  updatedAt
+  vehicleType
+  year
+}
+
+enum vehiclesSort {
+  asc
+  desc
 }
