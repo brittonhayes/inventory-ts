@@ -1,8 +1,6 @@
-import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import LL, { setLocale } from '$i18n/i18n-svelte';
 import { breadcrumbs } from '$lib/stores/navigation';
 import axios, { type AxiosResponse } from 'axios';
-import { gql } from 'graphql-request';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
@@ -18,24 +16,6 @@ export const load = (async ({ url, parent }) => {
 	]);
 
 	const vehicles: AxiosResponse<Components.Schemas.VehicleResponse[]> = await axios.get(`/api/vehicles`);
-
-	const query = gql`
-		{
-			vehicles {
-				id
-				name
-				make
-				model
-				updatedAt
-				machineHours
-				vehicleType
-			}
-		}
-	`;
-
-	const response = await axios.post(PUBLIC_API_BASE_URL + '/graphql', {
-		query
-	});
 
 	return {
 		title: $LL.vehicles.title(),
@@ -56,6 +36,6 @@ export const load = (async ({ url, parent }) => {
 				}
 			}
 		},
-		vehicles: response.data.data.vehicles
+		vehicles: vehicles.data
 	};
 }) satisfies PageLoad;

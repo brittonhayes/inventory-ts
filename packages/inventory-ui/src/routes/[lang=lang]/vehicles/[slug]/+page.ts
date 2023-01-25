@@ -1,8 +1,6 @@
-import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import LL, { setLocale } from '$i18n/i18n-svelte';
 import { breadcrumbs } from '$lib/stores/navigation';
-import axios, { type AxiosResponse } from 'axios';
-import request, { gql } from 'graphql-request';
+import axios from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
@@ -11,51 +9,29 @@ export const load = (async ({ params, parent }) => {
 	setLocale(locale);
 	const $LL = get(LL);
 
-	const query = gql`
-	{
-		vehicle(id: "${params.slug}", filters: {
-			includeParts: true,
-			includeGuides: true,
-			includeAttachments: true,
-		}) {
-		  id,
-		  name,
-		  make,
-		  model,
-		  vehicleType,
-		  guides {
-			id,
-			name
-		  }
-		  compatibleParts {
-			id,
-			name
-		  }
-		  compatibleImplements {
-			id,
-			name
-		  }
-		}
-	}`;
-
-	const response = await axios.post(PUBLIC_API_BASE_URL + '/graphql', {
-		query
-	});
+	const vehicle = await axios.get<Components.Schemas.Vehicle>('/api/vehicles/' + params.slug);
+	const vehicleParts = await axios.get<Components.Schemas.VehiclePart[]>('/api/vehicles/' + params.slug + '/parts/');
+	const vehicleImplements = await axios.get<Components.Schemas.Implement[]>(
+		'/api/vehicles/' + params.slug + '/implements'
+	);
+	const vehicleGuides = await axios.get<Components.Schemas.MaintenanceGuide[]>(
+		'/api/maintenance/guides/vehicle/' + params.slug
+	);
 
 	breadcrumbs.set([
 		{ label: $LL.home.title(), href: `/${locale}/`, icon: 'home' },
 		{ label: $LL.vehicles.title(), href: `/${locale}/vehicles/`, icon: 'agriculture' },
 		{
-			label: `${response.data.data.vehicle.name}`,
-			href: `/${locale}/vehicles/${response.data.data.vehicle.id}/`,
+			label: vehicle.data.name || vehicle.data.model,
+			href: `/${locale}/vehicles/${vehicle.data.id}/`,
 			icon: ''
 		}
 	]);
 	return {
 		params: params,
-		vehicle: response.data.data.vehicle,
-		implements: response.data.data.compatibleImplements,
-		parts: response.data.data.compatibleParts,
-		guides: response.data.data.guides
+		vehicle: vehicle.data,
+		implements: vehicleImplements.data,
+		parts: vehicleParts.data,
+		guides: vehicleGuides.data
 	};
 }) satisfies PageLoad;
