@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { MaintenanceGuide } from './dto/guides.dto';
+import { MaintenanceGuide } from '../dto/guides.dto';
 import { MaintenanceGuidesService } from './guides.service';
 
 @Resolver(() => MaintenanceGuide)

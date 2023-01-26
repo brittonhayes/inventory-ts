@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
-import { MaintenanceGuidesService } from './guides.service';
+import { MaintenanceGuidesService } from './guides/guides.service';
 import { MaintenanceController } from './maintenance.controller';
-import { MaintenanceTasksService } from './tasks.service';
+import { MaintenanceTasksService } from './tasks/tasks.service';
 
 describe('MaintenanceController', () => {
   let controller: MaintenanceController;

@@ -1,8 +1,7 @@
-import { createAuth0Client } from '@auth0/auth0-spa-js';
-import type { Auth0Client, PopupLoginOptions } from '@auth0/auth0-spa-js';
-import { user, isAuthenticated, popupOpen } from '$lib/stores';
 import { PUBLIC_AUTH0_CLIENT_ID, PUBLIC_AUTH0_DOMAIN } from '$env/static/public';
-import axios from 'axios';
+import { isAuthenticated, popupOpen, user } from '$lib/stores';
+import type { Auth0Client, PopupLoginOptions } from '@auth0/auth0-spa-js';
+import { createAuth0Client } from '@auth0/auth0-spa-js';
 
 async function createClient(): Promise<Auth0Client> {
 	const auth0Client = await createAuth0Client({

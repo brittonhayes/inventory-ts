@@ -69,6 +69,16 @@ enum FuelEventAction {
   DRAIN
 }
 
+model User {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  provider   String   @default("google")
+  providerId String   @unique
+  username   String   @unique
+  name       String?
+}
+
 model FuelEvent {
   id        String          @id @default(cuid())
   timestamp DateTime        @default(now())

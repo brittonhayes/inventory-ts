@@ -7,13 +7,13 @@ const config: Config = {
   },
   cors: {
     enabled: true,
+    credentials: true,
     origin: [
       'http://localhost:3000',
       'https://openfarms.brittonhayes.com',
       'http://localhost:5173',
       'http://localhost:4173',
     ],
-    credentials: true,
   },
   swagger: {
     enabled: true,
@@ -35,8 +35,16 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    audience: process.env.AUTH0_AUDIENCE,
-    issuer: process.env.AUTH0_ISSUER_URL,
+    sessionCookieKey: 'session',
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    jwt: {
+      secret: process.env.JWT_SECRET,
+      expiration: process.env.JWT_EXPIRES_IN,
+    },
     helmet: {
       contentSecurityPolicy: false,
     },

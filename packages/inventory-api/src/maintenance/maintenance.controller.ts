@@ -14,8 +14,8 @@ import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';
 import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
-import { MaintenanceGuidesService } from './guides.service';
-import { MaintenanceTasksService } from './tasks.service';
+import { MaintenanceGuidesService } from './guides/guides.service';
+import { MaintenanceTasksService } from './tasks/tasks.service';
 
 @ApiTags('maintenance')
 @Controller('maintenance')

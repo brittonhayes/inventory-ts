@@ -34,7 +34,6 @@ export class EmployeesController {
     return this.employeesService.deleteEmployee(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })

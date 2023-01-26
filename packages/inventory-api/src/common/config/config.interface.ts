@@ -42,6 +42,18 @@ export interface GraphqlConfig {
 
 export interface SecurityConfig {
   helmet: HelmetOptions;
-  issuer: string;
-  audience: string;
+  jwt: JwtConfig;
+  google: GoogleOauthConfig;
+  sessionCookieKey: string;
+}
+
+export interface GoogleOauthConfig {
+  clientID: string;
+  clientSecret: string;
+  callbackURL: string;
+}
+
+export interface JwtConfig {
+  secret: string;
+  expiration: string;
 }

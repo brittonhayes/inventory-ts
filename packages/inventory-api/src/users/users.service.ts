@@ -1,0 +1,34 @@
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'nestjs-prisma';
+import { CreateUserDto } from './dto/user.dto';
+
+@Injectable()
+export class UsersService {
+  constructor(private prisma: PrismaService) {}
+
+  async listUsers(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.UserWhereUniqueInput;
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithRelationInput;
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.user.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
+  }
+
+  async findUser(where: Prisma.UserWhereUniqueInput) {
+    return this.prisma.user.findUnique({ where });
+  }
+
+  async createUser(createUserDto: CreateUserDto) {
+    return this.prisma.user.create({ data: createUserDto });
+  }
+}

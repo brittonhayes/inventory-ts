@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Query, Resolver, Mutation } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { CreateEmployeeDto, Employee } from './dto/employees.dto';
+import { Employee } from './dto/employees.dto';
 import { EmployeesService } from './employees.service';
 
 @Resolver(() => Employee)
