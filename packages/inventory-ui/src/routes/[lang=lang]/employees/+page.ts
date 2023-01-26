@@ -1,4 +1,5 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
+import { auth0Client } from '$lib/stores';
 import { breadcrumbs } from '$lib/stores/navigation';
 import axios, { type AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
@@ -15,7 +16,11 @@ export const load: PageLoad = (async ({ parent, route }) => {
 		{ label: $LL.employees.title(), href: `/${locale}/employees/`, icon: 'groups' }
 	]);
 
-	const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/');
+	const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/', {
+		headers: {
+			Authorization: `Bearer ${await get(auth0Client).getTokenSilently()}`
+		}
+	});
 
 	return {
 		employees: employees.data,

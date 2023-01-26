@@ -1,5 +1,3 @@
-import { browser } from '$app/environment';
-import { NODE_ENV } from '$env/static/private';
 import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import { redirect } from '@sveltejs/kit';
 import axios from 'axios';

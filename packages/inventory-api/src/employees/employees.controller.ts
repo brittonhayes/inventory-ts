@@ -1,4 +1,5 @@
-import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { CreateEmployeeDto, Employee, EmployeeResponse, UpdateEmployeeDto } from './dto/employees.dto';
@@ -33,6 +34,7 @@ export class EmployeesController {
     return this.employeesService.deleteEmployee(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })

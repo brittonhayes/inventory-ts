@@ -16,6 +16,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth0/auth0-spa-js": "^2.0.2",
 		"@dicebear/collection": "^5.0.2",
 		"@dicebear/core": "^5.0.2",
 		"@tiptap/starter-kit": "^2.0.0-beta.209",

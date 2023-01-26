@@ -1,15 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { avatar } from '$lib/common/avatar';
 	import TitleBar from '$lib/components/TitleBar.svelte';
-	import { initials } from '@dicebear/collection';
-	import { createAvatar } from '@dicebear/core';
 	import type { PageData } from './$types';
-
-	const avatar = async (employee: string) => {
-		return createAvatar(initials, {
-			seed: employee
-		}).toDataUri();
-	};
 
 	export let data: PageData;
 </script>

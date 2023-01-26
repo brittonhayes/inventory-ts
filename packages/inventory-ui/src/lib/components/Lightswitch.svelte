@@ -39,7 +39,7 @@
 
 </script>
 
-<label class="{$$props.class + ' swap swap-rotate btn btn-ghost opacity-50 hover:opacity-100 btn-square'}">
+<label class="{$$props.class + ' swap swap-rotate btn btn-ghost btn-square'}">
 	<!-- this hidden checkbox controls the state -->
 	<input type="checkbox" on:click="{toggleTheme}" checked="{$theme === 'dark'}" />
 	<!-- moon icon -->

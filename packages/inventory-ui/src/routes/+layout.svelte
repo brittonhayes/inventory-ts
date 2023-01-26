@@ -5,6 +5,7 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { isAuthenticated } from '$lib/stores';
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 
@@ -19,13 +20,17 @@
 	];
 </script>
 
+<!-- svelte-ignore missing-declaration -->
 <svelte:head>
 	<title>{$page.data.title || 'Inventory'}</title>
 	<HeadHrefLangs />
 </svelte:head>
 
 <AppDrawer links="{links}">
-	<Navigation />
+	<Navigation redirectTo={`/${$page.data.locale}/login`} />
 	<slot />
-	<BottomNav class="index-1000 lg:hidden" links="{links}" />
+
+	{#if $isAuthenticated}
+		<BottomNav class="index-1000 lg:hidden" links="{links}" />
+	{/if}
 </AppDrawer>

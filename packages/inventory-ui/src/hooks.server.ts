@@ -1,6 +1,8 @@
 import { detectLocale, i18n, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
+import { isAuthenticated } from '$lib/stores';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
+import { get } from 'svelte/store';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 
 loadAllLocales();
@@ -9,14 +11,15 @@ const L = i18n();
 export const handle: Handle = async ({ event, resolve }) => {
 	// read language slug
 	const [, lang] = event.url.pathname.split('/');
+	const authenticated = get(isAuthenticated);
 
 	// redirect to base locale if no locale slug was found
 	if (!lang) {
 		const locale = getPreferredLocale(event);
-
+		const destination = get(isAuthenticated) ? `/${locale}` : `/${locale}/login`;
 		return new Response(null, {
 			status: 302,
-			headers: { Location: `/${locale}` }
+			headers: { Location: destination }
 		});
 	}
 
@@ -27,6 +30,23 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// bind locale and translation functions to current request
 	event.locals.locale = locale;
 	event.locals.LL = LL;
+
+	// Redirect to login if not authenticated
+	if (!authenticated && event.url.pathname !== `/${locale}/login`) {
+		const destination = get(isAuthenticated) ? `/${locale}` : `/${locale}/login`;
+		return new Response(null, {
+			status: 302,
+			headers: { Location: destination }
+		});
+	}
+
+	if (authenticated && event.url.pathname === `/${locale}/login`) {
+		const destination = get(isAuthenticated) ? `/${locale}` : `/${locale}/login`;
+		return new Response(null, {
+			status: 302,
+			headers: { Location: destination }
+		});
+	}
 
 	// replace html lang attribute with correct language
 	return resolve(event, { transformPageChunk: ({ html }) => html.replace('%lang%', locale) });
