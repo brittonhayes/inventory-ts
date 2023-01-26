@@ -19,10 +19,7 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
   async validate(_accessToken: string, _refreshToken: string, profile: Profile) {
     const { id, name, emails } = profile;
 
-    let user = await this.usersService.findUser({
-      username: emails[0].value,
-      providerId: id,
-    });
+    let user = await this.usersService.findUser(id);
     if (!user) {
       user = await this.usersService.createUser({
         provider: 'google',

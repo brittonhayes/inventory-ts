@@ -24,8 +24,12 @@ export class UsersService {
     });
   }
 
-  async findUser(where: Prisma.UserWhereUniqueInput) {
-    return this.prisma.user.findUnique({ where });
+  async findUser(id: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        providerId: id,
+      },
+    });
   }
 
   async createUser(createUserDto: CreateUserDto) {
