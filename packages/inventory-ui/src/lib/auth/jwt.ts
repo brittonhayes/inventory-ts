@@ -1,5 +1,5 @@
 import { API } from '$lib/api';
-import { isAuthenticated, user } from '$lib/stores';
+import { isAuthenticated, user, type User } from '$lib/stores';
 import { get } from 'svelte/store';
 
 export class JWT {
@@ -30,7 +30,7 @@ export class JWT {
 		this.setToken('');
 		this.setRefreshToken('');
 		isAuthenticated.set(false);
-		user.update((u) => ({ ...u, username: '' }));
+		user.set({} as User);
 	}
 
 	static async refresh() {

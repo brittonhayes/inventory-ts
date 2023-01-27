@@ -1,6 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { breadcrumbs } from '$lib/stores';
+	breadcrumbs.set([]);
 </script>
 
 <section class="flex flex-col mx-auto justify-center items-center md:w-3/4">

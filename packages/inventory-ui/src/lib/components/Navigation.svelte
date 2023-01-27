@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { JWT } from '$lib/auth/jwt';
 	import { avatar } from '$lib/common/avatar';
 	import { isAuthenticated, user } from '$lib/stores/auth';
@@ -8,7 +10,11 @@
 	import Breadcrumbs from './Breadcrumbs.svelte';
 	import Lightswitch from './Lightswitch.svelte';
 
-	export let redirectTo: string;
+	export let profilePicture = '';
+	export let locale = 'en';
+	$: avatar($user.username).then((data) => {
+		profilePicture = data;
+	});
 
 	function logout() {
 		JWT.logout();
@@ -34,9 +40,9 @@
 				<label tabindex="0" class="btn btn-ghost rounded-btn">
 					<div class="avatar">
 						<div class="w-8 round rounded-xl">
-							{#await avatar($user.username) then src}
-								<img alt="Avatar" src="{src}" />
-							{/await}
+							{#if profilePicture}
+								<img src="{profilePicture}" alt="Avatar" />
+							{/if}
 						</div>
 					</div>
 				</label>

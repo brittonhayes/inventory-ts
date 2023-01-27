@@ -23,7 +23,7 @@ export const load = (async ({ parent }) => {
 	setLocale(locale);
 	const $LL = get(LL);
 	breadcrumbs.set([
-		{ label: $LL.home.title(), href: `/${locale}/home`, icon: '' },
+		{ label: $LL.home.title(), href: `/${locale}`, icon: '' },
 		{ label: $LL.guides.title(), href: `/${locale}/guides`, icon: 'menu_book' }
 	]);
 
