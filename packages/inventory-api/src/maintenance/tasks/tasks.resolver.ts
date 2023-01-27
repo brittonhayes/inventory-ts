@@ -1,10 +1,12 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
+import { GqlAuthGuard } from '../../common/guards/gql-auth.guard';
 import { MaintenanceTask } from '../dto/tasks.dto';
 import { MaintenanceTasksService } from './tasks.service';
 
 @Resolver(() => MaintenanceTask)
+@UseGuards(GqlAuthGuard)
 export class MaintenanceTasksResolver {
   constructor(private readonly tasksService: MaintenanceTasksService) {}
 

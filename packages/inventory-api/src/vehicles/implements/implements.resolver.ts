@@ -1,10 +1,12 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { Implement } from './dto/implements.dto';
+import { Implement } from '../dto/implements.dto';
+import { GqlAuthGuard } from '../../common/guards/gql-auth.guard';
 import { ImplementsService } from './implements.service';
 
 @Resolver(() => Implement)
+@UseGuards(GqlAuthGuard)
 export class ImplementsResolver {
   constructor(private readonly implementsService: ImplementsService) {}
 

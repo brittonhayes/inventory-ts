@@ -1,10 +1,12 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { VehiclePart } from './dto/parts.dto';
+import { GqlAuthGuard } from '../../common/guards/gql-auth.guard';
+import { VehiclePart } from '../dto/parts.dto';
 import { VehiclePartsService } from './parts.service';
 
 @Resolver(() => VehiclePart)
+@UseGuards(GqlAuthGuard)
 export class VehiclePartsResolver {
   constructor(private readonly vehiclePartsService: VehiclePartsService) {}
 

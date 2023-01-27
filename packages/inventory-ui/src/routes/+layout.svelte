@@ -27,10 +27,8 @@
 </svelte:head>
 
 <AppDrawer links="{links}">
-	<Navigation redirectTo={`/${$page.data.locale}/login`} />
+	<Navigation redirectTo="{`/${$page.data.locale}/login`}" />
 	<slot />
 
-	{#if $isAuthenticated}
-		<BottomNav class="index-1000 lg:hidden" links="{links}" />
-	{/if}
+	<BottomNav class="index-1000 lg:hidden" links="{links}" />
 </AppDrawer>

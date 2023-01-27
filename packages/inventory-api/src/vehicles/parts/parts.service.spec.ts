@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
-import { shouldListVehicleParts, shouldReturnVehiclePartById } from '../../test/fixtures/parts';
+import { shouldListVehicleParts, shouldReturnVehiclePartById } from '../../../test/fixtures/parts';
 import { VehiclePartsService } from './parts.service';
 
 describe('VehiclePartService', () => {

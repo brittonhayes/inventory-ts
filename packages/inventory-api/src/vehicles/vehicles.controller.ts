@@ -11,17 +11,20 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { AccessTokenGuard } from '../common/guards/token.guard';
 import { ImplementResponse } from './dto/implements.dto';
 import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart, VehiclePartResponse } from './dto/parts.dto';
 import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from './dto/vehicles.dto';
-import { VehiclePartsService } from './parts.service';
+import { VehiclePartsService } from './parts/parts.service';
 import { VehiclesService } from './vehicles.service';
 
 @ApiTags('vehicles')
 @Controller('vehicles')
+@UseGuards(AccessTokenGuard)
 export class VehiclesController {
   constructor(
     private readonly vehiclesService: VehiclesService,

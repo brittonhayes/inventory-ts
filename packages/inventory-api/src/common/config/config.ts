@@ -35,7 +35,6 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    sessionCookieKey: 'session',
     google: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -43,7 +42,7 @@ const config: Config = {
     },
     jwt: {
       secret: process.env.JWT_SECRET,
-      expiration: process.env.JWT_EXPIRES_IN,
+      refreshSecret: process.env.JWT_REFRESH_SECRET,
     },
     helmet: {
       contentSecurityPolicy: false,

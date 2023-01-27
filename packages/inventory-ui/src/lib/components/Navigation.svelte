@@ -1,21 +1,18 @@
 <script lang="ts">
-	import auth from '$lib/auth/service';
+	import { JWT } from '$lib/auth/jwt';
 	import { avatar } from '$lib/common/avatar';
-	import { auth0Client, isAuthenticated, user } from '$lib/stores/auth';
+	import { isAuthenticated, user } from '$lib/stores/auth';
 	import { breadcrumbs } from '$lib/stores/navigation';
 	import { redirect } from '@sveltejs/kit';
 	import BackButton from './BackButton.svelte';
 	import Breadcrumbs from './Breadcrumbs.svelte';
 	import Lightswitch from './Lightswitch.svelte';
-	
+
 	export let redirectTo: string;
 
 	function logout() {
-		auth.logout($auth0Client);
-		isAuthenticated.set(false);
-		redirect(307, redirectTo);
+		JWT.logout();
 	}
-
 </script>
 
 <div class="{$$props.class + ' navbar mb-2 md:mb-10 mt-2'}">
@@ -37,8 +34,8 @@
 				<label tabindex="0" class="btn btn-ghost rounded-btn">
 					<div class="avatar">
 						<div class="w-8 round rounded-xl">
-							{#await avatar($user.name || $user.id) then src}
-						  		<img alt="Avatar" {src} />
+							{#await avatar($user.username) then src}
+								<img alt="Avatar" src="{src}" />
 							{/await}
 						</div>
 					</div>
@@ -50,12 +47,11 @@
 						<!-- svelte-ignore a11y-missing-attribute -->
 						<span>
 							<i class="material-icons">logout</i>
-							<a class="link" on:click="{logout}">Logout</a>
+							<a class="link" on:click="{() => logout()}">Logout</a>
 						</span>
-						
 					</li>
 				</ul>
-      		</div>
+			</div>
 		{/if}
 		<Lightswitch />
 	</div>

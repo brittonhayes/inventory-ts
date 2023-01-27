@@ -1,40 +1,53 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 @ObjectType()
 export class User {
   @Field()
+  @ApiProperty({ type: String })
   id: string;
 
   @Field()
+  @ApiProperty({ type: String })
   provider: string;
 
   @Field()
+  @ApiProperty({ type: String })
   providerId: string;
 
   @Field()
+  @ApiProperty({ type: String })
   username: string;
 
   @Field()
+  @ApiProperty({ type: String, nullable: true })
   name?: string;
 
   @Field()
+  @ApiProperty({ type: Date })
   createdAt: Date;
 
   @Field()
+  @ApiProperty({ type: Date })
   updatedAt: Date;
 }
 
-export class CreateUserDto extends PartialType(User) {
+export class CreateUserDto {
   @Field()
   username: string;
 
   @Field()
   name?: string;
 
-  @Field()
-  provider: string;
+  password: string;
+
+  refreshToken?: string;
 
   @Field()
-  providerId: string;
+  provider?: string;
+
+  @Field()
+  providerId?: string;
 }
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {}

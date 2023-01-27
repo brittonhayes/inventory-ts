@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import * as cookieParser from 'cookie-parser';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
 import { CorsConfig, NestConfig, SecurityConfig, SwaggerConfig } from './common/config/config.interface';
@@ -34,6 +35,10 @@ async function bootstrap() {
   // Security
   if (securityConfig.helmet) {
     app.use(helmet(securityConfig.helmet));
+  }
+
+  if (securityConfig.jwt) {
+    app.use(cookieParser(securityConfig.jwt.secret));
   }
 
   if (swaggerConfig.enabled) {

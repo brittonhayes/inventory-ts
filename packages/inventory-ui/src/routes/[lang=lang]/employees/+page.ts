@@ -1,12 +1,24 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
-import { auth0Client } from '$lib/stores';
+import { API } from '$lib/api';
 import { breadcrumbs } from '$lib/stores/navigation';
-import axios, { type AxiosResponse } from 'axios';
+import { error } from '@sveltejs/kit';
+import axios from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = (async ({ parent, route }) => {
+export const load: PageLoad = (async ({ parent }) => {
 	const { locale } = await parent();
+	let employees: Components.Schemas.Employee[] = [];
+
+	try {
+		const client = API.client();
+		const res = await client.get<Components.Schemas.Employee[]>('/api/employees/');
+		employees = res.data;
+	} catch (err) {
+		if (axios.isAxiosError(err) && err.response) {
+			throw error(err.response.status, err.response.statusText);
+		}
+	}
 
 	setLocale(locale);
 	const $LL = get(LL);
@@ -16,14 +28,8 @@ export const load: PageLoad = (async ({ parent, route }) => {
 		{ label: $LL.employees.title(), href: `/${locale}/employees/`, icon: 'groups' }
 	]);
 
-	const employees: AxiosResponse<Components.Schemas.Employee[]> = await axios.get('/api/employees/', {
-		headers: {
-			Authorization: `Bearer ${await get(auth0Client).getTokenSilently()}`
-		}
-	});
-
 	return {
-		employees: employees.data,
+		employees: employees,
 		content: {
 			title: $LL.employees.title(),
 			subtitle: $LL.employees.subtitle(),

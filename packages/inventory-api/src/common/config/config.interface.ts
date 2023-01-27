@@ -44,7 +44,6 @@ export interface SecurityConfig {
   helmet: HelmetOptions;
   jwt: JwtConfig;
   google: GoogleOauthConfig;
-  sessionCookieKey: string;
 }
 
 export interface GoogleOauthConfig {
@@ -55,5 +54,5 @@ export interface GoogleOauthConfig {
 
 export interface JwtConfig {
   secret: string;
-  expiration: string;
+  refreshSecret: string;
 }
