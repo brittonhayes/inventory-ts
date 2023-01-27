@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/com
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { SecurityConfig } from 'src/common/config/config.interface';
+import { SecurityConfig } from '..//common/config/config.interface';
 import { CreateUserDto } from '../users/dto/user.dto';
 import { UsersService } from '../users/users.service';
 import { AuthDto } from './dto/auth.dto';

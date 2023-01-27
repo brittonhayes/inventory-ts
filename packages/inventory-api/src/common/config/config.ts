@@ -41,8 +41,8 @@ const config: Config = {
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     jwt: {
-      secret: process.env.JWT_SECRET,
-      refreshSecret: process.env.JWT_REFRESH_SECRET,
+      secret: process.env.JWT_SECRET || '',
+      refreshSecret: process.env.JWT_REFRESH_SECRET || '',
     },
     helmet: {
       contentSecurityPolicy: false,

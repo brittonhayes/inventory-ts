@@ -1,10 +1,16 @@
 import { INestApplication } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import config from '../src/common/config/config';
 import * as request from 'supertest';
-import { ImplementsService } from '../src/vehicles/implements.service';
-import { VehiclePartsService } from '../src/vehicles/parts.service';
+import { JwtTokenStrategy } from '../src/auth/strategies/token.strategy';
+import { ImplementsService } from '../src/vehicles/implements/implements.service';
+import { VehiclePartsService } from '../src/vehicles/parts/parts.service';
 import { VehiclesModule } from '../src/vehicles/vehicles.module';
 import { VehiclesService } from '../src/vehicles/vehicles.service';
+import { AuthModule } from '../src/auth/auth.module';
+import { UsersModule } from '../src/users/users.module';
+import { PrismaService } from 'nestjs-prisma';
 
 describe('Vehicles (e2e)', () => {
   let app: INestApplication;
@@ -29,7 +35,15 @@ describe('Vehicles (e2e)', () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [VehiclesModule],
+      imports: [
+        AuthModule,
+        VehiclesModule,
+        UsersModule,
+        ConfigModule.forRoot({
+          load: [config],
+        }),
+      ],
+      providers: [JwtTokenStrategy],
     })
       .overrideProvider(VehiclePartsService)
       .useValue(vehiclePartsService)

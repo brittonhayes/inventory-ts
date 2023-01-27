@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
-import { AccessTokenGuard } from 'src/common/guards/token.guard';
+import { AccessTokenGuard } from '../common/guards/token.guard';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
