@@ -7,23 +7,23 @@ const config: Config = {
   },
   cors: {
     enabled: true,
+    credentials: true,
     origin: [
-      'http://localhost:3000',
       'https://openfarms.brittonhayes.com',
+      'http://localhost:3000',
       'http://localhost:5173',
       'http://localhost:4173',
     ],
-    credentials: true,
   },
   swagger: {
-    enabled: true,
+    enabled: process.env.NODE_ENV !== 'production',
     title: 'Open Farms Agriculture Inventory API',
     description: 'Open Farms Agriculture Inventory API',
     version: '1.5',
-    path: 'docs',
+    docsPath: '/docs',
     servers: {
-      prod: 'https://openfarms.brittonhayes.com/api',
-      dev: 'http://localhost:5000/api',
+      prod: 'https://openfarms.brittonhayes.com',
+      dev: 'http://localhost:5000',
     },
   },
   graphql: {
@@ -35,8 +35,15 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    audience: process.env.AUTH0_AUDIENCE,
-    issuer: process.env.AUTH0_ISSUER_URL,
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    jwt: {
+      secret: process.env.JWT_SECRET || '',
+      refreshSecret: process.env.JWT_REFRESH_SECRET || '',
+    },
     helmet: {
       contentSecurityPolicy: false,
     },

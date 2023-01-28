@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MaintenanceGuide, Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateMaintenanceGuideDto } from './dto/guides.dto';
+import { CreateMaintenanceGuideDto } from '../dto/guides.dto';
 
 @Injectable()
 export class MaintenanceGuidesService {

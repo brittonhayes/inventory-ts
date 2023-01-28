@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
+	import { JWT } from '$lib/auth/jwt';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
@@ -19,13 +20,14 @@
 	];
 </script>
 
+<!-- svelte-ignore missing-declaration -->
 <svelte:head>
 	<title>{$page.data.title || 'Inventory'}</title>
 	<HeadHrefLangs />
 </svelte:head>
 
 <AppDrawer links="{links}">
-	<Navigation />
+	<Navigation redirectTo="{`/${$page.data.locale}/login`}" />
 	<slot />
 	<BottomNav class="index-1000 lg:hidden" links="{links}" />
 </AppDrawer>

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateMaintenanceTaskDto, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
+import { CreateMaintenanceTaskDto, UpdateMaintenanceTaskDto } from '../dto/tasks.dto';
 
 @Injectable()
 export class MaintenanceTasksService {

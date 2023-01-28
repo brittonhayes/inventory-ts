@@ -1,6 +1,6 @@
 import LL, { setLocale } from '$i18n/i18n-svelte';
+import { API } from '$lib/api';
 import { breadcrumbs } from '$lib/stores/navigation';
-import axios from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
@@ -9,12 +9,13 @@ export const load = (async ({ params, parent }) => {
 	setLocale(locale);
 	const $LL = get(LL);
 
-	const vehicle = await axios.get<Components.Schemas.Vehicle>('/api/vehicles/' + params.slug);
-	const vehicleParts = await axios.get<Components.Schemas.VehiclePart[]>('/api/vehicles/' + params.slug + '/parts/');
-	const vehicleImplements = await axios.get<Components.Schemas.Implement[]>(
+	const client = API.client();
+	const vehicle = await client.get<Components.Schemas.Vehicle>('/api/vehicles/' + params.slug);
+	const vehicleParts = await client.get<Components.Schemas.VehiclePart[]>('/api/vehicles/' + params.slug + '/parts/');
+	const vehicleImplements = await client.get<Components.Schemas.Implement[]>(
 		'/api/vehicles/' + params.slug + '/implements'
 	);
-	const vehicleGuides = await axios.get<Components.Schemas.MaintenanceGuide[]>(
+	const vehicleGuides = await client.get<Components.Schemas.MaintenanceGuide[]>(
 		'/api/maintenance/guides/vehicle/' + params.slug
 	);
 
@@ -23,7 +24,7 @@ export const load = (async ({ params, parent }) => {
 		{ label: $LL.vehicles.title(), href: `/${locale}/vehicles/`, icon: 'agriculture' },
 		{
 			label: vehicle.data.name || vehicle.data.model,
-			href: `/${locale}/vehicles/${vehicle.data.id}/`,
+			href: `/${locale}/vehicles/${vehicle.data.id}`,
 			icon: ''
 		}
 	]);

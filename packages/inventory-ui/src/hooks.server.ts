@@ -13,7 +13,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// redirect to base locale if no locale slug was found
 	if (!lang) {
 		const locale = getPreferredLocale(event);
-
 		return new Response(null, {
 			status: 302,
 			headers: { Location: `/${locale}` }

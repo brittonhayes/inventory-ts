@@ -9,14 +9,18 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { AccessTokenGuard } from '../common/guards/token.guard';
 import { CreateToolDto, ToolResponse, UpdateToolDto } from './dto/tools.dto';
 import { ToolsService } from './tools.service';
 
 @ApiTags('tools')
+@ApiBearerAuth()
 @Controller('tools')
+@UseGuards(AccessTokenGuard)
 export class ToolsController {
   constructor(private readonly toolsService: ToolsService) {}
 

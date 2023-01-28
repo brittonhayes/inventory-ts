@@ -8,7 +8,7 @@
 <section class="flex flex-col mx-auto w-full md:w-3/4">
 	<TitleBar class="mb-10" title="{data.content.title}" subtitle="{data.content.subtitle}">
 		<svelte:fragment slot="action">
-			<a href="/{data.locale}/tasks/create" class="btn btn-primary">
+			<a href="/{data.locale}/tasks/create" class="btn btn-primary btn-disabled">
 				<i class="material-icons">add</i>
 				<span>{data.content.buttons.add}</span>
 			</a>

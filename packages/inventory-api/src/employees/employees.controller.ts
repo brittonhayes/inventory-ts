@@ -1,11 +1,14 @@
-import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { AccessTokenGuard } from '../common/guards/token.guard';
 import { CreateEmployeeDto, Employee, EmployeeResponse, UpdateEmployeeDto } from './dto/employees.dto';
 import { EmployeesService } from './employees.service';
 
 @ApiTags('employees')
 @Controller('employees')
+@ApiBearerAuth()
+@UseGuards(AccessTokenGuard)
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 

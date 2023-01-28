@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import * as cookieParser from 'cookie-parser';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
 import { CorsConfig, NestConfig, SecurityConfig, SwaggerConfig } from './common/config/config.interface';
@@ -36,18 +37,8 @@ async function bootstrap() {
     app.use(helmet(securityConfig.helmet));
   }
 
-  if (swaggerConfig.enabled) {
-    // Documentation
-    const options = new DocumentBuilder()
-      .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
-      .addServer(swaggerConfig.servers.dev, 'development')
-      .addServer(swaggerConfig.servers.prod, 'production')
-      .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
-      .setVersion(swaggerConfig.version || '1.0')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup(swaggerConfig.path || 'docs', app, document);
+  if (securityConfig.jwt) {
+    app.use(cookieParser(securityConfig.jwt.secret));
   }
 
   if (corsConfig.enabled) {
@@ -59,6 +50,26 @@ async function bootstrap() {
 
   if (nestConfig.prefix) {
     app.setGlobalPrefix(nestConfig.prefix);
+  }
+
+  if (swaggerConfig.enabled) {
+    // Documentation
+    const options = new DocumentBuilder()
+      .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
+      .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
+      .setVersion(swaggerConfig.version || '1.0')
+      .addServer(swaggerConfig.servers.dev, 'development')
+      .addServer(swaggerConfig.servers.prod, 'production')
+      .addSecurity('bearer', {
+        type: 'http',
+        scheme: 'bearer',
+      })
+      .build();
+
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup(swaggerConfig.docsPath || 'docs', app, document, {
+      useGlobalPrefix: true,
+    });
   }
 
   await app.listen(process.env.PORT || nestConfig.port || 5000);

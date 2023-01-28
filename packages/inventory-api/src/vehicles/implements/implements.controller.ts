@@ -10,14 +10,18 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { CreateImplementDto, UpdateImplementDto, ImplementResponse } from './dto/implements.dto';
+import { AccessTokenGuard } from '../../common/guards/token.guard';
+import { CreateImplementDto, UpdateImplementDto, ImplementResponse } from '../dto/implements.dto';
 import { ImplementsService } from './implements.service';
 
 @ApiTags('implements')
+@ApiBearerAuth()
 @Controller('implements')
+@UseGuards(AccessTokenGuard)
 export class ImplementsController {
   constructor(private readonly implementsService: ImplementsService) {}
 

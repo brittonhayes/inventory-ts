@@ -16,11 +16,14 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth0/auth0-spa-js": "^2.0.2",
 		"@dicebear/collection": "^5.0.2",
 		"@dicebear/core": "^5.0.2",
 		"@tiptap/starter-kit": "^2.0.0-beta.209",
 		"axios": "^1.2.3",
 		"es6-promise": "^4.2.4",
+		"jsonwebtoken": "^9.0.0",
+		"jwt-decode": "^3.1.2",
 		"material-symbols": "^0.4.2",
 		"typesafe-i18n": "^5.18.1"
 	},

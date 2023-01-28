@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Route } from '$lib/types';
 	import { page } from '$app/stores';
+	import type { Route } from '$lib/types';
 	export let links: Route[];
 </script>
 

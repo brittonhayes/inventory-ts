@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
-import { shouldListImplements, shouldReturnImplementById } from '../../test/fixtures/implements';
-import { Implement } from './dto/implements.dto';
+import { shouldListImplements, shouldReturnImplementById } from '../../../test/fixtures/implements';
+import { Implement } from '../dto/implements.dto';
 import { ImplementsService } from './implements.service';
 
 describe('ImplementsService', () => {

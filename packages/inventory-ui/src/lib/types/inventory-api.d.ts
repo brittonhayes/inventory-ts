@@ -284,6 +284,127 @@ declare namespace Paths {
             export type $200 = Components.Schemas.EmployeeResponse;
         }
     }
+    namespace GoogleOauthControllerGoogleAuth {
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
+    namespace GoogleOauthControllerGoogleAuthLogout {
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
+    namespace GoogleOauthControllerGoogleAuthRedirect {
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
+    namespace HealthControllerReadiness {
+        namespace Responses {
+            export interface $200 {
+                /**
+                 * example:
+                 * ok
+                 */
+                status?: string;
+                /**
+                 * example:
+                 * {
+                 *   "database": {
+                 *     "status": "up"
+                 *   }
+                 * }
+                 */
+                info?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                } | null;
+                /**
+                 * example:
+                 * {}
+                 */
+                error?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                } | null;
+                /**
+                 * example:
+                 * {
+                 *   "database": {
+                 *     "status": "up"
+                 *   }
+                 * }
+                 */
+                details?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                };
+            }
+            export interface $503 {
+                /**
+                 * example:
+                 * error
+                 */
+                status?: string;
+                /**
+                 * example:
+                 * {
+                 *   "database": {
+                 *     "status": "up"
+                 *   }
+                 * }
+                 */
+                info?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                } | null;
+                /**
+                 * example:
+                 * {
+                 *   "redis": {
+                 *     "status": "down",
+                 *     "message": "Could not connect"
+                 *   }
+                 * }
+                 */
+                error?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                } | null;
+                /**
+                 * example:
+                 * {
+                 *   "database": {
+                 *     "status": "up"
+                 *   },
+                 *   "redis": {
+                 *     "status": "down",
+                 *     "message": "Could not connect"
+                 *   }
+                 * }
+                 */
+                details?: {
+                    [name: string]: {
+                        [name: string]: string;
+                        status?: string;
+                    };
+                };
+            }
+        }
+    }
     namespace ImplementsControllerCreateImplement {
         export type RequestBody = Components.Schemas.CreateImplementDto;
         namespace Responses {

@@ -27,8 +27,8 @@ export interface SwaggerConfig {
     prod: string;
     dev: string;
   };
+  docsPath: string;
   version: string;
-  path: string;
 }
 
 export interface GraphqlConfig {
@@ -42,6 +42,17 @@ export interface GraphqlConfig {
 
 export interface SecurityConfig {
   helmet: HelmetOptions;
-  issuer: string;
-  audience: string;
+  jwt: JwtConfig;
+  google: GoogleOauthConfig;
+}
+
+export interface GoogleOauthConfig {
+  clientID: string;
+  clientSecret: string;
+  callbackURL: string;
+}
+
+export interface JwtConfig {
+  secret: string;
+  refreshSecret: string;
 }
