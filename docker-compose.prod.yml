@@ -45,7 +45,7 @@ services:
       - inventory-db
 
   inventory-db:
-    image: postgres:13
+    image: postgres:15
     restart: unless-stopped
     networks:
       - inventory
