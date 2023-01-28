@@ -27,8 +27,8 @@ export interface SwaggerConfig {
     prod: string;
     dev: string;
   };
+  docsPath: string;
   version: string;
-  path: string;
 }
 
 export interface GraphqlConfig {

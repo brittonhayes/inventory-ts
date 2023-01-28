@@ -9,21 +9,21 @@ const config: Config = {
     enabled: true,
     credentials: true,
     origin: [
-      'http://localhost:3000',
       'https://openfarms.brittonhayes.com',
+      'http://localhost:3000',
       'http://localhost:5173',
       'http://localhost:4173',
     ],
   },
   swagger: {
-    enabled: true,
+    enabled: process.env.NODE_ENV !== 'production',
     title: 'Open Farms Agriculture Inventory API',
     description: 'Open Farms Agriculture Inventory API',
     version: '1.5',
-    path: 'docs',
+    docsPath: '/docs',
     servers: {
-      prod: 'https://openfarms.brittonhayes.com/api',
-      dev: 'http://localhost:5000/api',
+      prod: 'https://openfarms.brittonhayes.com',
+      dev: 'http://localhost:5000',
     },
   },
   graphql: {

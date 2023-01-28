@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { SecurityConfig } from '../../common/config/config.interface';
-
-export type JwtPayload = { sub: string; username: string };
+import { JwtPayload } from '../dto/auth.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -12,10 +12,12 @@ export class JwtTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get<SecurityConfig>('security').jwt.secret,
+      passReqToCallback: true,
     });
   }
 
-  async validate(payload: JwtPayload) {
-    return { id: payload.sub, username: payload.username };
+  async validate(req: Request, payload: JwtPayload) {
+    const jwt = req.get('Authorization').replace('Bearer', '').trim();
+    return { ...payload, jwt };
   }
 }

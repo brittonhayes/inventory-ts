@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { JWT } from '$lib/auth/jwt';
 	import { error } from '@sveltejs/kit';
+	import { isAxiosError } from 'axios';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -14,7 +15,11 @@
 			await JWT.login(username, password);
 			goto(`/${data.locale}`);
 		} catch (e) {
-			throw error(401, 'Login failed');
+			if (isAxiosError(e)) {
+				error(401, e.message);
+			} else {
+				error(500, 'Failed to login');
+			}
 		}
 	};
 </script>
@@ -23,7 +28,7 @@
 	<h2 class="card-title text-3xl">Hey there</h2>
 	<p>Let's get you logged in.</p>
 
-	<div class="card bg-base-200 shadow-2xl">
+	<div class="card bg-base-200 shadow-2xl mt-8">
 		<div class="card-body items-center text-center">
 			<div class="flex flex-col text-left">
 				<label for="username" class="text-lg">Username</label>

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LL from '$i18n/i18n-svelte';
+	import { JWT } from '$lib/auth/jwt';
 	import AppDrawer from '$lib/components/AppDrawer.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import HeadHrefLangs from '$lib/components/HeadHrefLangs.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
-	import { isAuthenticated } from '$lib/stores';
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 
@@ -29,6 +29,5 @@
 <AppDrawer links="{links}">
 	<Navigation redirectTo="{`/${$page.data.locale}/login`}" />
 	<slot />
-
 	<BottomNav class="index-1000 lg:hidden" links="{links}" />
 </AppDrawer>

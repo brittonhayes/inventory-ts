@@ -1,23 +1,29 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { JWT } from '$lib/auth/jwt';
 	import { avatar } from '$lib/common/avatar';
 	import { isAuthenticated, user } from '$lib/stores/auth';
 	import { breadcrumbs } from '$lib/stores/navigation';
-	import { redirect } from '@sveltejs/kit';
+	import { onMount } from 'svelte';
 	import BackButton from './BackButton.svelte';
 	import Breadcrumbs from './Breadcrumbs.svelte';
 	import Lightswitch from './Lightswitch.svelte';
 
 	export let profilePicture = '';
 	export let locale = 'en';
+
+	onMount(() => {
+		JWT.setUser();
+	});
+
 	$: avatar($user.username).then((data) => {
 		profilePicture = data;
 	});
 
 	function logout() {
-		JWT.logout();
+		JWT.logout().then(() => {
+			goto(`/${locale}/login`);
+		});
 	}
 </script>
 
@@ -53,7 +59,7 @@
 						<!-- svelte-ignore a11y-missing-attribute -->
 						<span>
 							<i class="material-icons">logout</i>
-							<a class="link" on:click="{() => logout()}">Logout</a>
+							<a class="link" on:click="{logout}">Logout</a>
 						</span>
 					</li>
 				</ul>

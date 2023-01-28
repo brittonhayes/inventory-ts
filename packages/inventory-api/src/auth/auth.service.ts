@@ -1,6 +1,6 @@
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { JwtSecretRequestType, JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { SecurityConfig } from '..//common/config/config.interface';
 import { CreateUserDto } from '../users/dto/user.dto';
@@ -46,12 +46,14 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(userId: string) {
-    this.usersService.updateUser(userId, { refreshToken: null });
+  async logout(userId: string): Promise<void> {
+    if (!userId) throw new BadRequestException('No user id provided');
+
+    this.usersService.updateUser(userId, { refreshToken: '' });
   }
 
-  async refreshTokens(username: string, refreshToken: string) {
-    const user = await this.usersService.findUserByUsername(username);
+  async refreshTokens(userId: string, refreshToken: string) {
+    const user = await this.usersService.findUserById(userId);
     if (!user || !user.refreshToken) throw new ForbiddenException('Access Denied');
 
     const refreshTokenMatches = await argon2.verify(user.refreshToken, refreshToken);

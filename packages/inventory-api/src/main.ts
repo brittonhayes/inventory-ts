@@ -41,20 +41,6 @@ async function bootstrap() {
     app.use(cookieParser(securityConfig.jwt.secret));
   }
 
-  if (swaggerConfig.enabled) {
-    // Documentation
-    const options = new DocumentBuilder()
-      .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
-      .addServer(swaggerConfig.servers.dev, 'development')
-      .addServer(swaggerConfig.servers.prod, 'production')
-      .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
-      .setVersion(swaggerConfig.version || '1.0')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup(swaggerConfig.path || 'docs', app, document);
-  }
-
   if (corsConfig.enabled) {
     app.enableCors({
       origin: corsConfig.origin,
@@ -64,6 +50,26 @@ async function bootstrap() {
 
   if (nestConfig.prefix) {
     app.setGlobalPrefix(nestConfig.prefix);
+  }
+
+  if (swaggerConfig.enabled) {
+    // Documentation
+    const options = new DocumentBuilder()
+      .setTitle(swaggerConfig.title || 'Open Farms Inventory Service')
+      .setDescription(swaggerConfig.description || 'Agriculture inventory management service.')
+      .setVersion(swaggerConfig.version || '1.0')
+      .addServer(swaggerConfig.servers.dev, 'development')
+      .addServer(swaggerConfig.servers.prod, 'production')
+      .addSecurity('bearer', {
+        type: 'http',
+        scheme: 'bearer',
+      })
+      .build();
+
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup(swaggerConfig.docsPath || 'docs', app, document, {
+      useGlobalPrefix: true,
+    });
   }
 
   await app.listen(process.env.PORT || nestConfig.port || 5000);

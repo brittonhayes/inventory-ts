@@ -13,7 +13,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { AccessTokenGuard } from '../common/guards/token.guard';
 import { ImplementResponse } from './dto/implements.dto';
@@ -23,6 +23,7 @@ import { VehiclePartsService } from './parts/parts.service';
 import { VehiclesService } from './vehicles.service';
 
 @ApiTags('vehicles')
+@ApiBearerAuth()
 @Controller('vehicles')
 @UseGuards(AccessTokenGuard)
 export class VehiclesController {

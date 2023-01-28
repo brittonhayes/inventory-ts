@@ -2,21 +2,21 @@ import LL, { setLocale } from '$i18n/i18n-svelte';
 import { API } from '$lib/api';
 import { breadcrumbs } from '$lib/stores/navigation';
 import { error } from '@sveltejs/kit';
-import axios from 'axios';
+import { isAxiosError } from 'axios';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ parent, params }) => {
 	let employee: Components.Schemas.Employee = {} as Components.Schemas.Employee;
 
+	const client = API.client();
+
 	try {
-		const client = API.client();
 		const res = await client.get<Components.Schemas.Employee>('/api/employees/' + params.slug);
 		employee = res.data;
 	} catch (err) {
-		if (axios.isAxiosError(err) && err.response) {
-			throw error(err.response.status, err.response.statusText);
-		}
+		if (isAxiosError(err) && err.response)
+			throw error(err.response?.status || 500, err.response?.statusText || 'Something went wrong');
 	}
 
 	const { locale } = await parent();

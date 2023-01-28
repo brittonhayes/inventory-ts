@@ -23,6 +23,7 @@
 		"axios": "^1.2.3",
 		"es6-promise": "^4.2.4",
 		"jsonwebtoken": "^9.0.0",
+		"jwt-decode": "^3.1.2",
 		"material-symbols": "^0.4.2",
 		"typesafe-i18n": "^5.18.1"
 	},
