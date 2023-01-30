@@ -29,7 +29,7 @@ registerEnumType(PowerType, {
 @ObjectType()
 export class Vehicle {
   @ApiProperty({ type: String })
-  @Field((type) => String)
+  @Field(() => String)
   id: string;
 
   @Field({ nullable: true })
@@ -80,19 +80,19 @@ export class Vehicle {
   @ApiProperty({ default: PowerType.DIESEL, enum: PowerType, enumName: 'PowerType' })
   power: PowerType = PowerType.DIESEL;
 
-  @Field((type) => [MaintenanceGuide], { nullable: true })
+  @Field(() => [MaintenanceGuide], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => MaintenanceGuide })
   guides?: MaintenanceGuide[];
 
-  @Field((type) => [VehiclePart], { nullable: true })
+  @Field(() => [VehiclePart], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => VehiclePart })
   compatibleParts?: VehiclePart[];
 
-  @Field((type) => [Attachment], { nullable: true })
+  @Field(() => [Attachment], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => VehiclePart })
   compatibleAttachments?: Attachment[];
 
-  @Field((type) => [Implement], { nullable: true })
+  @Field(() => [Implement], { nullable: true })
   @ApiPropertyOptional({ isArray: true, type: () => Implement })
   compatibleImplements?: Implement[];
 }
