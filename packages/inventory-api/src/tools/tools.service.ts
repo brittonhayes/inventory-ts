@@ -8,7 +8,7 @@ import { UpdateToolDto } from './dto/update-tool.dto';
 export class ToolsService {
   constructor(private prisma: PrismaService) {}
 
-  async listTools(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.ToolWhereUniqueInput;
@@ -25,15 +25,15 @@ export class ToolsService {
     });
   }
 
-  async findToolById(id: string) {
+  async findById(id: string) {
     return this.prisma.tool.findUnique({ where: { id } });
   }
 
-  async createTool(createToolDto: CreateToolDto) {
+  async create(createToolDto: CreateToolDto) {
     return this.prisma.tool.create({ data: createToolDto });
   }
 
-  async updateTool(id: string, updateToolDto: UpdateToolDto) {
+  async update(id: string, updateToolDto: UpdateToolDto) {
     return this.prisma.tool.update({
       data: updateToolDto,
       where: {
@@ -42,7 +42,7 @@ export class ToolsService {
     });
   }
 
-  async deleteTool(id: string) {
+  async delete(id: string) {
     return this.prisma.tool.delete({ where: { id } });
   }
 }

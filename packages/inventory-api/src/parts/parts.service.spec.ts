@@ -24,7 +24,7 @@ describe('VehiclePartService', () => {
   it('should return an array of vehicle parts', async () => {
     const want = shouldListVehicleParts;
     prisma.vehiclePart.findMany = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.listVehicleParts({
+    const result = await service.list({
       orderBy: { name: 'asc' },
     });
 
@@ -34,7 +34,7 @@ describe('VehiclePartService', () => {
   it('should return a vehicle part by id', async () => {
     const want = shouldReturnVehiclePartById;
     prisma.vehiclePart.findUnique = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.findVehiclePartById(want.id);
+    const result = await service.findById(want.id);
 
     expect(result).toEqual(want);
   });

@@ -16,14 +16,14 @@ export class AuthService {
   ) {}
   async signUp(createUserDto: CreateUserDto): Promise<any> {
     // Check if user exists
-    const userExists = await this.usersService.findUserById(createUserDto.username);
+    const userExists = await this.usersService.findById(createUserDto.username);
     if (userExists) {
       throw new BadRequestException('User already exists');
     }
 
     // Hash password
     const hash = await this.hashData(createUserDto.password);
-    const newUser = await this.usersService.createUser({
+    const newUser = await this.usersService.create({
       ...createUserDto,
       password: hash,
     });
@@ -34,7 +34,7 @@ export class AuthService {
 
   async login(data: AuthDto) {
     // Check if user exists
-    const user = await this.usersService.findUserByUsername(data.username);
+    const user = await this.usersService.findByUsername(data.username);
     if (!user) throw new BadRequestException('User does not exist');
 
     const passwordMatches = await argon2.verify(user.password, data.password);
@@ -49,11 +49,11 @@ export class AuthService {
   async logout(userId: string): Promise<void> {
     if (!userId) throw new BadRequestException('No user id provided');
 
-    this.usersService.updateUser(userId, { refreshToken: '' });
+    this.usersService.update(userId, { refreshToken: '' });
   }
 
   async refreshTokens(userId: string, refreshToken: string) {
-    const user = await this.usersService.findUserById(userId);
+    const user = await this.usersService.findById(userId);
     if (!user || !user.refreshToken) throw new ForbiddenException('Access Denied');
 
     const refreshTokenMatches = await argon2.verify(user.refreshToken, refreshToken);
@@ -71,7 +71,7 @@ export class AuthService {
 
   async updateRefreshToken(userId: string, refreshToken: string) {
     const hashedRefreshToken = await this.hashData(refreshToken);
-    await this.usersService.updateUser(userId, {
+    await this.usersService.update(userId, {
       refreshToken: hashedRefreshToken,
     });
   }

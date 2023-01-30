@@ -15,26 +15,26 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Get()
   findAll() {
-    return this.usersService.listUsers();
+    return this.usersService.list();
   }
 
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.usersService.findUserById(id);
+    return this.usersService.findById(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.updateUser(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.deleteUser(id);
+    return this.usersService.delete(id);
   }
 }

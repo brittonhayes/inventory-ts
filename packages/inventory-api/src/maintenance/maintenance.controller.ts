@@ -36,7 +36,7 @@ export class MaintenanceController {
   @Post('/guides')
   @ApiOkResponse({ description: 'Returns the created maintenance guide', type: MaintenanceGuide })
   async createGuide(@Body() createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
-    return this.maintenanceGuidesService.createMaintenanceGuide(createMaintenanceGuideDto);
+    return this.maintenanceGuidesService.create(createMaintenanceGuideDto);
   }
 
   @Get('/guides/vehicle/:id')
@@ -46,31 +46,31 @@ export class MaintenanceController {
     isArray: true,
   })
   async findGuideByVehicle(@Param('id') id: string) {
-    return this.maintenanceGuidesService.findMaintenanceGuideByVehicle(id);
+    return this.maintenanceGuidesService.findByVehicleId(id);
   }
 
   @Get('/guides/:id/tasks')
   @ApiOkResponse({ description: 'Returns the maintenance tasks for the guide', type: MaintenanceTask, isArray: true })
   async findGuideTasks(@Param('id') id: string) {
-    return this.maintenanceGuidesService.findMaintenanceGuideTasks(id);
+    return this.maintenanceGuidesService.findTasks(id);
   }
 
   @Get('/guides/:id')
   @ApiOkResponse({ description: 'Returns the maintenance guide', type: MaintenanceGuide })
   async findGuideById(@Param('id') id: string) {
-    return this.maintenanceGuidesService.findMaintenanceGuide(id);
+    return this.maintenanceGuidesService.findById(id);
   }
 
   @Patch('/guides/:id')
   @ApiOkResponse({ description: 'Returns the updated maintenance guide', type: MaintenanceGuide })
   async updateGuide(@Param('id') id: string, @Body() updateMaintenanceGuideDto: UpdateMaintenanceGuideDto) {
-    return this.maintenanceGuidesService.updateMaintenanceGuide(id, updateMaintenanceGuideDto);
+    return this.maintenanceGuidesService.update(id, updateMaintenanceGuideDto);
   }
 
   @Delete('/guides/:id')
   @ApiOkResponse({ description: 'Returns the deleted maintenance guide', type: MaintenanceGuide })
   async deleteGuide(@Param('id') id: string) {
-    return this.maintenanceGuidesService.deleteMaintenanceGuide(id);
+    return this.maintenanceGuidesService.delete(id);
   }
 
   @Get('/guides')
@@ -88,7 +88,7 @@ export class MaintenanceController {
     )
     orderBy?: Prisma.MaintenanceGuideScalarFieldEnum,
   ) {
-    return this.maintenanceGuidesService.listMaintenanceGuides({
+    return this.maintenanceGuidesService.list({
       orderBy: { [orderBy]: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
@@ -99,25 +99,25 @@ export class MaintenanceController {
   @Post('/tasks')
   @ApiOkResponse({ description: 'Returns the created maintenance task', type: MaintenanceTask })
   async createTask(@Body() createMaintenanceTaskDto: CreateMaintenanceTaskDto) {
-    return this.maintenanceTasksService.createMaintenanceTask(createMaintenanceTaskDto);
+    return this.maintenanceTasksService.create(createMaintenanceTaskDto);
   }
 
   @Get('/tasks/:id')
   @ApiOkResponse({ description: 'Returns the maintenance', type: MaintenanceTask })
   async findByTaskId(@Param('id') id: string) {
-    return this.maintenanceTasksService.findMaintenanceTask(id);
+    return this.maintenanceTasksService.findById(id);
   }
 
   @Patch('/tasks/:id')
   @ApiOkResponse({ description: 'Returns the updated maintenance', type: MaintenanceTask })
   async updateTask(@Param('id') id: string, @Body() updateMaintenanceTaskDto: UpdateMaintenanceTaskDto) {
-    return this.maintenanceTasksService.updateMaintenanceTask(id, updateMaintenanceTaskDto);
+    return this.maintenanceTasksService.update(id, updateMaintenanceTaskDto);
   }
 
   @Delete('/tasks/:id')
   @ApiOkResponse({ description: 'Returns the deleted maintenance', type: MaintenanceTask })
   async deleteTask(@Param('id') id: string) {
-    return this.maintenanceTasksService.deleteMaintenanceTask(id);
+    return this.maintenanceTasksService.delete(id);
   }
 
   @Get('/tasks')
@@ -135,7 +135,7 @@ export class MaintenanceController {
     )
     orderBy?: Prisma.MaintenanceTaskScalarFieldEnum,
   ) {
-    return this.maintenanceTasksService.listMaintenanceTasks({
+    return this.maintenanceTasksService.list({
       orderBy: { [orderBy]: sort },
       include: {
         tools: true,

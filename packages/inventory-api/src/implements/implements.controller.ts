@@ -29,26 +29,26 @@ export class ImplementsController {
 
   @Post()
   @ApiOkResponse({ description: 'Returns the created implement', type: ImplementResponse })
-  async createImplement(@Body() createImplementDto: CreateImplementDto) {
-    return this.implementsService.createImplement(createImplementDto);
+  async create(@Body() createImplementDto: CreateImplementDto) {
+    return this.implementsService.create(createImplementDto);
   }
 
   @Get(':id')
   @ApiOkResponse({ description: 'Returns the implement', type: ImplementResponse })
-  async findImplementById(@Param('id') id: string) {
-    return this.implementsService.findImplementById(id);
+  async findById(@Param('id') id: string) {
+    return this.implementsService.findById(id);
   }
 
   @Patch(':id')
   @ApiOkResponse({ description: 'Returns the updated implement', type: ImplementResponse })
-  async updateImplement(@Param('id') id: string, @Body() updateImplementDto: UpdateImplementDto) {
-    return this.implementsService.updateImplement(id, updateImplementDto);
+  async update(@Param('id') id: string, @Body() updateImplementDto: UpdateImplementDto) {
+    return this.implementsService.update(id, updateImplementDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'Returns the deleted implement', type: ImplementResponse })
-  async deleteImplement(@Param('id') id: string) {
-    return this.implementsService.deleteImplement(id);
+  async delete(@Param('id') id: string) {
+    return this.implementsService.delete(id);
   }
 
   @Get()
@@ -61,7 +61,7 @@ export class ImplementsController {
     isArray: true,
     type: ImplementResponse,
   })
-  async listImplements(
+  async list(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
     @Query(
@@ -72,7 +72,7 @@ export class ImplementsController {
     orderBy?: Prisma.ImplementScalarFieldEnum,
     @Query('limit', new DefaultValuePipe(15), ParseIntPipe) limit?: number,
   ) {
-    return this.implementsService.listImplements({
+    return this.implementsService.list({
       orderBy: { [orderBy]: sort },
       take: limit ? limit : 15,
       where: {

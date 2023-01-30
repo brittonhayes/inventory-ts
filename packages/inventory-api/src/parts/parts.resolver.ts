@@ -12,7 +12,7 @@ export class VehiclePartsResolver {
 
   @Query(() => VehiclePart, { name: 'part' })
   async guide(@Args('id') id: string): Promise<VehiclePart> {
-    const guide = await this.vehiclePartsService.findVehiclePartById(id);
+    const guide = await this.vehiclePartsService.findById(id);
     if (!guide) {
       throw new NotFoundException(id);
     }
@@ -20,8 +20,8 @@ export class VehiclePartsResolver {
   }
 
   @Query(() => [VehiclePart], { name: 'parts' })
-  vehicleParts(): Promise<VehiclePart[]> {
-    return this.vehiclePartsService.listVehicleParts({
+  async vehicleParts(): Promise<VehiclePart[]> {
+    return this.vehiclePartsService.list({
       orderBy: { name: Prisma.SortOrder.asc },
     });
   }

@@ -12,7 +12,7 @@ export class EmployeesResolver {
 
   @Query(() => Employee, { name: 'employee' })
   async employee(@Args('id') id: string): Promise<Employee> {
-    const employee = await this.employeesService.findEmployee(id);
+    const employee = await this.employeesService.findById(id);
     if (!employee) {
       throw new NotFoundException(id);
     }
@@ -21,7 +21,7 @@ export class EmployeesResolver {
 
   @Query(() => [Employee], { name: 'employees' })
   employees(): Promise<Employee[]> {
-    return this.employeesService.listEmployees({
+    return this.employeesService.list({
       orderBy: { name: Prisma.SortOrder.asc },
     });
   }

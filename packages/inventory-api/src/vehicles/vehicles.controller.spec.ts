@@ -9,7 +9,7 @@ describe('VehiclesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [VehiclesService, VehiclePartsService, PrismaService],
+      providers: [VehiclesService, PrismaService],
       controllers: [VehiclesController],
     }).compile();
 

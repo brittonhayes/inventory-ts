@@ -29,26 +29,26 @@ export class ToolsController {
 
   @Post()
   @ApiOkResponse({ description: 'Returns the created tool', type: Tool })
-  async createTool(@Body() createToolDto: CreateToolDto) {
-    return this.toolsService.createTool(createToolDto);
+  async create(@Body() createToolDto: CreateToolDto) {
+    return this.toolsService.create(createToolDto);
   }
 
   @Get(':id')
   @ApiOkResponse({ description: 'Returns the tool', type: Tool })
-  async findToolById(@Param('id') id: string) {
-    return this.toolsService.findToolById(id);
+  async findById(@Param('id') id: string) {
+    return this.toolsService.findById(id);
   }
 
   @Patch(':id')
   @ApiOkResponse({ description: 'Returns the updated tool', type: Tool })
-  async updateTool(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto) {
-    return this.toolsService.updateTool(id, updateToolDto);
+  async update(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto) {
+    return this.toolsService.update(id, updateToolDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'Returns the deleted tool', type: Tool })
-  async deleteTool(@Param('id') id: string) {
-    return this.toolsService.deleteTool(id);
+  async delete(@Param('id') id: string) {
+    return this.toolsService.delete(id);
   }
 
   @Get()
@@ -56,7 +56,7 @@ export class ToolsController {
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.ToolScalarFieldEnum })
   @ApiOkResponse({ description: 'Returns the list of tools', type: Tool, isArray: true })
-  async listTools(
+  async list(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
     @Query(
@@ -66,7 +66,7 @@ export class ToolsController {
     )
     orderBy?: Prisma.ToolScalarFieldEnum,
   ) {
-    return this.toolsService.listTools({
+    return this.toolsService.list({
       orderBy: { [orderBy]: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],

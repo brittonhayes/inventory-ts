@@ -23,7 +23,7 @@ describe('MaintenanceService', () => {
   it('should return an array of maintenance guides', async () => {
     const want = shouldListGuides;
     prisma.maintenanceGuide.findMany = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.listMaintenanceGuides({
+    const result = await service.list({
       orderBy: { name: 'asc' },
     });
 
@@ -34,6 +34,6 @@ describe('MaintenanceService', () => {
     const want = shouldReturnGuideById;
 
     prisma.maintenanceGuide.findUnique = jest.fn().mockResolvedValueOnce(want);
-    expect(await service.findMaintenanceGuide(want.id)).toEqual(want);
+    expect(await service.findById(want.id)).toEqual(want);
   });
 });

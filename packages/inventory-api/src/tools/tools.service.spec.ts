@@ -23,7 +23,7 @@ describe('ToolsService', () => {
     const want = {};
 
     prisma.tool.create = jest.fn().mockResolvedValue(want);
-    const tool = await service.createTool({
+    const tool = await service.create({
       name: 'test',
     });
     expect(tool).toBe(want);
@@ -33,7 +33,7 @@ describe('ToolsService', () => {
     const want = {};
 
     prisma.tool.findUnique = jest.fn().mockResolvedValue(want);
-    const tool = await service.findToolById('test');
+    const tool = await service.findById('test');
     expect(tool).toBe(want);
   });
 
@@ -41,7 +41,7 @@ describe('ToolsService', () => {
     const want = {};
 
     prisma.tool.findMany = jest.fn().mockResolvedValue(want);
-    const tools = await service.listTools({});
+    const tools = await service.list({});
     expect(tools).toBe(want);
   });
 });

@@ -12,7 +12,7 @@ export class ImplementsResolver {
 
   @Query(() => Implement, { name: 'implement' })
   async implement(@Args('id') id: string): Promise<Implement> {
-    const implement = await this.implementsService.findImplementById(id);
+    const implement = await this.implementsService.findById(id);
     if (!implement) {
       throw new NotFoundException(id);
     }
@@ -24,7 +24,7 @@ export class ImplementsResolver {
     @Args({ name: 'attachmentId', type: () => String, nullable: true }) attachmentId?: string,
     @Args({ name: 'vehicleId', type: () => String, nullable: true }) vehicleId?: string,
   ): Promise<Implement[]> {
-    return this.implementsService.listImplements({
+    return this.implementsService.list({
       where: {
         compatibleAttachments: { some: { id: attachmentId } },
         compatibleVehicles: { some: { id: vehicleId } },

@@ -8,7 +8,7 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 export class EmployeesService {
   constructor(private prisma: PrismaService) {}
 
-  async listEmployees(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.EmployeeWhereUniqueInput;
@@ -28,7 +28,7 @@ export class EmployeesService {
     });
   }
 
-  async findEmployee(id: string) {
+  async findById(id: string) {
     return this.prisma.employee.findUnique({
       where: {
         id,
@@ -36,13 +36,13 @@ export class EmployeesService {
     });
   }
 
-  async createEmployee(createEmployeeDto: CreateEmployeeDto) {
+  async create(createEmployeeDto: CreateEmployeeDto) {
     return this.prisma.employee.create({
       data: createEmployeeDto,
     });
   }
 
-  async updateEmployee(id: string, updateEmployeeDto: UpdateEmployeeDto) {
+  async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
     return this.prisma.employee.update({
       data: updateEmployeeDto,
       where: {
@@ -51,7 +51,7 @@ export class EmployeesService {
     });
   }
 
-  async deleteEmployee(id: string) {
+  async delete(id: string) {
     return this.prisma.employee.delete({
       where: {
         id,

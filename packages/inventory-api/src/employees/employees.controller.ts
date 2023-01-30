@@ -17,37 +17,37 @@ export class EmployeesController {
 
   @Post()
   @ApiOkResponse({ description: 'Returns the created employee', type: EmployeeResponse })
-  async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeesService.createEmployee(createEmployeeDto);
+  async create(@Body() createEmployeeDto: CreateEmployeeDto) {
+    return this.employeesService.create(createEmployeeDto);
   }
 
   @Get(':id')
   @ApiOkResponse({ description: 'Returns the employee', type: EmployeeResponse })
-  async findEmployeeById(@Param('id') id: string) {
-    return this.employeesService.findEmployee(id);
+  async findById(@Param('id') id: string) {
+    return this.employeesService.findById(id);
   }
 
   @Patch(':id')
   @ApiOkResponse({ description: 'Returns the updated employee', type: EmployeeResponse })
-  async updateEmployee(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
-    return this.employeesService.updateEmployee(id, updateEmployeeDto);
+  async update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+    return this.employeesService.update(id, updateEmployeeDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'Returns the deleted employee', type: EmployeeResponse })
-  async deleteEmployee(@Param('id') id: string) {
-    return this.employeesService.deleteEmployee(id);
+  async delete(@Param('id') id: string) {
+    return this.employeesService.delete(id);
   }
 
   @Get()
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiOkResponse({ description: 'Returns the employees', type: Employee, isArray: true })
-  async listEmployees(
+  async list(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,
   ) {
-    return this.employeesService.listEmployees({
+    return this.employeesService.list({
       orderBy: { name: sort },
       where: {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
