@@ -8,7 +8,7 @@ import { UpdateImplementDto } from './dto/update-implement.dto';
 export class ImplementsService {
   constructor(private prisma: PrismaService) {}
 
-  async listImplements(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.ImplementWhereUniqueInput;
@@ -27,17 +27,17 @@ export class ImplementsService {
     });
   }
 
-  async findImplementById(id: string) {
+  async findById(id: string) {
     return this.prisma.implement.findUnique({ where: { id } });
   }
 
-  async createImplement(createImplementDto: CreateImplementDto) {
+  async create(createImplementDto: CreateImplementDto) {
     return this.prisma.implement.create({
       data: createImplementDto,
     });
   }
 
-  async updateImplement(id: string, updateImplementDto: UpdateImplementDto) {
+  async update(id: string, updateImplementDto: UpdateImplementDto) {
     return this.prisma.implement.update({
       where: {
         id,
@@ -46,7 +46,7 @@ export class ImplementsService {
     });
   }
 
-  async deleteImplement(id: string) {
+  async delete(id: string) {
     return this.prisma.implement.delete({
       where: { id },
     });

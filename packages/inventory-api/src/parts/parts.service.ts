@@ -8,7 +8,7 @@ import { UpdateVehiclePartDto } from './dto/update-part.dto';
 export class VehiclePartsService {
   constructor(private prisma: PrismaService) {}
 
-  async listVehicleParts(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.VehiclePartWhereUniqueInput;
@@ -25,24 +25,24 @@ export class VehiclePartsService {
     });
   }
 
-  async findVehiclePartById(id: string) {
+  async findById(id: string) {
     return this.prisma.vehiclePart.findUnique({ where: { id } });
   }
 
-  async createVehiclePart(createVehiclePartDto: CreateVehiclePartDto) {
+  async create(createVehiclePartDto: CreateVehiclePartDto) {
     return this.prisma.vehiclePart.create({
       data: createVehiclePartDto,
     });
   }
 
-  async updateVehiclePart(id: string, updateVehiclePartDto: UpdateVehiclePartDto) {
+  async update(id: string, updateVehiclePartDto: UpdateVehiclePartDto) {
     return this.prisma.vehiclePart.update({
       where: { id },
       data: updateVehiclePartDto,
     });
   }
 
-  async deleteVehiclePart(id: string) {
+  async delete(id: string) {
     return this.prisma.vehiclePart.delete({
       where: { id },
     });

@@ -28,7 +28,7 @@ export class VehiclesResolver {
   }
 
   @Query(() => [Vehicle], { name: 'vehicles' })
-  vehicles(@Args() args: ListVehiclesArgs, @Args() filters?: FilterVehiclesArgs): Promise<Vehicle[]> {
+  async vehicles(@Args() args: ListVehiclesArgs, @Args() filters?: FilterVehiclesArgs): Promise<Vehicle[]> {
     return this.vehiclesService.listVehicles({
       skip: filters.skip,
       take: filters.take,

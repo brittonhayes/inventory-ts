@@ -10,6 +10,7 @@ import { EmployeesModule } from './employees/employees.module';
 import { GqlConfigService } from './graphql.service';
 import { HealthModule } from './health/health.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { VehiclePartsModule } from './parts/parts.module';
 import { ToolsModule } from './tools/tools.module';
 import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
@@ -30,6 +31,7 @@ import { VehiclesModule } from './vehicles/vehicles.module';
     UsersModule,
     AuthModule,
     VehiclesModule,
+    VehiclePartsModule,
     ToolsModule,
     EmployeesModule,
     MaintenanceModule,

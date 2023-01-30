@@ -7,7 +7,7 @@ import { CreateMaintenanceGuideDto } from './dto/create-guide.dto';
 export class MaintenanceGuidesService {
   constructor(private prisma: PrismaService) {}
 
-  async listMaintenanceGuides(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.MaintenanceGuideWhereUniqueInput;
@@ -24,7 +24,7 @@ export class MaintenanceGuidesService {
     });
   }
 
-  async findMaintenanceGuide(id: string) {
+  async findById(id: string) {
     return this.prisma.maintenanceGuide.findUnique({
       where: {
         id,
@@ -35,7 +35,7 @@ export class MaintenanceGuidesService {
     });
   }
 
-  async findMaintenanceGuideTasks(id: string) {
+  async findTasks(id: string) {
     return this.prisma.maintenanceGuide
       .findUnique({
         where: {
@@ -45,20 +45,20 @@ export class MaintenanceGuidesService {
       .tasks();
   }
 
-  async createMaintenanceGuide(createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
+  async create(createMaintenanceGuideDto: CreateMaintenanceGuideDto) {
     return this.prisma.maintenanceGuide.create({
       data: createMaintenanceGuideDto,
     });
   }
 
-  async updateMaintenanceGuide(id: string, updateMaintenanceGuideDto: CreateMaintenanceGuideDto) {
+  async update(id: string, updateMaintenanceGuideDto: CreateMaintenanceGuideDto) {
     return this.prisma.maintenanceGuide.update({
       where: { id },
       data: updateMaintenanceGuideDto,
     });
   }
 
-  async findMaintenanceGuideByVehicle(id: string) {
+  async findByVehicleId(id: string) {
     return this.prisma.maintenanceGuide.findMany({
       where: {
         vehicleId: id,
@@ -66,7 +66,7 @@ export class MaintenanceGuidesService {
     });
   }
 
-  async deleteMaintenanceGuide(id: string) {
+  async delete(id: string) {
     return this.prisma.maintenanceGuide.delete({
       where: {
         id,

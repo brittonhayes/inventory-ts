@@ -12,7 +12,7 @@ export class MaintenanceTasksResolver {
 
   @Query(() => MaintenanceTask, { name: 'task' })
   async task(@Args('id') id: string): Promise<MaintenanceTask> {
-    const task = await this.tasksService.findMaintenanceTask(id);
+    const task = await this.tasksService.findById(id);
     if (!task) {
       throw new NotFoundException(id);
     }
@@ -21,7 +21,7 @@ export class MaintenanceTasksResolver {
 
   @Query(() => [MaintenanceTask], { name: 'tasks' })
   tasks(): Promise<MaintenanceTask[]> {
-    return this.tasksService.listMaintenanceTasks({
+    return this.tasksService.list({
       orderBy: { name: Prisma.SortOrder.asc },
     });
   }

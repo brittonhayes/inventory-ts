@@ -8,7 +8,7 @@ import { UpdateMaintenanceTaskDto } from './dto/update-task.dto';
 export class MaintenanceTasksService {
   constructor(private prisma: PrismaService) {}
 
-  async listMaintenanceTasks(params: {
+  async list(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.MaintenanceTaskWhereUniqueInput;
@@ -28,7 +28,7 @@ export class MaintenanceTasksService {
     });
   }
 
-  async findMaintenanceTask(id: string) {
+  async findById(id: string) {
     return this.prisma.maintenanceTask.findUnique({
       where: {
         id,
@@ -36,20 +36,20 @@ export class MaintenanceTasksService {
     });
   }
 
-  async createMaintenanceTask(createMaintenanceTaskDto: CreateMaintenanceTaskDto) {
+  async create(createMaintenanceTaskDto: CreateMaintenanceTaskDto) {
     return this.prisma.maintenanceTask.create({
       data: createMaintenanceTaskDto,
     });
   }
 
-  async updateMaintenanceTask(id: string, updateMaintenanceTaskDto: UpdateMaintenanceTaskDto) {
+  async update(id: string, updateMaintenanceTaskDto: UpdateMaintenanceTaskDto) {
     return this.prisma.maintenanceTask.update({
       where: { id },
       data: updateMaintenanceTaskDto,
     });
   }
 
-  async deleteMaintenanceTask(id: string) {
+  async delete(id: string) {
     return this.prisma.maintenanceTask.delete({
       where: { id },
     });

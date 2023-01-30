@@ -25,7 +25,7 @@ describe('EmployeesService', () => {
     const want = [];
 
     prisma.employee.findMany = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.listEmployees({
+    const result = await service.list({
       orderBy: { name: 'asc' },
     });
 
@@ -36,6 +36,6 @@ describe('EmployeesService', () => {
     const want = shouldReturnEmployeeById;
 
     prisma.employee.findUnique = jest.fn().mockResolvedValueOnce(want);
-    expect(await service.findEmployee(want.id)).toEqual(want);
+    expect(await service.findById(want.id)).toEqual(want);
   });
 });

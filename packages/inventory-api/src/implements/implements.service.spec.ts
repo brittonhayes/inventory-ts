@@ -26,7 +26,7 @@ describe('ImplementsService', () => {
     const want: Implement[] = shouldListImplements;
 
     prisma.implement.findMany = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.listImplements({
+    const result = await service.list({
       orderBy: { name: 'asc' },
     });
 
@@ -37,7 +37,7 @@ describe('ImplementsService', () => {
     const want = shouldReturnImplementById;
 
     prisma.implement.findUnique = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.findImplementById(want.id);
+    const result = await service.findById(want.id);
 
     expect(result).toEqual<Implement>(want);
   });
