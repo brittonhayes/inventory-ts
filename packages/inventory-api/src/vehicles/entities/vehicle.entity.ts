@@ -11,19 +11,19 @@ registerEnumType(Prisma.SortOrder, {
 });
 
 registerEnumType(Prisma.VehicleScalarFieldEnum, {
-  name: 'vehiclesOrder',
+  name: 'VehiclesOrder',
 });
 
 registerEnumType(Condition, {
-  name: 'condition',
+  name: 'Condition',
 });
 
 registerEnumType(VehicleType, {
-  name: 'vehicleType',
+  name: 'VehicleType',
 });
 
 registerEnumType(PowerType, {
-  name: 'powerType',
+  name: 'PowerType',
 });
 
 @ObjectType()

@@ -12,6 +12,13 @@ type Attachment {
   updatedAt: DateTime!
 }
 
+enum Condition {
+  BROKEN
+  GOOD
+  MINT
+  POOR
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -28,7 +35,7 @@ type Employee {
 type Implement {
   compatibleAttachments: [Attachment!]
   compatibleVehicles: [Vehicle!]
-  condition: condition
+  condition: Condition
   createdAt: DateTime!
   id: String!
   implementType: ImplementType
@@ -81,6 +88,13 @@ type MaintenanceTask {
   vehicleId: String
 }
 
+enum PowerType {
+  DIESEL
+  ELECTRIC
+  GAS
+  HYBRID
+}
+
 type Query {
   employee(id: String!): Employee!
   employees: [Employee!]!
@@ -92,9 +106,9 @@ type Query {
   parts: [VehiclePart!]!
   task(id: String!): MaintenanceTask!
   tasks: [MaintenanceTask!]!
-  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: vehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
+  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: VehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
   vehicles(
-    condition: condition = GOOD
+    condition: Condition = GOOD
     includeAttachments: Boolean = false
     includeGuides: Boolean = false
     includeImplements: Boolean = false
@@ -106,12 +120,12 @@ type Query {
     make: String
     model: String
     name: String
-    orderBy: vehiclesOrder = updatedAt
-    power: powerType = DIESEL
+    orderBy: VehiclesOrder = updatedAt
+    power: PowerType = DIESEL
     skip: Int = 0
     sort: vehiclesSort
     take: Int
-    vehicleType: vehicleType
+    vehicleType: VehicleType
     year: Int
   ): [Vehicle!]!
 }
@@ -132,7 +146,7 @@ type Vehicle {
   compatibleAttachments: [Attachment!]
   compatibleImplements: [Implement!]
   compatibleParts: [VehiclePart!]
-  condition: condition!
+  condition: Condition!
   createdAt: DateTime!
   guides: [MaintenanceGuide!]
   id: String!
@@ -142,9 +156,9 @@ type Vehicle {
   make: String!
   model: String!
   name: String
-  power: powerType!
+  power: PowerType!
   updatedAt: DateTime!
-  vehicleType: vehicleType!
+  vehicleType: VehicleType!
   year: Int
 }
 
@@ -156,21 +170,7 @@ type VehiclePart {
   updatedAt: DateTime!
 }
 
-enum condition {
-  BROKEN
-  GOOD
-  MINT
-  POOR
-}
-
-enum powerType {
-  DIESEL
-  ELECTRIC
-  GAS
-  HYBRID
-}
-
-enum vehicleType {
+enum VehicleType {
   ATV
   COMBINE
   OTHER
@@ -181,7 +181,7 @@ enum vehicleType {
   UTV
 }
 
-enum vehiclesOrder {
+enum VehiclesOrder {
   condition
   createdAt
   id
