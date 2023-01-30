@@ -1,18 +1,17 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
-	import { breadcrumbs } from '$lib/stores/navigation';
+	import { backButtonLink, breadcrumbs } from '$lib/stores/navigation';
 
-	export let to = '';
+	let to = '';
 	export let icon = 'arrow_back';
 	export let text = 'Back';
 
-	afterNavigate(({ from }) => {
-		to = from?.url.pathname || $breadcrumbs.at(-2)?.href || '/';
+	$: backButtonLink.subscribe((link) => {
+		to = link;
 	});
 </script>
 
 {#if $breadcrumbs.length > 2}
-	<div class="{$$props.class}">
+	<div class="{$$props.class} hidden">
 		<a href="{to}" class="btn bg-base-100 gap-2 flex flex-row justify-center items-center">
 			<i class="material-icons">{icon}</i>
 			<span class="hidden md:block">

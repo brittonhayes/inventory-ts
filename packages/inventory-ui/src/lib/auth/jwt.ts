@@ -32,7 +32,7 @@ export class JWT {
 
 	static async logout() {
 		try {
-			const res = await axios.get(`/api/auth/logout`, {
+			await axios.get(`/api/auth/logout`, {
 				baseURL: PUBLIC_API_BASE_URL,
 				headers: {
 					Authorization: `Bearer ${this.getToken()}`

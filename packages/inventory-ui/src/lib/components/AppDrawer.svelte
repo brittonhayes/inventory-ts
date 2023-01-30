@@ -14,12 +14,7 @@
 		<ul class="menu p-4 w-20 bg-base-100">
 			{#each links as link}
 				<li>
-					<a
-						class:btn-primary="{$page.url.pathname === link.href}"
-						class:text-primary="{$page.url.pathname === link.href}"
-						class="btn btn-ghost btn-square mb-2"
-						href="{link.href}"
-					>
+					<a class:active="{$page.url.pathname === link.href}" class="btn btn-ghost btn-square mb-2" href="{link.href}">
 						<i class="material-icons">{link.icon}</i>
 					</a>
 				</li>

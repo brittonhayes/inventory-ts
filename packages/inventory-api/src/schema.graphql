@@ -100,10 +100,6 @@ type Query {
   employees: [Employee!]!
   guide(id: String!): MaintenanceGuide!
   guides: [MaintenanceGuide!]!
-  implement(id: String!): Implement!
-  implements(attachmentId: String, vehicleId: String): [Implement!]!
-  part(id: String!): VehiclePart!
-  parts: [VehiclePart!]!
   task(id: String!): MaintenanceTask!
   tasks: [MaintenanceTask!]!
   vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: VehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!

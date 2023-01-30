@@ -14,6 +14,7 @@ import { VehiclePartsModule } from './parts/parts.module';
 import { ToolsModule } from './tools/tools.module';
 import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
+import { ImplementsModule } from './implements/implements.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { VehiclesModule } from './vehicles/vehicles.module';
     EmployeesModule,
     MaintenanceModule,
     HealthModule,
+    ImplementsModule,
   ],
 })
 export class AppModule implements NestModule {
