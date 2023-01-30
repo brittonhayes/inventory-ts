@@ -16,11 +16,15 @@ import {
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { AccessTokenGuard } from '../common/guards/token.guard';
-import { ImplementResponse } from './dto/implements.dto';
-import { CreateVehiclePartDto, UpdateVehiclePartDto, VehiclePart, VehiclePartResponse } from './dto/parts.dto';
-import { CreateVehicleDto, UpdateVehicleDto, VehicleResponse } from './dto/vehicles.dto';
-import { VehiclePartsService } from './parts/parts.service';
+import { VehiclePartsService } from '../parts/parts.service';
 import { VehiclesService } from './vehicles.service';
+import { ImplementResponse } from '../implements/entities/implement-response.entity';
+import { CreateVehiclePartDto } from '../parts/dto/create-part.dto';
+import { UpdateVehiclePartDto } from '../parts/dto/update-part.dto';
+import { VehiclePart } from '../parts/entities/part.entity';
+import { Vehicle } from './entities/vehicle.entity';
+import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 
 @ApiTags('vehicles')
 @ApiBearerAuth()
@@ -33,25 +37,25 @@ export class VehiclesController {
   ) {}
 
   @Post()
-  @ApiOkResponse({ description: 'Returns the created vehicle', type: VehicleResponse })
+  @ApiOkResponse({ description: 'Returns the created vehicle', type: Vehicle })
   async createVehicle(@Body() createVehicleDto: CreateVehicleDto) {
     return this.vehiclesService.createVehicle(createVehicleDto);
   }
 
   @Get(':id')
-  @ApiOkResponse({ description: 'Returns the vehicle', type: VehicleResponse })
+  @ApiOkResponse({ description: 'Returns the vehicle', type: Vehicle })
   async findVehicleById(@Param('id') id: string) {
     return this.vehiclesService.findVehicleById(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ description: 'Returns the updated vehicle', type: VehicleResponse, status: HttpStatus.OK })
+  @ApiOkResponse({ description: 'Returns the updated vehicle', type: Vehicle, status: HttpStatus.OK })
   async updateVehicle(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto) {
     return this.vehiclesService.updateVehicle(id, updateVehicleDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ description: 'Returns the deleted vehicle', type: VehicleResponse })
+  @ApiOkResponse({ description: 'Returns the deleted vehicle', type: Vehicle })
   async deleteVehicle(@Param('id') id: string) {
     return this.vehiclesService.deleteVehicle(id);
   }
@@ -64,7 +68,7 @@ export class VehiclesController {
   @ApiOkResponse({
     description: 'Returns the vehicles',
     isArray: true,
-    type: VehicleResponse,
+    type: Vehicle,
   })
   async listVehicles(
     @Query('name') name?: string,
@@ -100,7 +104,7 @@ export class VehiclesController {
   @ApiOkResponse({
     description: 'Returns the compatible parts for the vehicle',
     isArray: true,
-    type: VehiclePartResponse,
+    type: VehiclePart,
   })
   async getCompatibleParts(@Param('id') id: string) {
     return this.vehiclesService.listCompatibleParts(id);

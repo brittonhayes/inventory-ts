@@ -1,7 +1,7 @@
 import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Condition } from '@prisma/client';
-import { Vehicle } from './vehicles.dto';
+import { Vehicle } from '../entities/vehicle.entity';
 
 @ObjectType()
 export class Attachment {

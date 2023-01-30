@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
 import { shouldListVehicles, shouldReturnVehicleById } from '../../test/fixtures/vehicles';
-import { Vehicle } from './dto/vehicles.dto';
+import { Vehicle } from './entities/vehicle.entity';
 import { VehiclesService } from './vehicles.service';
 
 describe('VehiclesService', () => {

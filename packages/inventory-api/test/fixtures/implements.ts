@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Implement } from '../../src/vehicles/dto/implements.dto';
+import { Implement } from '../../src/implements/entities/implement.entity';
 
 export const shouldReturnImplementById = {
   id: faker.datatype.uuid(),

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Employee } from '../../src/employees/dto/employees.dto';
+import { Employee } from '../../src/employees/entities/employee.entity';
 
 export const shouldReturnEmployeeById = {
   id: faker.datatype.uuid(),

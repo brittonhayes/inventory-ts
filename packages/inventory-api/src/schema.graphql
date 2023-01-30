@@ -106,7 +106,7 @@ type Query {
   parts: [VehiclePart!]!
   task(id: String!): MaintenanceTask!
   tasks: [MaintenanceTask!]!
-  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: vehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
+  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: VehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
   vehicles(
     condition: Condition = GOOD
     includeAttachments: Boolean = false
@@ -120,7 +120,7 @@ type Query {
     make: String
     model: String
     name: String
-    orderBy: vehiclesOrder = updatedAt
+    orderBy: VehiclesOrder = updatedAt
     power: PowerType = DIESEL
     skip: Int = 0
     sort: vehiclesSort
@@ -181,7 +181,7 @@ enum VehicleType {
   UTV
 }
 
-enum vehiclesOrder {
+enum VehiclesOrder {
   condition
   createdAt
   id

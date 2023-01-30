@@ -3,7 +3,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
 import { GqlAuthGuard } from '../common/guards/gql-auth.guard';
 import { FilterVehiclesArgs, ListVehiclesArgs } from './dto/vehicles.args';
-import { Vehicle } from './dto/vehicles.dto';
+import { Vehicle } from './entities/vehicle.entity';
 import { VehiclesService } from './vehicles.service';
 
 @Resolver(() => Vehicle)

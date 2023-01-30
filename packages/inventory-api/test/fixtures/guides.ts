@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { MaintenanceGuide } from '../../src/maintenance/dto/guides.dto';
+import { MaintenanceGuide } from '../../src/guides/entities/guide.entity';
 
 export const shouldReturnGuideById: MaintenanceGuide = {
   id: faker.datatype.uuid(),

@@ -2,10 +2,10 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { AccessTokenGuard } from '../common/guards/token.guard';
 import { RefreshTokenGuard } from '../common/guards/refresh.guard';
-import { CreateUserDto } from '../users/dto/user.dto';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @Controller('auth')
 @ApiTags('auth')
