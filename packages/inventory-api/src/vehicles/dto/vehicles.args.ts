@@ -1,14 +1,6 @@
-import { ArgsType, Field, PartialType, registerEnumType } from '@nestjs/graphql';
+import { ArgsType, Field, PartialType } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
-import { CreateVehicleDto } from './vehicles.dto';
-
-registerEnumType(Prisma.SortOrder, {
-  name: 'vehiclesSort',
-});
-
-registerEnumType(Prisma.VehicleScalarFieldEnum, {
-  name: 'vehiclesOrder',
-});
+import { CreateVehicleDto } from './create-vehicle.dto';
 
 @ArgsType()
 export class ListVehiclesArgs extends PartialType(CreateVehicleDto, ArgsType) {}

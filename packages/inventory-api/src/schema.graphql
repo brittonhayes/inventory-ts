@@ -12,13 +12,6 @@ type Attachment {
   updatedAt: DateTime!
 }
 
-enum Condition {
-  BROKEN
-  GOOD
-  MINT
-  POOR
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -35,7 +28,7 @@ type Employee {
 type Implement {
   compatibleAttachments: [Attachment!]
   compatibleVehicles: [Vehicle!]
-  condition: Condition
+  condition: condition
   createdAt: DateTime!
   id: String!
   implementType: ImplementType
@@ -88,13 +81,6 @@ type MaintenanceTask {
   vehicleId: String
 }
 
-enum PowerType {
-  DIESEL
-  ELECTRIC
-  GAS
-  HYBRID
-}
-
 type Query {
   employee(id: String!): Employee!
   employees: [Employee!]!
@@ -108,7 +94,7 @@ type Query {
   tasks: [MaintenanceTask!]!
   vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: vehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
   vehicles(
-    condition: Condition = GOOD
+    condition: condition = GOOD
     includeAttachments: Boolean = false
     includeGuides: Boolean = false
     includeImplements: Boolean = false
@@ -121,11 +107,11 @@ type Query {
     model: String
     name: String
     orderBy: vehiclesOrder = updatedAt
-    power: PowerType = DIESEL
+    power: powerType = DIESEL
     skip: Int = 0
     sort: vehiclesSort
     take: Int
-    vehicleType: VehicleType
+    vehicleType: vehicleType
     year: Int
   ): [Vehicle!]!
 }
@@ -146,7 +132,7 @@ type Vehicle {
   compatibleAttachments: [Attachment!]
   compatibleImplements: [Implement!]
   compatibleParts: [VehiclePart!]
-  condition: Condition!
+  condition: condition!
   createdAt: DateTime!
   guides: [MaintenanceGuide!]
   id: String!
@@ -156,9 +142,9 @@ type Vehicle {
   make: String!
   model: String!
   name: String
-  power: PowerType!
+  power: powerType!
   updatedAt: DateTime!
-  vehicleType: VehicleType!
+  vehicleType: vehicleType!
   year: Int
 }
 
@@ -170,7 +156,21 @@ type VehiclePart {
   updatedAt: DateTime!
 }
 
-enum VehicleType {
+enum condition {
+  BROKEN
+  GOOD
+  MINT
+  POOR
+}
+
+enum powerType {
+  DIESEL
+  ELECTRIC
+  GAS
+  HYBRID
+}
+
+enum vehicleType {
   ATV
   COMBINE
   OTHER

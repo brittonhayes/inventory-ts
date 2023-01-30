@@ -1,7 +1,7 @@
-import { ObjectType, Field, GraphQLISODateTime } from '@nestjs/graphql';
-import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Length } from 'class-validator';
-import { MaintenanceTask } from '../../maintenance/dto/tasks.dto';
+import { MaintenanceTask } from '../../tasks/entities/task.entity';
 
 @ObjectType()
 export class Employee {

@@ -2,8 +2,11 @@ import { Body, Controller, DefaultValuePipe, Delete, Get, Param, Patch, Post, Qu
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { AccessTokenGuard } from '../common/guards/token.guard';
-import { CreateEmployeeDto, Employee, EmployeeResponse, UpdateEmployeeDto } from './dto/employees.dto';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeesService } from './employees.service';
+import { EmployeeResponse } from './entities/employee-response.entity';
+import { Employee } from './entities/employee.entity';
 
 @ApiTags('employees')
 @Controller('employees')

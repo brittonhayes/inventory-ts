@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { VehiclePart } from '../../src/vehicles/dto/parts.dto';
+import { VehiclePart } from '../../src/parts/entities/part.entity';
 
 export const shouldListVehicleParts: VehiclePart[] = [
   {

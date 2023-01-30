@@ -14,7 +14,10 @@ import {
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 import { AccessTokenGuard } from '../common/guards/token.guard';
-import { CreateToolDto, ToolResponse, UpdateToolDto } from './dto/tools.dto';
+import { CreateToolDto } from './dto/create-tool.dto';
+import { UpdateToolDto } from './dto/update-tool.dto';
+import { Tool } from './entities/tool.entity';
+
 import { ToolsService } from './tools.service';
 
 @ApiTags('tools')
@@ -25,25 +28,25 @@ export class ToolsController {
   constructor(private readonly toolsService: ToolsService) {}
 
   @Post()
-  @ApiOkResponse({ description: 'Returns the created tool', type: ToolResponse })
+  @ApiOkResponse({ description: 'Returns the created tool', type: Tool })
   async createTool(@Body() createToolDto: CreateToolDto) {
     return this.toolsService.createTool(createToolDto);
   }
 
   @Get(':id')
-  @ApiOkResponse({ description: 'Returns the tool', type: ToolResponse })
+  @ApiOkResponse({ description: 'Returns the tool', type: Tool })
   async findToolById(@Param('id') id: string) {
     return this.toolsService.findToolById(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ description: 'Returns the updated tool', type: ToolResponse })
+  @ApiOkResponse({ description: 'Returns the updated tool', type: Tool })
   async updateTool(@Param('id') id: string, @Body() updateToolDto: UpdateToolDto) {
     return this.toolsService.updateTool(id, updateToolDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ description: 'Returns the deleted tool', type: ToolResponse })
+  @ApiOkResponse({ description: 'Returns the deleted tool', type: Tool })
   async deleteTool(@Param('id') id: string) {
     return this.toolsService.deleteTool(id);
   }
@@ -52,7 +55,7 @@ export class ToolsController {
   @ApiQuery({ name: 'name', required: false })
   @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
   @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.ToolScalarFieldEnum })
-  @ApiOkResponse({ description: 'Returns the list of tools', type: ToolResponse, isArray: true })
+  @ApiOkResponse({ description: 'Returns the list of tools', type: Tool, isArray: true })
   async listTools(
     @Query('name') name?: string,
     @Query('sort', new DefaultValuePipe(Prisma.SortOrder.asc)) sort?: Prisma.SortOrder,

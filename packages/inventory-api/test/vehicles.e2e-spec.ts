@@ -4,13 +4,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import config from '../src/common/config/config';
 import * as request from 'supertest';
 import { JwtTokenStrategy } from '../src/auth/strategies/token.strategy';
-import { ImplementsService } from '../src/vehicles/implements/implements.service';
-import { VehiclePartsService } from '../src/vehicles/parts/parts.service';
+import { ImplementsService } from '../src/implements/implements.service';
+import { VehiclePartsService } from '../src/parts/parts.service';
 import { VehiclesModule } from '../src/vehicles/vehicles.module';
 import { VehiclesService } from '../src/vehicles/vehicles.service';
 import { AuthModule } from '../src/auth/auth.module';
 import { UsersModule } from '../src/users/users.module';
-import { PrismaService } from 'nestjs-prisma';
 
 describe('Vehicles (e2e)', () => {
   let app: INestApplication;

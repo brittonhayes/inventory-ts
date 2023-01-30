@@ -13,11 +13,15 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { CreateMaintenanceGuideDto } from '../guides/dto/create-guide.dto';
+import { UpdateMaintenanceGuideDto } from '../guides/dto/update-guide.dto';
+import { MaintenanceGuide } from '../guides/entities/guide.entity';
+import { CreateMaintenanceTaskDto } from '../tasks/dto/create-task.dto';
+import { UpdateMaintenanceTaskDto } from '../tasks/dto/update-task.dto';
+import { MaintenanceTask } from '../tasks/entities/task.entity';
 import { AccessTokenGuard } from '../common/guards/token.guard';
-import { CreateMaintenanceGuideDto, MaintenanceGuide, UpdateMaintenanceGuideDto } from './dto/guides.dto';
-import { CreateMaintenanceTaskDto, MaintenanceTask, UpdateMaintenanceTaskDto } from './dto/tasks.dto';
-import { MaintenanceGuidesService } from './guides/guides.service';
-import { MaintenanceTasksService } from './tasks/tasks.service';
+import { MaintenanceGuidesService } from '../guides/guides.service';
+import { MaintenanceTasksService } from '../tasks/tasks.service';
 
 @ApiTags('maintenance')
 @ApiBearerAuth()
