@@ -127,32 +127,25 @@ model Tool {
   tasks     MaintenanceTask[]
 }
 
-model MaintenanceGuide {
-  id           String            @id @default(cuid())
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
-  name         String
-  content      String
-  manual       String?
-  machineHours Int               @default(0)
-  tasks        MaintenanceTask[]
-  vehicleId    String?
-  vehicle      Vehicle?          @relation(fields: [vehicleId], references: [id])
+model Guide {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  content   String
 }
 
 model MaintenanceTask {
-  id          String            @id @default(cuid())
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  status      TaskStatus        @default(INCOMPLETE)
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  status      TaskStatus @default(INCOMPLETE)
   dueDate     DateTime?
   name        String
   description String?
   tools       Tool[]
   assigneeId  String?
-  assignee    Employee?         @relation(fields: [assigneeId], references: [id])
-  guide       MaintenanceGuide? @relation(fields: [guideId], references: [id])
-  guideId     String?
+  assignee    Employee?  @relation(fields: [assigneeId], references: [id])
 }
 
 model Vehicle {
@@ -170,7 +163,6 @@ model Vehicle {
   link         String?
   power        PowerType?   @default(DIESEL)
 
-  guides                MaintenanceGuide[]
   compatibleParts       VehiclePart[]
   compatibleAttachments Attachment[]
   compatibleImplements  Implement[]

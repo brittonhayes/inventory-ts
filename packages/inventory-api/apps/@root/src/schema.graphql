@@ -59,12 +59,24 @@ enum ImplementType {
   TRAILER
 }
 
+type MaintenanceGuide {
+  content: String!
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  tasks: [MaintenanceTask!]
+  updatedAt: DateTime!
+  vehicle: Vehicle
+  vehicleId: String
+}
+
 type MaintenanceTask {
   assignee: Employee
   assigneeId: String
   createdAt: DateTime!
   description: String
   dueDate: DateTime!
+  guide: MaintenanceGuide
   guideId: String
   id: String!
   machineHours: Int
@@ -86,6 +98,8 @@ enum PowerType {
 type Query {
   employee(id: String!): Employee!
   employees: [Employee!]!
+  guide(id: String!): MaintenanceGuide!
+  guides: [MaintenanceGuide!]!
   task(id: String!): MaintenanceTask!
   tasks: [MaintenanceTask!]!
   vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: VehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
@@ -130,6 +144,7 @@ type Vehicle {
   compatibleParts: [VehiclePart!]
   condition: Condition!
   createdAt: DateTime!
+  guides: [MaintenanceGuide!]
   id: String!
   isOwned: Boolean
   link: String
