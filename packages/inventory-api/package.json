@@ -8,11 +8,12 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
+    "dev:guides": "nest start guides -w",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/apps/@root/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "migrate": "prisma migrate dev --preview-feature",
     "migrate:dev:create": "prisma migrate dev --create-only --preview-feature",
@@ -30,9 +31,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/@root/test/jest-e2e.json",
+    "proto": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./libs/grpc --ts_proto_out=./libs/grpc/src ./libs/grpc/proto/*.proto --ts_proto_opt=addNestjsRestParameter=true --ts_proto_opt=stringEnums=true --ts_proto_opt=unrecognizedEnum=false --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.7",
+    "@grpc/proto-loader": "^0.7.4",
     "@nestjs/apollo": "^10.1.7",
     "@nestjs/axios": "^1.0.1",
     "@nestjs/common": "^9.0.0",
@@ -40,6 +44,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^10.1.7",
     "@nestjs/jwt": "^10.0.1",
+    "@nestjs/microservices": "^9.2.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
@@ -55,6 +60,7 @@
     "cookie-parser": "^1.4.6",
     "graphql": "^16.6.0",
     "helmet": "^6.0.1",
+    "inventory-proto": "github:brittonhayes/inventory-proto",
     "jwks-rsa": "^3.0.1",
     "nestjs-prisma": "^0.20.0",
     "passport": "^0.6.0",
@@ -71,7 +77,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.8",
-    "@types/node": "^18.0.0",
+    "@types/node": "^18.11.18",
     "@types/passport-google-oauth20": "^2.0.11",
     "@types/passport-jwt": "^3.0.8",
     "@types/supertest": "^2.0.11",
@@ -91,6 +97,7 @@
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
+    "ts-proto": "^1.139.0",
     "tsconfig-paths": "4.1.2",
     "typescript": "^4.7.4"
   },
@@ -117,8 +124,14 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/src/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@brittonhayes/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
+      "^@app/proto(|/.*)$": "<rootDir>/libs/proto/src/$1"
+    }
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

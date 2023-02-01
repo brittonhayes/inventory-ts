@@ -1,0 +1,184 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Attachment {
+  compatibleVehicles: String
+  condition: String
+  createdAt: DateTime!
+  id: String!
+  isOwned: Boolean
+  name: String!
+  updatedAt: DateTime!
+}
+
+enum Condition {
+  BROKEN
+  GOOD
+  MINT
+  POOR
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Employee {
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  tasks: [MaintenanceTask!]
+  updatedAt: DateTime!
+}
+
+type Implement {
+  compatibleAttachments: [Attachment!]
+  compatibleVehicles: [Vehicle!]
+  condition: Condition
+  createdAt: DateTime!
+  id: String!
+  implementType: ImplementType
+  isOwned: Boolean
+  make: String!
+  model: String!
+  name: String!
+  updatedAt: DateTime!
+  year: Int
+}
+
+enum ImplementType {
+  CHISEL
+  CULTIVATOR
+  DRILL
+  HARROW
+  MOWER
+  OTHER
+  RODWEEDER
+  SPRAYER
+  TRAILER
+}
+
+type MaintenanceTask {
+  assignee: Employee
+  assigneeId: String
+  createdAt: DateTime!
+  description: String
+  dueDate: DateTime!
+  guideId: String
+  id: String!
+  machineHours: Int
+  name: String!
+  status: TaskStatus!
+  tools: [Tool!]
+  updatedAt: DateTime!
+  vehicle: Vehicle
+  vehicleId: String
+}
+
+enum PowerType {
+  DIESEL
+  ELECTRIC
+  GAS
+  HYBRID
+}
+
+type Query {
+  employee(id: String!): Employee!
+  employees: [Employee!]!
+  task(id: String!): MaintenanceTask!
+  tasks: [MaintenanceTask!]!
+  vehicle(id: String!, includeAttachments: Boolean = false, includeGuides: Boolean = false, includeImplements: Boolean = false, includeParts: Boolean = false, orderBy: VehiclesOrder = updatedAt, skip: Int = 0, sort: vehiclesSort, take: Int): Vehicle!
+  vehicles(
+    condition: Condition = GOOD
+    includeAttachments: Boolean = false
+    includeGuides: Boolean = false
+    includeImplements: Boolean = false
+    includeParts: Boolean = false
+    link: String
+
+    """Find machine hours greater than or equal to the number provided"""
+    machineHours: Int
+    make: String
+    model: String
+    name: String
+    orderBy: VehiclesOrder = updatedAt
+    power: PowerType = DIESEL
+    skip: Int = 0
+    sort: vehiclesSort
+    take: Int
+    vehicleType: VehicleType
+    year: Int
+  ): [Vehicle!]!
+}
+
+enum TaskStatus {
+  CANCELLED
+  COMPLETED
+  INCOMPLETE
+}
+
+type Tool {
+  id: String!
+  name: String!
+  tasks: [MaintenanceTask!]
+}
+
+type Vehicle {
+  compatibleAttachments: [Attachment!]
+  compatibleImplements: [Implement!]
+  compatibleParts: [VehiclePart!]
+  condition: Condition!
+  createdAt: DateTime!
+  id: String!
+  isOwned: Boolean
+  link: String
+  machineHours: Int!
+  make: String!
+  model: String!
+  name: String
+  power: PowerType!
+  updatedAt: DateTime!
+  vehicleType: VehicleType!
+  year: Int
+}
+
+type VehiclePart {
+  compatibleVehicles: [Vehicle!]
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+enum VehicleType {
+  ATV
+  COMBINE
+  OTHER
+  SEMITRUCK
+  SPRAYER
+  TRACTOR
+  TRUCK
+  UTV
+}
+
+enum VehiclesOrder {
+  condition
+  createdAt
+  id
+  isOwned
+  link
+  machineHours
+  make
+  model
+  name
+  power
+  updatedAt
+  vehicleType
+  year
+}
+
+enum vehiclesSort {
+  asc
+  desc
+}

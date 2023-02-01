@@ -54,81 +54,20 @@ async function main() {
     ],
   });
 
-  await prisma.maintenanceGuide.create({
+  await prisma.guide.create({
     data: {
       name: '1000 Hour Service',
       content: `
         <p>${faker.lorem.paragraph(5)}</p>
         
       `,
-      tasks: {
-        create: {
-          name: faker.random.words(2),
-          dueDate: faker.date.future(),
-          assignee: {
-            create: {
-              name: faker.name.firstName(),
-            },
-          },
-        },
-      },
-      vehicle: {
-        create: {
-          name: 'Challenger 85E',
-          machineHours: 10000,
-          make: 'Caterpillar (CAT/AGCO)',
-          model: '85E',
-          power: 'DIESEL',
-          vehicleType: 'TRACTOR',
-          link: faker.internet.url(),
-          compatibleImplements: {
-            create: [
-              {
-                name: 'Grizzly 7ft Rear Discharge Estate Mower',
-                make: 'Grizly',
-                model: '7ft Rear Discharge Estate Mower',
-                implementType: 'MOWER',
-              },
-            ],
-          },
-          compatibleParts: {
-            create: [
-              {
-                name: 'Diesel Fuel Filter',
-              },
-            ],
-          },
-        },
-      },
     },
   });
 
-  await prisma.maintenanceGuide.create({
+  await prisma.guide.create({
     data: {
       name: '5000 Hour Service',
       content: faker.lorem.paragraphs(3).replace(/\n/gi, '\n\n'),
-      tasks: {
-        create: {
-          name: faker.random.words(2),
-          dueDate: faker.date.future(),
-          assignee: {
-            create: {
-              name: faker.name.firstName(),
-            },
-          },
-        },
-      },
-      vehicle: {
-        create: {
-          name: 'New Holland Sp.365F',
-          machineHours: 2300,
-          make: 'New Holland (CNH)',
-          model: 'Sp.365F',
-          power: 'DIESEL',
-          vehicleType: 'SPRAYER',
-          link: faker.internet.url(),
-        },
-      },
     },
   });
 }

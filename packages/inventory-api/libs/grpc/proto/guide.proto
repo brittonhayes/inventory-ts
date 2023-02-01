@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package guide;
+
+service GuideService {
+  rpc FindGuide(GuideRequest) returns (GuideResponse) {}
+  rpc ListGuides(ListGuidesRequest) returns (ListGuidesResponse) {}
+  rpc CreateGuide(CreateGuideRequest) returns (GuideResponse) {}
+  rpc UpdateGuide(UpdateGuideRequest) returns (GuideResponse) {}
+  rpc DeleteGuide(DeleteGuideRequest) returns (GuideResponse) {}
+}
+
+message GuideRequest { string id = 1; }
+
+message GuideResponse {
+  string id = 1;
+  string createdAt = 2;
+  string updatedAt = 3;
+  string name = 4;
+  string content = 5;
+}
+
+enum SortDirection {
+  asc = 0;
+  desc = 1;
+}
+
+enum OrderBy {
+  createdAt = 0;
+  updatedAt = 1;
+  name = 2;
+}
+
+message ListGuidesRequest {
+  optional int32 skip = 1;
+  optional int32 take = 2;
+  optional SortDirection sortBy = 3;
+  optional OrderBy orderBy = 4;
+  optional string search = 5;
+}
+message ListGuidesResponse { repeated GuideResponse guides = 1; }
+
+message CreateGuideRequest {
+  string name = 1;
+  string content = 2;
+}
+
+message UpdateGuideRequest {
+  optional string id = 1;
+  optional string name = 2;
+  optional string content = 3;
+}
+
+message DeleteGuideRequest { string id = 1; }
