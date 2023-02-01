@@ -1,45 +1,51 @@
-import { Body, Controller, DefaultValuePipe, Logger, Param, ParseEnumPipe, Query } from '@nestjs/common';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
+import { ClassSerializerInterceptor, Controller, Inject, UseInterceptors } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
+import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { GuidesService } from './guides.service';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
 import { Guide } from './entities/guide.entity';
-import { GuidesService } from './guides.service';
+import { GuideRequest, GUIDE_SERVICE_NAME, ListGuidesRequest } from '@app/grpc/proto/guide.pb';
+import { Prisma } from '@prisma/client';
 
-@ApiTags('guides')
-@ApiBearerAuth()
 @Controller('guides')
+@UseInterceptors(ClassSerializerInterceptor)
 export class GuidesController {
-  constructor(private readonly guidesService: GuidesService) {}
+  @Inject(GuidesService)
+  private readonly service: GuidesService;
 
-  @MessagePattern('createGuide')
+  @GrpcMethod(GUIDE_SERVICE_NAME, 'CreateGuide')
   @ApiOkResponse({ description: 'Returns the created maintenance guide', type: Guide })
-  async createGuide(@Body() createGuideDto: CreateGuideDto) {
-    return this.guidesService.create(createGuideDto);
+  async createGuide(createGuideDto: CreateGuideDto) {
+    return this.service.create(createGuideDto);
   }
 
-  @MessagePattern('findGuideById')
+  @GrpcMethod(GUIDE_SERVICE_NAME, 'FindGuide')
   @ApiOkResponse({ description: 'Returns the maintenance guide', type: Guide })
-  async findGuideById(@Param('id') id: string) {
-    return this.guidesService.findById(id);
+  async findGuideById(data: GuideRequest) {
+    return this.service.findById(data.id);
   }
 
-  @MessagePattern('updateGuide')
+  @GrpcMethod(GUIDE_SERVICE_NAME, 'UpdateGuide')
   @ApiOkResponse({ description: 'Returns the updated maintenance guide', type: Guide })
-  async updateGuide(@Param('id') id: string, @Body() updateMaintenanceGuideDto: UpdateGuideDto) {
-    return this.guidesService.update(id, updateMaintenanceGuideDto);
+  async updateGuide(id: string, updateMaintenanceGuideDto: UpdateGuideDto) {
+    return this.service.update(id, updateMaintenanceGuideDto);
   }
 
-  @MessagePattern('deleteGuide')
+  @GrpcMethod(GUIDE_SERVICE_NAME, 'DeleteGuide')
   @ApiOkResponse({ description: 'Returns the deleted maintenance guide', type: Guide })
-  async deleteGuide(@Param('id') id: string) {
-    return this.guidesService.delete(id);
+  async deleteGuide(id: string) {
+    return this.service.delete(id);
   }
 
-  @EventPattern('guide_list_requested')
-  async listGuides() {
-    Logger.log('requested list guides');
-    return this.guidesService.list({});
+  @GrpcMethod(GUIDE_SERVICE_NAME, 'ListGuides')
+  @ApiOkResponse({ description: 'Returns the  guides', isArray: true, type: Guide })
+  @ApiQuery({ name: 'name', required: false })
+  @ApiQuery({ name: 'sort', required: false, enum: Prisma.SortOrder })
+  @ApiQuery({ name: 'orderBy', required: false, enum: Prisma.GuideScalarFieldEnum })
+  async listGuides(data: ListGuidesRequest) {
+    return {
+      guides: await this.service.list(data),
+    };
   }
 }

@@ -41,7 +41,7 @@ const config: Config = {
     introspection: true,
     debug: false,
     cache: 'bounded',
-    schemaDestination: './src/schema.graphql',
+    schemaDestination: './schema.graphql',
     sortSchema: true,
   },
   security: {

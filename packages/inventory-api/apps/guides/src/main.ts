@@ -1,29 +1,32 @@
-import { ValidationPipe } from '@nestjs/common';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
-import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
+import { PrismaService } from 'nestjs-prisma';
 import { GuidesModule } from './guides.module';
+import { protobufPackage } from '@app/grpc/proto/guide.pb';
 
 async function bootstrap() {
   const port = 5001;
   const app = await NestFactory.createMicroservice(GuidesModule, {
-    transport: Transport.TCP,
+    transport: Transport.GRPC,
     options: {
-      port: port,
+      url: `127.0.0.1:${port}`,
+      package: protobufPackage,
+      protoPath: 'node_modules/inventory-proto/proto/guide.proto',
+      loader: {
+        arrays: true,
+      },
     },
   });
 
   // Validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   // enable shutdown hook
   const prismaService: PrismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  // Prisma Client Exception Filter for unhandled exceptions
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
-
+  Logger.log(`Guides Microservice is listening on port ${port}`, 'GuidesMicroservice');
   await app.listen();
 }
 bootstrap();

@@ -1,6 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Prisma } from '@prisma/client';
 import { Guide } from './entities/guide.entity';
 import { GuidesService } from './guides.service';
 
@@ -18,9 +17,7 @@ export class GuidesResolver {
   }
 
   @Query(() => [Guide], { name: 'guides' })
-  guides(): Promise<Guide[]> {
-    return this.guidesService.list({
-      orderBy: { name: Prisma.SortOrder.asc },
-    });
+  guides() {
+    return this.guidesService.list({});
   }
 }

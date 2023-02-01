@@ -29,6 +29,12 @@
       ],
       "@app/security/*": [
         "libs/security/src/*"
+      ],
+      "@app/grpc": [
+        "libs/grpc/src"
+      ],
+      "@app/grpc/*": [
+        "libs/grpc/src/*"
       ]
     }
   }

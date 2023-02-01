@@ -22,9 +22,7 @@ describe('MaintenanceService', () => {
   it('should return an array of maintenance guides', async () => {
     const want = [];
     prisma.guide.findMany = jest.fn().mockResolvedValueOnce(want);
-    const result = await service.list({
-      orderBy: { name: 'asc' },
-    });
+    const result = await service.list({});
 
     expect(result).toBe(want);
   });

@@ -4,33 +4,25 @@ import {
   DefaultValuePipe,
   Delete,
   Get,
-  Inject,
   Param,
   ParseEnumPipe,
   Patch,
   Post,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Guide, Prisma } from '@prisma/client';
-import { AccessTokenGuard } from '@app/common/guards/token.guard';
+import { Prisma } from '@prisma/client';
 import { CreateMaintenanceTaskDto } from '../tasks/dto/create-task.dto';
 import { UpdateMaintenanceTaskDto } from '../tasks/dto/update-task.dto';
 import { MaintenanceTask } from '../tasks/entities/task.entity';
 import { MaintenanceTasksService } from '../tasks/tasks.service';
-import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
 
 @ApiTags('maintenance')
 @ApiBearerAuth()
 @Controller('maintenance')
 // @UseGuards(AccessTokenGuard)
 export class MaintenanceController {
-  constructor(
-    @Inject('GUIDES_SERVICE') private readonly client: ClientProxy,
-    private readonly maintenanceTasksService: MaintenanceTasksService,
-  ) {}
+  constructor(private readonly maintenanceTasksService: MaintenanceTasksService) {}
 
   @Post('/tasks')
   @ApiOkResponse({ description: 'Returns the created maintenance task', type: MaintenanceTask })
@@ -81,10 +73,5 @@ export class MaintenanceController {
         AND: [name ? { name: { mode: Prisma.QueryMode.insensitive, contains: name } } : {}],
       },
     });
-  }
-
-  @Get('guides')
-  async listGuides() {
-    return await firstValueFrom(this.client.emit('guide_list_requested', {}));
   }
 }

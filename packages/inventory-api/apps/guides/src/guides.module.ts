@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
 import { GuidesController } from './guides.controller';
-import { GuidesResolver } from './guides.resolver';
 import { GuidesService } from './guides.service';
 
 @Module({
@@ -16,7 +15,7 @@ import { GuidesService } from './guides.service';
       isGlobal: true,
     }),
   ],
-  providers: [GuidesResolver, GuidesService],
   controllers: [GuidesController],
+  providers: [GuidesService],
 })
 export class GuidesModule {}

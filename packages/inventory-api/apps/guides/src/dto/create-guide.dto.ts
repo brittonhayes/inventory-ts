@@ -1,6 +1,8 @@
 import { InputType } from '@nestjs/graphql';
-import { OmitType } from '@nestjs/swagger';
-import { Guide } from '../entities/guide.entity';
+import { CreateGuideRequest } from '@app/grpc/proto/guide.pb';
 
 @InputType()
-export class CreateGuideDto extends OmitType(Guide, ['id', 'createdAt', 'updatedAt'] as const) {}
+export class CreateGuideDto implements CreateGuideRequest {
+  name: string;
+  content: string;
+}

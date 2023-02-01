@@ -1,26 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { Guide, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
 import { CreateGuideDto } from './dto/create-guide.dto';
+import { ListGuidesRequest } from '@app/grpc/proto/guide.pb';
 
 @Injectable()
 export class GuidesService {
   constructor(private prisma: PrismaService) {}
 
-  async list(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.GuideWhereUniqueInput;
-    where?: Prisma.GuideWhereInput;
-    orderBy?: Prisma.GuideOrderByWithRelationInput;
-  }): Promise<Guide[]> {
-    const { skip, take, cursor, where, orderBy } = params;
+  async list(data: ListGuidesRequest) {
     return this.prisma.guide.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
+      skip: data.skip,
+      take: data.take,
+      orderBy: data.orderBy
+        ? {
+            [data.orderBy]: data.sortBy,
+          }
+        : {},
+      where: {
+        AND: [data.search ? { name: { mode: Prisma.QueryMode.insensitive, contains: data.search } } : {}],
+      },
     });
   }
 

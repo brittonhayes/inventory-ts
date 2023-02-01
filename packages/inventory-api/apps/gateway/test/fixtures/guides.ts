@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker';
-import { MaintenanceGuide } from '../../src/guides/entities/guide.entity';
+import { Guide } from 'apps/guides/src/entities/guide.entity';
 
-export const shouldReturnGuideById: MaintenanceGuide = {
+export const shouldReturnGuideById: Guide = {
   id: faker.datatype.uuid(),
   createdAt: faker.date.past(),
   updatedAt: faker.date.past(),
   name: faker.lorem.words(3),
   content: faker.lorem.lines(10),
-} satisfies MaintenanceGuide;
+} satisfies Guide;
 
-export const shouldListGuides: MaintenanceGuide[] = [
+export const shouldListGuides: Guide[] = [
   {
     id: faker.datatype.uuid(),
     createdAt: faker.date.past(),

@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package vehicle;
+
+service VehicleService {
+  rpc GetVehicle(VehicleRequest) returns (VehicleResponse) {}
+}
+
+message VehicleRequest { string id = 1; }
+message VehicleResponse {
+  string id = 1;
+  string createdAt = 2;
+  string updatedAt = 3;
+  string name = 4;
+  string make = 5;
+  string model = 6;
+  string year = 7;
+  VehicleType vehicleType = 8;
+  int64 machineHours = 9;
+  PowerType powerType = 10;
+}
+
+enum VehicleType {
+  TRACTOR = 0;
+  SPRAYER = 1;
+  COMBINE = 2;
+  TRUCK = 3;
+  ATV = 4;
+  UTV = 5;
+  SEMITRUCK = 6;
+  OTHER = 7;
+}
+
+enum PowerType {
+  GAS = 0;
+  DIESEL = 1;
+  ELECTRIC = 2;
+  HYBRID = 3;
+}

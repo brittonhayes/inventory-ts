@@ -2,7 +2,6 @@ import { CorsConfig, SecurityConfig, ServicesConfig, SwaggerConfig } from '@app/
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -73,12 +72,6 @@ async function bootstrap() {
     });
   }
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
-    options: { retryAttempts: 5, retryDelay: 3000 },
-  });
-
-  await app.startAllMicroservices();
   await app.listen(process.env.PORT || serviceConfigs.root.port || 5000);
 
   Logger.log(`Application is running on: ${await app.getUrl()}`);
